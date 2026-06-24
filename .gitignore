@@ -1,0 +1,42 @@
+# Model weights
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.bin
+
+# Datasets / large files
+data/
+datasets/
+*.h5
+*.npy
+*.npz
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# Logs / run artifacts
+*.log
+logs/
+runs/
+wandb/
+outputs/
+checkpoints/
+
+# Environments
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+node_modules/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Secrets
+*.env
+.env.*
