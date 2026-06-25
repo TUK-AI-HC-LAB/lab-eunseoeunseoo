@@ -2,9 +2,7 @@
 
 ## Introduction
 
-[Write 2–3 sentences describing your research focus once a direction is confirmed.]
-
-Language policy: reports are written in English (README, WEEKLY_LOG, meeting briefs, experiment reports, analysis notes).
+Reading Industrial Anomaly Detection (IAD) papers and exploring potential research directions. Surveying existing methods to identify a research topic to pursue.
 
 ---
 
@@ -12,7 +10,7 @@ Language policy: reports are written in English (README, WEEKLY_LOG, meeting bri
 
 | # | Folder | Paper | Venue | Status |
 |---|---|---|---|---|
-| — | — | — | — | Not started |
+| 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | 📖 Reading |
 
 ---
 
