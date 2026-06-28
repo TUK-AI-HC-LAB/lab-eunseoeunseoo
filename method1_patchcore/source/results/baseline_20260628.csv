@@ -1,0 +1,17 @@
+category,instance_auroc,full_pixel_auroc,anomaly_pixel_auroc
+bottle,1.000,0.985,0.980
+cable,0.998,0.984,0.975
+capsule,0.981,0.990,0.987
+carpet,0.985,0.991,0.988
+grid,0.977,0.988,0.983
+hazelnut,1.000,0.987,0.979
+leather,1.000,0.993,0.990
+metal_nut,0.998,0.983,0.979
+pill,0.968,0.978,0.976
+screw,0.981,0.995,0.994
+tile,0.996,0.957,0.941
+toothbrush,1.000,0.986,0.980
+transistor,1.000,0.963,0.929
+wood,0.990,0.950,0.937
+zipper,0.992,0.989,0.986
+mean,0.991,0.981,0.974

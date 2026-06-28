@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Reading Industrial Anomaly Detection (IAD) papers and exploring potential research directions. Surveying existing methods to identify a research topic to pursue.
+Reproducing Industrial Anomaly Detection (IAD) methods on MVTec AD, starting with PatchCore as the entry point.
 
 ---
 
@@ -10,16 +10,19 @@ Reading Industrial Anomaly Detection (IAD) papers and exploring potential resear
 
 | # | Folder | Paper | Venue | Status |
 |---|---|---|---|---|
-| 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | 📖 Reading |
+| 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced |
 
 ---
 
 ## Progress Summary
 
-### 2026-W26 (current) — Repository setup
+### 2026-W26 (current) — Repository setup + PatchCore reproduction
 
 - Initialized personal repository structure following the lab guide
+- Reproduced PatchCore baseline on all 15 MVTec AD categories: I-AUROC 99.1%, P-AUROC 98.1% (matches paper)
+- Three sub-direction candidates identified for next step: VLM/CLIP-based IAD, 3D multimodal IAD, Diffusion-based IAD
 - → [meetings/2026-W26_brief.md](meetings/2026-W26_brief.md)
+- → [method1_patchcore/markdown/baseline_analysis.md](method1_patchcore/markdown/baseline_analysis.md)
 
 ---
 
@@ -27,3 +30,4 @@ Reading Industrial Anomaly Detection (IAD) papers and exploring potential resear
 
 - [WEEKLY_LOG.md](WEEKLY_LOG.md)
 - [meetings/](meetings/)
+- [method1_patchcore/](method1_patchcore/)
