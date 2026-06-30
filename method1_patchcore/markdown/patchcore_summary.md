@@ -1,4 +1,4 @@
-# PatchCore Summary
+﻿# PatchCore Summary
 
 ## Paper Metadata
 
@@ -127,3 +127,50 @@ Each theoretical component is individually validated, and their combined synergy
 - **Hyperparameter Sensitivity** : Feature layers (2+3), neighborhood size (p=3), and smoothing (σ=4) were empirically chosen based on MVTec AD. Whether these remain optimal for entirely new product types or defect categories requires further validation.
 - **Backbone Architecture Dependency** : Study is focused on ResNet-family CNNs. It is unclear how PatchCore performs with Vision Transformers (ViT) or other architectures that extract patch features differently.
 - **Anomaly Score Re-weighting** : The re-weighting in Eq. (7) is closer to an empirical heuristic. There is room to introduce a more principled probabilistic framework that accounts for neighborhood density and distribution.
+
+## Open Questions
+
+The following connects each stated limitation of PatchCore to a candidate research direction (A/B/C).
+
+### Q1. ImageNet Bias → Candidate A (VLM/CLIP-based IAD)
+
+**Paper's stated limitation**: "Performance fundamentally depends on the transferability of pre-trained features. If the target domain differs significantly from ImageNet, the feature extractor may degrade."
+
+PatchCore uses patch features extracted from an ImageNet-pretrained CNN (WideResNet50) as the definition of "normal." Because the backbone was trained to classify ImageNet objects, its representations may fail to capture subtle industrial defects (e.g., micro-scratches on metal, texture-level anomalies) when the visual domain diverges from ImageNet.
+
+**Connection**: Vision-language models such as CLIP are trained on image-text pairs, allowing defect concepts like "scratched surface" or "broken edge" to be encoded directly via text descriptions. This shifts the dependency from ImageNet class distributions to language-defined defect semantics, potentially reducing domain-transfer failure.
+**Core hypothesis for Candidate A**: Does text-based supervision reduce reliance on ImageNet feature transferability for industrial anomaly detection?
+
+---
+
+### Q2. Validated Only on ResNet Family → Candidate B (3D Multimodal IAD)
+
+**Paper's stated limitation**: "The study is focused on ResNet-family CNNs. It is unclear how PatchCore performs with Vision Transformers or other architectures."
+
+This limitation asks "what happens if we change the backbone?" Candidate B instead changes the **input modality** (RGB → RGB + point cloud), making the connection indirect. However, both fall under the broader gap that PatchCore has only been validated in the narrow design space of 2D RGB + CNN. RGB images alone carry no surface geometry information, so geometry-based defects (dents, deformations) with minimal color change may be missed entirely.
+
+**Connection (indirect)**: Adding depth/point cloud data as a complementary modality could compensate for geometry-based defects that 2D patch features cannot represent.
+**Core hypothesis for Candidate B**: Does combining RGB patch features with 3D geometry information improve detection of shape-based anomalies that produce little color change?
+
+> Honest assessment: This connection is weaker than A and C. It extends from a broader motivation ("PatchCore's input space is narrow") rather than a limitation the authors directly stated. Worth re-examining in the next meeting.
+
+---
+
+### Q3. Anomaly Score Re-weighting is a Heuristic → Candidate C (Diffusion-based IAD)
+
+**Paper's stated limitation**: "The re-weighting in Eq. (7) is closer to an empirical heuristic. There is room to introduce a more principled probabilistic framework that accounts for neighborhood density and distribution."
+
+PatchCore's anomaly score is computed as the distance to the nearest normal patch in the memory bank, re-weighted by a heuristic factor (Eq. 7). This is a distance-based approximation, not a direct model of the data distribution.
+
+**Connection**: Diffusion models learn the distribution of normal data directly. During denoising, the reconstruction error at each patch position reflects how far that region deviates from the learned normal distribution — a principled, likelihood-grounded signal rather than a heuristic distance. This could replace PatchCore's empirical re-weighting with a probabilistically motivated anomaly score.
+**Core hypothesis for Candidate C**: Does the reconstruction error of a diffusion model provide a more principled and accurate anomaly signal than PatchCore's distance-based heuristic?
+
+---
+
+### Summary
+
+| Candidate | Connected Limitation | Connection Strength |
+|---|---|---|
+| A (VLM/CLIP) | ImageNet feature dependency (author-stated) | Strong — directly from the paper |
+| C (Diffusion) | Heuristic anomaly score re-weighting (author-stated) | Strong — directly from the paper |
+| B (3D Multimodal) | Narrow validated input space (inferred, not author-stated) | Weak — extended by inference; needs validation |
