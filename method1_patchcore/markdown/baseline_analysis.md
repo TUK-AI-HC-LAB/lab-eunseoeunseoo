@@ -72,5 +72,74 @@ H1 is supported. Reproduced mean I-AUROC (99.1%) matches the paper exactly. P-AU
 
 ### Next
 
-- Observe which categories have relatively lower scores (pill: 96.8%, grid: 97.7%) and investigate why.
-- Proceed to next method (SimpleNet).
+#### Phenomenon 1 — Detection failure vs. Localization failure are different problems
+
+Examining the result table reveals two distinct failure modes:
+
+**Type 1 — Low I-AUROC (detection failure)**: The model fails to decide at the image level that an anomaly exists.
+
+| Category | I-AUROC | P-AUROC (full) |
+|---|---|---|
+| pill | 0.968 | 0.978 |
+| grid | 0.977 | 0.988 |
+| capsule | 0.981 | 0.990 |
+
+**Type 2 — Low P-AUROC (anomaly) despite high I-AUROC (localization failure)**: The model correctly flags the image as anomalous, but cannot pinpoint where the defect is.
+
+| Category | I-AUROC | P-AUROC (anomaly) |
+|---|---|---|
+| transistor | 1.000 | 0.929 |
+| tile | 0.996 | 0.941 |
+| wood | 0.990 | 0.937 |
+
+These are structurally different failures. A method that improves image-level detection does not necessarily improve localization, and vice versa. Future methods should be evaluated against each failure type separately.
+
+---
+
+#### Phenomenon 2 — Why does pill fail at detection?
+
+MVTec AD's pill category includes two distinct defect subtypes:
+- **Contamination / color spot**: A foreign-colored region appears on the pill surface — essentially a color anomaly.
+- **Wrong pill type**: An entirely different pill (different shape/color) appears in the image — essentially an object-level semantic anomaly.
+
+PatchCore's anomaly score measures the distance of a patch to the nearest patch in the memory bank. For color anomalies, the defect patch may still be geometrically similar to a normal patch (same shape, similar texture) and differ only in color channel values. If the ImageNet-pretrained backbone encodes color less sensitively than shape, small color deviations will produce low distances and thus low anomaly scores, causing misses.
+
+**Hypothesis H2**: PatchCore's memory bank distance-based score is insensitive to color-channel anomalies because WideResNet50 features are shape-biased from ImageNet pretraining.
+
+**Testable prediction**: If H2 holds, replacing the backbone with CLIP (which is trained on image-text pairs and encodes semantic color information via language) should improve I-AUROC on pill. If CLIP-based features close the gap on pill but not on grid, the cause is confirmed to be feature bias rather than the memory bank mechanism itself.
+
+---
+
+#### Phenomenon 3 — Why does grid fail at detection?
+
+Grid's defect types include bent threads, broken threads, and glue contamination — all of which are **local disruptions in a globally regular pattern**. The defect patch itself may look like a plausible patch in isolation (e.g., a single bent thread pixel is not obviously abnormal). The anomaly is only visible when viewed in the context of the surrounding regular pattern.
+
+PatchCore's locally-aware aggregation uses a 3×3 neighborhood (p=3, ~receptive field of ~32px at layer2). This is too small to capture the global periodicity of the grid texture. A patch in the middle of a broken thread may not differ enough from normal patches for the distance to exceed the threshold.
+
+**Hypothesis H3**: PatchCore's fixed 3×3 local aggregation is insufficient for detecting anomalies that require global context (pattern regularity), not just local patch appearance.
+
+**Testable prediction**: If H3 holds, increasing the aggregation size p or using a model with attention over the full image (e.g., ViT-based or diffusion-based reconstruction) should improve grid I-AUROC. This is independent of feature bias and represents a structural limitation of the patch comparison framework.
+
+---
+
+#### Phenomenon 4 — Why does transistor fail at localization despite perfect detection?
+
+Transistor defects include misplaced components and bent leads — these are **spatial/structural anomalies** where the object identity of a patch is correct but its position relative to other components is wrong. PatchCore's score for each patch is computed independently (each patch vs. its nearest neighbor in M). There is no mechanism to encode whether the spatial arrangement of components is correct globally.
+
+PatchCore can detect that "some patch in this image is far from normal patches" (high image-level score), but the specific patch that scores highest may not correspond to the actual defect location — it may instead flag a normal component that appears in an unexpected surrounding context.
+
+**Hypothesis H4**: PatchCore's per-patch independent scoring cannot capture spatial-arrangement anomalies; the highest-scoring patch may not be at the true defect location.
+
+**Testable prediction**: If H4 holds, a model that reconstructs the full image and measures reconstruction error per pixel (Candidate C, diffusion-based) should produce more accurate anomaly maps for transistor, because the reconstruction will fail at the exact location where the component is missing or misplaced.
+
+---
+
+#### Summary of hypotheses and candidate assignments
+
+| Hypothesis | Phenomenon | Candidate to test |
+|---|---|---|
+| H2: Shape-biased features miss color anomalies | pill low I-AUROC | A (CLIP/VLM — language encodes color semantics) |
+| H3: Local aggregation misses global pattern breaks | grid low I-AUROC | C (Diffusion — reconstruction captures global regularity) |
+| H4: Per-patch scoring misses spatial arrangement anomalies | transistor low P-AUROC | C (Diffusion — full-image reconstruction) |
+
+H2 points toward Candidate A; H3 and H4 both point toward Candidate C. This makes Candidates A and C the higher-priority directions to explore next. Candidate B (3D multimodal) is not implicated by any of the observed failure patterns in this 2D RGB dataset.
