@@ -1,8 +1,8 @@
 # TUK AI-HC Lab — eunseoeunseoo Repository
 
-## Introduction
+## 소개
 
-Reproducing Industrial Anomaly Detection (IAD) methods on MVTec AD, starting with PatchCore as the entry point.
+MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, PatchCore 재현 결과에서 도출한 원인 가설(H2/H3/H4)을 후속 방법으로 검증하는 중.
 
 ---
 
@@ -10,24 +10,31 @@ Reproducing Industrial Anomaly Detection (IAD) methods on MVTec AD, starting wit
 
 | # | Folder | Paper | Venue | Status |
 |---|---|---|---|---|
-| 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced |
+| 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced (mean I-AUROC 99.1%) |
+| 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | 🔬 진행 중 — zero-shot pill 재현 완료, H2 반박 |
 
 ---
 
 ## Progress Summary
 
-### 2026-W26 (current) — Repository setup + PatchCore reproduction
+### 2026-W28 (current) — H2 검증: WinCLIP zero-shot vs PatchCore
 
-- Initialized personal repository structure following the lab guide
-- Reproduced PatchCore baseline on all 15 MVTec AD categories: I-AUROC 99.1%, P-AUROC 98.1% (matches paper)
-- Three sub-direction candidates identified for next step: VLM/CLIP-based IAD, 3D multimodal IAD, Diffusion-based IAD
-- → [meetings/2026-W26_brief.md](meetings/2026-W26_brief.md)
+- WinCLIP zero-shot을 pill 카테고리에서 재현 (mala-lab 구현체): I-AUROC 0.812, PatchCore(0.968) 대비 -15.6%p → H2(zero-shot 버전) 반박
+- 공식 코드가 없는 논문의 비공식 구현체 간 재현 편차 확인 (caoyunkang 70.2% vs mala-lab 91.2% aggregate) → 신뢰할 수 있는 쪽으로 전환
+- → [meetings/2026-W28_brief.md](meetings/2026-W28_brief.md)
+- → [method2_winclip/markdown/winclip_zeroshot_analysis.md](method2_winclip/markdown/winclip_zeroshot_analysis.md)
+
+### 2026-W27 — PatchCore 재현 + 한계 분석
+
+- PatchCore baseline을 MVTec AD 15개 카테고리 전체에 재현: I-AUROC 99.1%, P-AUROC 98.1% (논문과 일치)
+- 결과표에서 두 가지 실패 유형(detection failure / localization failure) 발견, H2/H3/H4 가설 도출
+- → [meetings/2026-W27_brief.md](meetings/2026-W27_brief.md)
 - → [method1_patchcore/markdown/baseline_analysis.md](method1_patchcore/markdown/baseline_analysis.md)
 
 ---
 
 ## Quick Links
 
-- [WEEKLY_LOG.md](WEEKLY_LOG.md)
 - [meetings/](meetings/)
 - [method1_patchcore/](method1_patchcore/)
+- [method2_winclip/](method2_winclip/)

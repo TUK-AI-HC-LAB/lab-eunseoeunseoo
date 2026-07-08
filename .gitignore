@@ -5,9 +5,10 @@
 *.safetensors
 *.bin
 
-# Datasets / large files
-data/
-datasets/
+# Datasets / large files (root-level only — some cloned method code has its
+# own "datasets/" folder containing loader scripts, not raw data)
+/data/
+/datasets/
 *.h5
 *.npy
 *.npz

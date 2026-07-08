@@ -9,8 +9,25 @@
 | Conference / Journal | CVPR 2023 |
 | Year | 2023 |
 | Paper link | https://arxiv.org/abs/2303.14814 |
-| GitHub / Official code | https://github.com/caoyunkang/WinClip |
+| GitHub / Official code | none — paper authors released no official code. Unofficial re-implementations only; accuracy varies widely (see Implementation Notes below) |
 | Reason for investigation | Candidate A — addresses H2 (shape bias of PatchCore missing color anomalies like pill) |
+
+### Implementation Notes
+
+No official code exists for WinCLIP. Two unofficial re-implementations were checked:
+
+| Repo | MVTec zero-shot mean I-AUROC (own reported) | Fidelity to paper (91.8%) |
+|---|---|---|
+| [caoyunkang/WinClip](https://github.com/caoyunkang/WinClip) | 70.17% | Poor — large per-category gaps (e.g. grid 98.8%→48.9%, metal_nut 97.1%→37.6%) |
+| [mala-lab/WinCLIP](https://github.com/mala-lab/WinCLIP) | ~91.2% (via CVPR'24 InCTRL paper, which uses this code for its WinCLIP baseline) | Good — matches paper within ~0.6%p in aggregate |
+
+Using `mala-lab/WinCLIP` for reproduction (`method2_winclip/source/WinCLIP/`) because it is the only candidate with external validation (used as a baseline in a peer-reviewed paper).
+
+**Risk carried forward**: this guide's paper-selection priority (`README.md` 10장) ranks "official GitHub code exists" above candidates without it. WinCLIP fails that criterion — the absence of official code is exactly why the two unofficial re-implementations diverge so much. Cross-checking against the paper's own published per-category table (see below) is used to compensate.
+
+**Published pill zero-shot I-AUROC**: 79.10% — from the "Reported" column, pill row, of the per-category table in [caoyunkang/WinClip README](https://github.com/caoyunkang/WinClip) (i-auroc column; that table transcribes the original paper's per-category results, distinct from that repo's own unreliable re-implementation column, which is not used here). This is already well below PatchCore's pill result (96.8%), meaning the H2 zero-shot prediction may already be contradicted by the paper's own numbers before any local reproduction.
+
+*Correction (2026-07-08): an earlier version of this note claimed this number was "confirmed from two independent sources." The second source was a web search snippet describing "0.7908 in segmentation results" from an unspecified unofficial implementation — ambiguous whether it meant image-level or pixel-level AUROC, so it does not actually corroborate the image-level figure above and the claim was overstated. Only the caoyunkang README table is used as the source now.*
 
 ---
 
