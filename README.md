@@ -11,15 +11,16 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 | # | Folder | Paper | Venue | Status |
 |---|---|---|---|---|
 | 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced (mean I-AUROC 99.1%) |
-| 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | 🔬 진행 중 — zero-shot pill 재현 완료, H2 반박 |
+| 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | 🔬 진행 중 — zero-shot/1-shot pill 재현 완료, H2 계열 반박 |
 
 ---
 
 ## Progress Summary
 
-### 2026-W28 (current) — H2 검증: WinCLIP zero-shot vs PatchCore
+### 2026-W28 (current) — H2 검증: WinCLIP zero-shot/1-shot vs PatchCore
 
 - WinCLIP zero-shot을 pill 카테고리에서 재현 (mala-lab 구현체): I-AUROC 0.812, PatchCore(0.968) 대비 -15.6%p → H2(zero-shot 버전) 반박
+- WinCLIP+ 1-shot 재현: I-AUROC 0.853 (zero-shot 대비 +4.1%p, PatchCore 대비 여전히 -11.5%p) → H2 few-shot 확장판도 반박
 - 공식 코드가 없는 논문의 비공식 구현체 간 재현 편차 확인 (caoyunkang 70.2% vs mala-lab 91.2% aggregate) → 신뢰할 수 있는 쪽으로 전환
 - → [meetings/2026-W28_brief.md](meetings/2026-W28_brief.md)
 - → [method2_winclip/markdown/winclip_zeroshot_analysis.md](method2_winclip/markdown/winclip_zeroshot_analysis.md)

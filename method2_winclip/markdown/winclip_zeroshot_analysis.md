@@ -1,6 +1,6 @@
-# WinCLIP Zero-Shot Reproduction — pill 카테고리 (H2 검증)
+# WinCLIP Zero-Shot / 1-Shot Reproduction — pill 카테고리 (H2 검증)
 
-## 실험: pill 카테고리 zero-shot WinCLIP vs PatchCore
+## 실험 1: pill 카테고리 zero-shot WinCLIP vs PatchCore
 
 - commit: `39ae367` (mala-lab/WinCLIP)
 - sh: `method2_winclip/source/run_pill_zeroshot.sh`
@@ -51,8 +51,46 @@ H2가 맞다면 WinCLIP pill I-AUROC ≥ 0.968 (PatchCore 수준 또는 그 이�
 
 ---
 
+## 실험 2: pill 카테고리 WinCLIP+ 1-shot vs PatchCore
+
+- commit: `39ae367` (mala-lab/WinCLIP) + 로컬 수정 (아래 "구현 변경" 참고)
+- sh: `method2_winclip/source/run_pill_1shot.sh`
+- csv: `method2_winclip/source/WinCLIP/results/pill_1shot.csv`
+
+### 질문
+
+WinCLIP+ (1-shot, 정상 참조 이미지 1장 추가)가 pill 카테고리에서 PatchCore의 I-AUROC(0.968)를 넘어서는가? — 실험 1(zero-shot)에서 H2가 반박된 뒤, "언어만으로는 부족했지만 최소한의 시각 참조를 더하면 충분한가"를 확인하는 후속 실험.
+
+### 가설
+
+H2의 확장판(H2-few-shot): 언어 기반 color semantic에 시각적 유사도(1장의 정상 참조 이미지와의 patch-level 거리)를 더하면, zero-shot의 한계(0.812)를 넘어 PatchCore(0.968) 수준에 도달할 수 있다.
+
+### 설정
+
+실험 1과 동일 (구현체, backbone, 카테고리, seed, GPU). 차이점은 `shot=1`로 설정하고 WinCLIP+ 경로(언어 점수 + 시각 유사도 점수 평균)를 사용한 것.
+
+**구현 변경**: `mala-lab/WinCLIP`의 few-shot `forward()`가 정상 참조 이미지를 정확히 4장(`image[1]`~`image[4]`)으로 하드코딩되어 있어 `shot=1`로는 `IndexError`가 발생했다. `open_clip/model.py`의 `WinCLIP.forward()`를 임의의 shot 개수를 받도록 일반화했다 (`ref_images = image[1:]`로 변경, 나머지 gallery 구성 로직은 원래부터 개수에 무관하게 동작해서 손대지 않음). 로직 자체(코사인 유사도, harmonic mean aggregation)는 바꾸지 않았다.
+
+### 기대 결과
+
+H2-few-shot이 맞다면 WinCLIP+ 1-shot pill I-AUROC ≥ 0.968.
+
+### 실제 결과
+
+| 지표 | PatchCore (pill) | WinCLIP zero-shot | WinCLIP+ 1-shot | Raw Path |
+|---|---|---|---|---|
+| I-AUROC | 0.968 | 0.812 | **0.853** | `method2_winclip/source/WinCLIP/results/pill_1shot.csv` |
+| AUPR | — | 0.963 | 0.972 | 〃 |
+| F1-max | — | 0.916 | 0.916 | 〃 |
+
+### 해석
+
+**H2-few-shot도 반박된다.** 정상 참조 이미지 1장을 추가하니 I-AUROC가 0.812 → 0.853으로 +4.1%p 개선되어, 시각 참조가 실제로 도움이 된다는 것은 확인했다. 하지만 여전히 PatchCore(0.968)보다 11.5%p 낮다. 언어 점수와 최소한의 시각 유사도 점수를 합쳐도, PatchCore가 대규모 coreset memory bank로 확보한 매칭 정밀도에는 못 미친다.
+
+---
+
 ## 다음 판단
 
-zero-shot 조건에서는 H2가 성립하지 않는다. 다만 이 결과가 "CLIP 기반 접근 전체의 실패"를 의미하지는 않는다 — WinCLIP+(few-shot, 1~4장의 정상 참조 이미지 추가)는 언어 점수에 시각적 유사도 점수를 더하는 방식이라, 순수 언어 기반 zero-shot과는 다른 메커니즘이다. WinCLIP+ few-shot을 pill에서 확인하는 것이 H2의 "language+minimal visual reference" 변형 버전을 검증하는 다음 실험이 될 수 있다 (이번 주는 진행하지 않음, 다음 주 후보).
+zero-shot과 1-shot 두 조건 모두에서 H2 계열 가설이 반박되었다. 시각 참조를 늘릴수록(4-shot 등) 격차가 더 줄어들 가능성은 남아있지만, 개선 폭(+4.1%p/1장)을 선형 외삽하면 PatchCore를 따라잡으려면 참조 이미지가 최소 3~4장 이상 필요하다는 뜻이고, 그 지점부터는 "zero/few-shot의 실용적 이점"이라는 애초의 동기(카테고리별 재학습 없이 대응)가 희석된다.
 
-만약 few-shot도 PatchCore에 못 미친다면, H2 계열 가설 전체를 접고 H3/H4(Candidate C, diffusion 기반)로 우선순위를 옮기는 것이 타당하다.
+H2 계열(Candidate A)에 대한 이번 주 판단: **일단 보류하고 H3/H4(Candidate C, diffusion 기반, DiAD)로 우선순위를 옮기는 쪽이 타당해 보인다.** 다만 이건 잠정 판단이며, 다음 미팅에서 논의가 필요하다 (아래 브리프 8장 질문 참고).
