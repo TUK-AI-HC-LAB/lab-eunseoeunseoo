@@ -12,6 +12,7 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 |---|---|---|---|---|
 | 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced (mean I-AUROC 99.1%) |
 | 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | 🔬 진행 중 — zero-shot/1-shot pill 재현 완료, H2 계열 반박 |
+| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | 🔬 착수 — H3/H4 검증용, 논문 요약 완료 후 재현 시작 |
 
 ---
 
@@ -25,7 +26,7 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 - H2 계열 가설 전체 반박에 따라 Candidate C(DiAD, diffusion 기반, H3/H4 검증용)로 전환 결정 — 재현 착수 전 논문 읽는 중
 - → [meetings/2026-W28_brief.md](meetings/2026-W28_brief.md)
 - → [method2_winclip/markdown/winclip_zeroshot_analysis.md](method2_winclip/markdown/winclip_zeroshot_analysis.md)
-- → [related_work/markdown/diad_summary.md](related_work/markdown/diad_summary.md)
+- → [method3_diad/markdown/diad_summary.md](method3_diad/markdown/diad_summary.md)
 
 ### 2026-W27 — PatchCore 재현 + 한계 분석
 
@@ -41,4 +42,5 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 - [meetings/](meetings/)
 - [method1_patchcore/](method1_patchcore/)
 - [method2_winclip/](method2_winclip/)
+- [method3_diad/](method3_diad/)
 - [related_work/](related_work/)
