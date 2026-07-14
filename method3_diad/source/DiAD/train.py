@@ -18,10 +18,10 @@ def setup_seed(seed):
     torch.backends.cudnn.benchmark = False
 
 # Configs
-resume_path = './models/diad.ckpt'
+resume_path = 'C:/ai_local/diad_models/diad.ckpt'
 
 setup_seed(1)
-batch_size = 12
+batch_size = 2
 logger_freq = 3000000000000
 learning_rate = 1e-5
 only_mid_control = True
@@ -36,12 +36,17 @@ model.only_mid_control = only_mid_control
 # Misc
 train_dataset, test_dataset = MVTecDataset('train',data_path), MVTecDataset('test',data_path)
 # train_dataset, test_dataset = VisaDataset('train',data_path), VisaDataset('test',data_path)
-train_dataloader = DataLoader(train_dataset, num_workers=8, batch_size=batch_size, shuffle=True)
-test_dataloader = DataLoader(test_dataset, num_workers=8, batch_size=1, shuffle=True)
+train_dataloader = DataLoader(train_dataset, num_workers=0, batch_size=batch_size, shuffle=True)
+test_dataloader = DataLoader(test_dataset, num_workers=0, batch_size=1, shuffle=True)
 
 ckpt_callback_val_loss = ModelCheckpoint(monitor='val_acc', dirpath='./val_ckpt/',mode='max')
+# protocol change: one epoch takes ~10h on this 8GB laptop GPU, so the
+# 25-epoch validation/checkpoint cadence above would never save anything
+# in a single session. Add a step-based checkpoint so partial progress
+# survives an interruption (thermal shutdown, session end, etc.).
+ckpt_callback_periodic = ModelCheckpoint(dirpath='./val_ckpt/', filename='step_{step}', every_n_train_steps=50, save_top_k=-1)
 logger = ImageLogger(batch_frequency=logger_freq)
-trainer = pl.Trainer(gpus=1, precision=32, callbacks=[logger,ckpt_callback_val_loss], accumulate_grad_batches=4, check_val_every_n_epoch=25)
+trainer = pl.Trainer(gpus=1, precision=16, callbacks=[logger,ckpt_callback_val_loss,ckpt_callback_periodic], accumulate_grad_batches=4, check_val_every_n_epoch=25)
 
 # Train!
 trainer.fit(model, train_dataloaders=train_dataloader, val_dataloaders=test_dataloader)

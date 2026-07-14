@@ -24,6 +24,10 @@ runs/
 wandb/
 outputs/
 checkpoints/
+lightning_logs/
+val_ckpt/
+log
+log_image/
 
 # Environments
 __pycache__/

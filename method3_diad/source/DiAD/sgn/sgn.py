@@ -476,7 +476,11 @@ class DiAD(LatentDiffusion):
         params = list(self.control_model.parameters())
         params += list(self.model.diffusion_model.output_blocks.parameters())
         params += list(self.model.diffusion_model.out.parameters())
-        opt = torch.optim.AdamW(params, lr=lr)
+        # protocol change: 1.3B trainable params don't fit an fp32 AdamW
+        # optimizer state on an 8GB GPU; bitsandbytes' 8-bit AdamW cuts
+        # optimizer-state memory ~4x with equivalent update behavior.
+        import bitsandbytes as bnb
+        opt = bnb.optim.AdamW8bit(params, lr=lr)
         return opt
 
     def low_vram_shift(self, is_diffusing):

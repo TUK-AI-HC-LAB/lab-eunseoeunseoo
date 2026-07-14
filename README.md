@@ -12,13 +12,19 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 |---|---|---|---|---|
 | 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced (mean I-AUROC 99.1%) |
 | 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | 🔬 진행 중 — zero-shot/1-shot pill 재현 완료, H2 계열 반박 |
-| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | 🔬 착수 — H3/H4 검증용, 논문 요약 완료 후 재현 시작 |
+| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | 🔬 학습 실행 중 — H3/H4 검증용, 8GB GPU 환경 설정 완료 |
 
 ---
 
 ## Progress Summary
 
-### 2026-W28 (current) — H2 검증: WinCLIP zero-shot/1-shot vs PatchCore
+### 2026-W29 (current) — DiAD (Candidate C) 재현 착수, 학습 실행 중
+
+- 공식 DiAD repo clone, 로컬 GPU(RTX 5060 8GB)용 환경 설정, 여러 버전 호환 이슈 수정 후 학습 파이프라인 정상 동작 확인
+- 8-bit Adam 적용 후 학습 실행 중 (진행 상황은 `method3_diad/markdown/setup_notes.md` 참고)
+- 주간 브리핑(`meetings/2026-W29_brief.md`)은 아직 작성 전
+
+### 2026-W28 — H2 검증: WinCLIP zero-shot/1-shot vs PatchCore
 
 - WinCLIP zero-shot을 pill 카테고리에서 재현 (mala-lab 구현체): I-AUROC 0.812, PatchCore(0.968) 대비 -15.6%p → H2(zero-shot 버전) 반박
 - WinCLIP+ 1-shot 재현: I-AUROC 0.853 (zero-shot 대비 +4.1%p, PatchCore 대비 여전히 -11.5%p) → H2 few-shot 확장판도 반박

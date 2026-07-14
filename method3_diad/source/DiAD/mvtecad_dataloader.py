@@ -7,6 +7,15 @@ from torchvision import transforms
 
 mean_train = [0.485, 0.456, 0.406]
 std_train = [0.229, 0.224, 0.225]
+
+
+def imread_unicode(path, flags=cv2.IMREAD_COLOR):
+    # cv2.imread fails silently on Windows paths containing non-ASCII
+    # characters (e.g. Korean); read bytes via Python and decode instead.
+    data = np.fromfile(path, dtype=np.uint8)
+    return cv2.imdecode(data, flags)
+
+
 def data_transforms(size):
     datatrans =  transforms.Compose([
     transforms.Resize((size, size)),
@@ -50,7 +59,7 @@ class MVTecDataset(Dataset):
         target_filename = item['filename']
         label = item["label"]
         if item.get("maskname", None):
-            mask = cv2.imread( self.root + item['maskname'], cv2.IMREAD_GRAYSCALE)
+            mask = imread_unicode(self.root + item['maskname'], cv2.IMREAD_GRAYSCALE)
         else:
             if label == 0:  # good
                 mask = np.zeros(self.image_size).astype(np.uint8)
@@ -60,8 +69,8 @@ class MVTecDataset(Dataset):
                 raise ValueError("Labels must be [None, 0, 1]!")
 
         prompt = ""
-        source = cv2.imread(self.root + source_filename)
-        target = cv2.imread(self.root + target_filename)
+        source = imread_unicode(self.root + source_filename)
+        target = imread_unicode(self.root + target_filename)
         source = cv2.cvtColor(source, 4)
         target = cv2.cvtColor(target, 4)
         source = Image.fromarray(source, "RGB")

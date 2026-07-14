@@ -27,7 +27,7 @@ def get_node_name(name, parent_name):
 model = create_model(config_path='./models/diad.yaml')
 input_state_dict = load_state_dict(path_input)
 
-pretrained_weights = torch.load(input_path)
+pretrained_weights = torch.load(input_path, weights_only=False)
 if 'state_dict' in pretrained_weights:
     pretrained_weights = pretrained_weights['state_dict']
 
