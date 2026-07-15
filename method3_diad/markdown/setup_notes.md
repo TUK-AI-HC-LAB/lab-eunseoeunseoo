@@ -51,9 +51,42 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - `batch_size=12, precision=32`: 3번째 micro-batch까지 정상 진행(loss 출력됨), 4번째(= `accumulate_grad_batches=4`로 누적된 첫 실제 optimizer step) 직전에 `CUDA out of memory` (`Tried to allocate 20.00 MiB`, `18.24 GiB is allocated by PyTorch`라는 이상한 수치 — 8GB GPU인데 18GB 넘게 잡혔다고 나옴).
 - `batch_size=2, precision=16`(mixed precision)로 낮춰서 재시도 → **동일한 지점에서 동일하게 OOM** (`18.13 GiB allocated`).
 - **해석**: batch_size/precision을 낮춰도 OOM 지점과 규모가 거의 그대로라는 것은, activation memory(배치 크기에 비례)가 병목이 아니라 **trainable parameter 1.3B개에 대한 Adam optimizer state(m, v buffer, 보통 fp32 유지)** 자체가 지배적인 메모리 사용처라는 뜻이다. Adam만으로도 1.3B params × 8bytes ≈ 10.4GB가 필요해, 배치 크기를 아무리 줄여도 8GB GPU 한 대로는 구조적으로 안 맞을 가능성이 높다.
-- 이 가설이 맞다면 다음 후보: (a) `bitsandbytes` 8-bit Adam으로 optimizer state를 압축, (b) `only_mid_control=True`가 이미 켜져 있는데도 trainable params가 1.3B나 되는 이유 확인 후 더 많은 layer를 freeze, (c) gradient checkpointing, (d) 더 큰 VRAM 머신으로 이전. 아직 이 중 어느 것도 시도하지 않음.
+- 이 가설이 맞다면 다음 후보: (a) `bitsandbytes` 8-bit Adam으로 optimizer state를 압축, (b) `only_mid_control=True`가 이미 켜져 있는데도 trainable params가 1.3B나 되는 이유 확인 후 더 많은 layer를 freeze, (c) gradient checkpointing, (d) 더 큰 VRAM 머신으로 이전.
+
+### 8. `bitsandbytes` 8-bit Adam 적용 — 실제 학습 성공
+- `sgn/sgn.py`의 `configure_optimizers()`에서 `torch.optim.AdamW` 대신 `bitsandbytes.optim.AdamW8bit` 사용 (optimizer state를 8-bit로 저장해 약 4배 압축).
+- 적용 후 첫 실제 optimizer step이 OOM 없이 통과, loss가 감소하는 정상 학습 확인 → OOM 원인이 activation이 아니라 Adam optimizer state였다는 7절의 가설이 맞았음.
+- `batch_size=2`, `precision=16`, `accumulate_grad_batches=4`로 고정. 8GB GPU에서는 이 조합이 실질적인 하한선.
+
+### 9. 학습 속도 현실 점검 — 체크포인트 주기 단축
+- 초기 iteration 속도 약 20s/it 기준으로 계산하면 1 epoch ≈ 10시간, 원본 `check_val_every_n_epoch=25` 주기로는 단일 세션 안에 체크포인트가 단 한 번도 저장되지 않음 (전체 1000 epoch 기준으로는 비현실적인 기간이 소요).
+- **protocol change**: epoch 기준 val/checkpoint(`ckpt_callback_val_loss`, monitor=`val_acc`)는 그대로 두되, `every_n_train_steps=50`짜리 step 기준 `ModelCheckpoint`(`ckpt_callback_periodic`)를 추가해 세션이 중간에 끊겨도(열 종료, 재부팅 등) 최근 50 step 이내 진행 상황은 항상 보존되도록 함.
+- `ModelCheckpoint(save_top_k=2, monitor=None)`으로 처음 설정했다가 `MisconfigurationException: ... No quantity for top_k to track`로 즉시 실패 → `monitor`가 없을 때 `save_top_k`는 0/1/-1(무제한)만 허용됨을 확인, `save_top_k=1`로 수정(최신 체크포인트 1개만 유지, 8GB짜리가 무한히 쌓이는 것도 방지).
+
+### 10. 노트북 열 종료 — 물리적 원인
+- 학습 중 노트북이 온도 상승으로 갑자기 꺼져 세션과 백그라운드 프로세스가 함께 종료됨.
+- 원인은 GPU/하드웨어 한계가 아니라 노트북을 침대 위에 올려놓아 바닥 흡기구가 막힌 배치 문제로 파악 (거치대로 바닥과 간격을 띄운 뒤 동일 워크로드에서 재발 없음).
+- 이후 GPU 온도를 주기적으로 폴링해 85°C 이상이면 경고하는 감시 루틴을 병행 운용.
+
+### 11. 체크포인트가 OneDrive 동기화 폴더에 저장되던 버그 — 24.7GB 불필요 동기화 + 5시간43분 스톨
+- `ckpt_dir`을 명시적으로 지정하지 않았을 때 기본값이 `./val_ckpt/`로 잡혀, `method3_diad/source/DiAD/val_ckpt/` 즉 OneDrive 동기화 대상 폴더 안에 8.24GB짜리 체크포인트가 3개(총 24.7GB) 쌓인 것을 뒤늦게 발견.
+- 학습 로그에서 step 707→708 사이 한 스텝이 5시간43분 걸린 비정상 구간을 발견, 시점이 체크포인트 저장 직후와 일치 → OneDrive가 백그라운드에서 해당 파일을 업로드하려고 시도하면서 디스크 I/O를 붙잡아 학습이 사실상 멈췄던 것으로 추정(6절의 체크포인트 로딩 스톨과 동일한 근본 원인).
+- **protocol change**: `train.py`에 `ckpt_dir = 'C:/ai_local/diad_val_ckpt/'`를 명시하고 두 `ModelCheckpoint` 콜백 모두 이 경로를 쓰도록 변경, 기존 체크포인트도 이 경로로 이동. 오래된 체크포인트는 정리하고 최신 것만 유지.
+- `.gitignore`에 `lightning_logs/`, `val_ckpt/`, `log`, `log_image/` 추가 (체크포인트 자체는 이미 `*.ckpt` 규칙으로 제외되지만, 잘못된 경로에 생성된 관련 폴더/로그가 실수로 스테이징되는 것도 방지).
+
+### 12. 재시작 시 `ckpt_path` resume — state_dict strict 로딩 충돌
+- 세션이 끊긴 뒤 재시작할 때 `ckpt_dir` 안의 최신 `step_step=*.ckpt`를 찾아 `trainer.fit(..., ckpt_path=resume_ckpt_path)`로 넘겨 전체 trainer state(옵티마이저, 스케줄러, global_step 포함)를 복원하도록 함.
+- PL이 내부적으로 `model.load_state_dict(..., strict=True)`를 호출하는데, 저장된 체크포인트에는 첫 validation 때 지연 생성되는 평가용 ResNet50 feature extractor(`pretrained_model.*`) 키가 포함되어 있어 방금 새로 생성한 모델 인스턴스와 키가 안 맞아 `RuntimeError: Unexpected key(s) ... "pretrained_model.*"` 발생.
+- 이 키 불일치는 무해하므로(평가 전용 서브모듈, 학습에는 관여하지 않음), resume이 필요한 경우에 한해 `model.load_state_dict`를 `strict=False`로 강제하는 monkeypatch를 `resume_ckpt_path`가 있을 때만 적용.
+
+### 13. 체크포인트 저장 중 크래시 — `_atomic_save`의 메모리 이중 사용
+- step 200 체크포인트 저장 도중 `RuntimeError: [enforce fail at inline_container.cc:672] . unexpected pos ... vs ...`가 `torch.save(checkpoint, bytesbuffer)` 안에서 발생하며 학습 프로세스 종료.
+- 원인: PL(`lightning_fabric.plugins.io.torch_io._atomic_save`)의 기본 저장 방식이 8GB+ 체크포인트 전체를 먼저 메모리상의 `io.BytesIO()` 버퍼에 직렬화한 뒤 디스크에 쓰는 방식이라, 저장 순간 피크 RAM 사용량이 사실상 두 배가 됨. 이 머신은 RAM 23.7GB 총량에 모델·옵티마이저·dataloader가 이미 상주한 상태라 버퍼링 중 메모리 압박으로 zip 컨테이너가 깨진 것으로 추정.
+- 디스크에 이미 쓰여 있던 `step_step=150.ckpt`는 손상되지 않음(크래시가 디스크 쓰기 시작 전 버퍼링 단계에서 발생했기 때문).
+- **protocol change**: `train.py` 상단에서 `_torch_io._atomic_save`를 `torch.save(checkpoint, filepath)`로 직접 디스크에 쓰는 함수로 monkeypatch해 중간 버퍼링을 제거.
+- 수정 후 재시작, `step_step=150.ckpt`에서 정상 resume 후 이전에 크래시했던 지점(step 200)을 통과하고 `step_step=200.ckpt` 저장까지 정상 완료됨을 확인 → 수정 유효.
 
 ## 다음에 할 일
-1. 위 OOM 가설(Adam optimizer state 지배) 검증 — 예: `sum(p.numel() for p in model.parameters() if p.requires_grad)`으로 실제 trainable param 수 확인.
-2. `bitsandbytes` 8-bit Adam 또는 추가 freeze로 재시도.
-3. 학습 로그·중간 checkpoint 경로를 evidence로 기록 (아직 optimizer step을 한 번도 성공 못해서 checkpoint 없음).
+1. `step_step=200.ckpt` 저장 성공 이후에도 다음 주기적 체크포인트(step 250, 300, ...)들이 계속 안정적으로 저장되는지 모니터링.
+2. 온도/로그 감시를 계속 병행하면서, 세션이 끊길 때마다 12절의 resume 로직으로 이어서 학습.
+3. 일정 step 이상 진행되면 pixel/image-level AUROC 등 실제 평가 지표를 뽑아 H3/H4 가설 검증에 사용.

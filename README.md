@@ -12,34 +12,21 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 |---|---|---|---|---|
 | 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced (mean I-AUROC 99.1%) |
 | 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | 🔬 진행 중 — zero-shot/1-shot pill 재현 완료, H2 계열 반박 |
-| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | 🔬 학습 실행 중 — H3/H4 검증용, 8GB GPU 환경 설정 완료 |
+| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | 🔬 학습 진행 중 — H3/H4 검증용, 8GB GPU에서 checkpoint 저장 확인 |
 
 ---
 
-## Progress Summary
+## 현재 연구 방향
 
-### 2026-W29 (current) — DiAD (Candidate C) 재현 착수, 학습 실행 중
+PatchCore 재현(`method1_patchcore/`)에서 도출한 원인 가설 중 H2 계열은 WinCLIP 재현(`method2_winclip/`)으로 반박되어, 현재는 diffusion 기반 방법인 DiAD(`method3_diad/`)로 H3/H4를 검증하는 중이다. 진행 상세는 아래 weekly brief와 각 `methodN/markdown/`을 참고.
 
-- 공식 DiAD repo clone, 로컬 GPU(RTX 5060 8GB)용 환경 설정, 여러 버전 호환 이슈 수정 후 학습 파이프라인 정상 동작 확인
-- 8-bit Adam 적용 후 학습 실행 중 (진행 상황은 `method3_diad/markdown/setup_notes.md` 참고)
-- 주간 브리핑(`meetings/2026-W29_brief.md`)은 아직 작성 전
+## Weekly Briefs
 
-### 2026-W28 — H2 검증: WinCLIP zero-shot/1-shot vs PatchCore
-
-- WinCLIP zero-shot을 pill 카테고리에서 재현 (mala-lab 구현체): I-AUROC 0.812, PatchCore(0.968) 대비 -15.6%p → H2(zero-shot 버전) 반박
-- WinCLIP+ 1-shot 재현: I-AUROC 0.853 (zero-shot 대비 +4.1%p, PatchCore 대비 여전히 -11.5%p) → H2 few-shot 확장판도 반박
-- 공식 코드가 없는 논문의 비공식 구현체 간 재현 편차 확인 (caoyunkang 70.2% vs mala-lab 91.2% aggregate) → 신뢰할 수 있는 쪽으로 전환
-- H2 계열 가설 전체 반박에 따라 Candidate C(DiAD, diffusion 기반, H3/H4 검증용)로 전환 결정 — 재현 착수 전 논문 읽는 중
-- → [meetings/2026-W28_brief.md](meetings/2026-W28_brief.md)
-- → [method2_winclip/markdown/winclip_zeroshot_analysis.md](method2_winclip/markdown/winclip_zeroshot_analysis.md)
-- → [method3_diad/markdown/diad_summary.md](method3_diad/markdown/diad_summary.md)
-
-### 2026-W27 — PatchCore 재현 + 한계 분석
-
-- PatchCore baseline을 MVTec AD 15개 카테고리 전체에 재현: I-AUROC 99.1%, P-AUROC 98.1% (논문과 일치)
-- 결과표에서 두 가지 실패 유형(detection failure / localization failure) 발견, H2/H3/H4 가설 도출
-- → [meetings/2026-W27_brief.md](meetings/2026-W27_brief.md)
-- → [method1_patchcore/markdown/baseline_analysis.md](method1_patchcore/markdown/baseline_analysis.md)
+| Week | Link | 비고 |
+|---|---|---|
+| 2026-W29 | — | 작성 전 — DiAD 학습 진행 중, 세부 로그는 `method3_diad/markdown/setup_notes.md` |
+| 2026-W28 | [meetings/2026-W28_brief.md](meetings/2026-W28_brief.md) | H2 계열 가설 반박, Candidate C(DiAD)로 전환 |
+| 2026-W27 | [meetings/2026-W27_brief.md](meetings/2026-W27_brief.md) | PatchCore 재현, H2/H3/H4 가설 도출 |
 
 ---
 
