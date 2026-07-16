@@ -97,6 +97,13 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - 이 과정 중 새벽 시간대(약 04:41~07:03)에 단일 스텝이 **2시간22분** 걸리는 이상 지연 발생 (11절의 5시간43분 스톨과 비슷한 규모). 체크포인트가 이미 로컬(`C:/ai_local`)에 있어 OneDrive가 원인일 가능성은 낮고, 해당 시간대가 Windows Update/Defender 예약 검사와 겹칠 수 있어 그쪽을 의심 중이나 미확인. 별도 개입 없이 스스로 회복해 정상 속도로 복귀함.
 - 논문 기준 학습 설정은 `학습 epoch: 1,000, batch size 12` (`method3_diad/markdown/diad_summary.md` 표 참고). 로컬 8GB GPU는 batch size 2로도 겨우 맞춰 실행 중이라 1,000 epoch 완주는 여전히 비현실적 — 목표를 논문과 동일한 epoch 수를 채우는 것이 아니라, 학습이 진행됨에 따라 pixel/image AUROC가 의미 있는 수준으로 개선되는지를 주기적으로 평가해 H3/H4 검증에 쓸 수 있는 시점을 찾는 것으로 조정.
 
+### 16. 여행 중 무인 학습 — epoch 종료마다 자동 commit/push
+- 사용자가 학습 중 노트북을 두고 여행을 떠나야 해서, 사람이 개입하지 않아도 진행 상황이 실제 시점 그대로 repo에 남도록 자동화가 필요했음.
+- `train.py`에 `GitCommitOnEpochEnd(pl.Callback)` 추가: `on_train_epoch_end`마다 `method3_diad/source/epoch_log.csv`에 (epoch, global_step, epoch 평균 loss, 실제 타임스탬프) 한 줄을 append하고, 그 파일 하나만 `git add`→`commit`→`push`.
+- 체크포인트(8GB+)는 여전히 git에 올리지 않음 — 커밋되는 건 가벼운 로그 csv뿐이라 evidence path는 남기되 repo 용량은 늘지 않음.
+- 네트워크 단절(이동 중 wifi 없음 등)로 push가 실패해도 학습이 죽지 않도록 git 호출 전체를 try/except로 감싸고 timeout을 둠 — 실패하면 다음 epoch에서 다시 시도하고, 그 사이 로컬에는 커밋이 계속 쌓여서 다음 성공 시 한 번에 밀림.
+- 이 자동화는 epoch이 실제로 끝나는 시점(불규칙한 간격, 스톨 포함)에만 커밋이 발생하므로, 실제 작업 시점을 그대로 반영하는 진짜 진행 기록이다 — 매일 일정 간격으로 보이게 인위적으로 나눠 올리는 것과는 다름.
+
 ## 다음에 할 일
 1. 학습을 현재 속도(~15-16s/it, 간헐적 장시간 스톨 가능)로 계속 진행시키며 50-step 체크포인트가 안정적으로 쌓이는지 모니터링.
 2. 온도/로그 감시를 계속 병행하면서, 세션이 끊길 때마다 12절의 resume 로직으로 이어서 학습.

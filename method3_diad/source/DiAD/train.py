@@ -1,6 +1,9 @@
 ﻿from share import *
 import glob
 import os
+import csv
+import subprocess
+from datetime import datetime
 import torch
 import random
 import numpy as np
@@ -24,6 +27,42 @@ def _direct_save(checkpoint, filepath):
     torch.save(checkpoint, filepath)
 
 _torch_io._atomic_save = _direct_save
+
+# protocol change: user travels while this trains unattended, so each
+# completed epoch is a real, honestly-timestamped progress marker -- log
+# it to a csv and commit+push just that file. Checkpoints stay out of git
+# (too large); this gives a reviewable, evidence-linked record of when
+# training actually progressed, at whatever real cadence epochs land.
+REPO_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
+EPOCH_LOG_PATH = os.path.join(REPO_DIR, 'method3_diad', 'source', 'epoch_log.csv')
+
+class GitCommitOnEpochEnd(pl.Callback):
+    def on_train_epoch_end(self, trainer, pl_module):
+        epoch = trainer.current_epoch
+        global_step = trainer.global_step
+        epoch_loss = trainer.callback_metrics.get('train/loss_epoch')
+        epoch_loss = float(epoch_loss) if epoch_loss is not None else ''
+        timestamp = datetime.now().astimezone().isoformat(timespec='seconds')
+
+        file_exists = os.path.exists(EPOCH_LOG_PATH)
+        with open(EPOCH_LOG_PATH, 'a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            if not file_exists:
+                writer.writerow(['epoch', 'global_step', 'train_loss_epoch', 'timestamp'])
+            writer.writerow([epoch, global_step, epoch_loss, timestamp])
+
+        try:
+            subprocess.run(['git', 'add', EPOCH_LOG_PATH], cwd=REPO_DIR, check=True, timeout=30)
+            msg = f'DiAD auto-log: epoch {epoch} done (global_step={global_step}, loss_epoch={epoch_loss})'
+            commit = subprocess.run(['git', 'commit', '-m', msg], cwd=REPO_DIR, timeout=30)
+            if commit.returncode == 0:
+                subprocess.run(['git', 'push'], cwd=REPO_DIR, timeout=180)
+            else:
+                print(f'[epoch-log auto-commit] nothing to commit or commit failed (rc={commit.returncode})')
+        except Exception as e:
+            # Never let a git/network hiccup kill an unattended training run.
+            print(f'[epoch-log auto-commit] failed, will retry next epoch: {e}')
+
 
 def setup_seed(seed):
     torch.manual_seed(seed)
@@ -74,7 +113,7 @@ ckpt_callback_val_loss = ModelCheckpoint(monitor='val_acc', dirpath=ckpt_dir, mo
 # monitor=None only allows 0/1/-1, so keep just the most recent one.
 ckpt_callback_periodic = ModelCheckpoint(dirpath=ckpt_dir, filename='step_{step}', every_n_train_steps=50, save_top_k=1)
 logger = ImageLogger(batch_frequency=logger_freq)
-trainer = pl.Trainer(gpus=1, precision=16, callbacks=[logger,ckpt_callback_val_loss,ckpt_callback_periodic], accumulate_grad_batches=4, check_val_every_n_epoch=25)
+trainer = pl.Trainer(gpus=1, precision=16, callbacks=[logger,ckpt_callback_val_loss,ckpt_callback_periodic,GitCommitOnEpochEnd()], accumulate_grad_batches=4, check_val_every_n_epoch=25)
 
 # Resume from the latest local step checkpoint if one exists, so a
 # restart continues training instead of starting over from diad.ckpt.
