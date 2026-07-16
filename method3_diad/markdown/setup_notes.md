@@ -86,7 +86,14 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - **protocol change**: `train.py` 상단에서 `_torch_io._atomic_save`를 `torch.save(checkpoint, filepath)`로 직접 디스크에 쓰는 함수로 monkeypatch해 중간 버퍼링을 제거.
 - 수정 후 재시작, `step_step=150.ckpt`에서 정상 resume 후 이전에 크래시했던 지점(step 200)을 통과하고 `step_step=200.ckpt` 저장까지 정상 완료됨을 확인 → 수정 유효.
 
+### 14. Iteration 속도 저하 — 데이터셋을 로컬로 옮겨도 해결 안 됨
+- step 200 이후 학습이 진행되며 순간 iteration 속도가 초반 ~3.7s/it에서 ~16-19s/it로 저하되어 그 수준에서 고정됨. GPU는 사용률 100%인데 전력 소모는 ~30W(정상 대비 낮음)로, GPU가 연산이 아니라 무언가를 기다리며 대기하는 패턴으로 관찰됨.
+- **가설(기각됨)**: 6/11절과 동일한 OneDrive I/O 경합이 이번엔 `data_path`(학습 이미지, 5GB, 여전히 OneDrive 동기화 폴더 안에 있었음)에서 발생하는 것으로 추정 → `No_Submit/Dataset/`를 `C:/ai_local/diad_dataset/`로 복사(robocopy, 6644 files, 4.9GB, 1분41초 완료)하고 `train.py`의 `data_path`를 로컬 경로로 변경.
+- 수정 후 재시작·resume 확인했으나, 실측 순간 속도는 여전히 ~15-16s/it로 **개선 없음**. tqdm이 보여주는 누적 평균(예: 3.49s/it)은 체크포인트 resume 시 이미 완료된 iteration을 순간적으로 "따라잡기"하는 구간이 분모에 섞여 낮게 보이는 착시이며, 실제 스텝 간 timestamp로 재계산하면 이전과 동일한 병목이 그대로 남아 있음을 확인.
+- 결론: 이 병목의 원인은 (적어도 주된 원인은) OneDrive 데이터 I/O가 아니었음. 아직 미확인 상태로 남은 후보: sm_120(Blackwell)용 최적화 커널 부재(attention/conv 등에서 비효율적인 fallback 경로 사용 가능성), `bitsandbytes` 8-bit optimizer의 매 스텝 양자화/역양자화 오버헤드, 낮은 여유 RAM(24GB 중 4-6GB대)으로 인한 페이징. 원인 규명에 추가 시간을 쓰는 대신, 현재 속도로도 50-step 체크포인트가 계속 쌓이므로 H3/H4 evidence 확보 목적상 학습은 그대로 진행하기로 결정.
+
 ## 다음에 할 일
-1. `step_step=200.ckpt` 저장 성공 이후에도 다음 주기적 체크포인트(step 250, 300, ...)들이 계속 안정적으로 저장되는지 모니터링.
+1. 학습을 현재 속도(~15-16s/it)로 계속 진행시키며 50-step 체크포인트가 안정적으로 쌓이는지 모니터링.
 2. 온도/로그 감시를 계속 병행하면서, 세션이 끊길 때마다 12절의 resume 로직으로 이어서 학습.
 3. 일정 step 이상 진행되면 pixel/image-level AUROC 등 실제 평가 지표를 뽑아 H3/H4 가설 검증에 사용.
+4. (선택) 14절의 미확인 후보 원인 중 하나를 골라 profiling — 우선순위는 낮음, 학습 자체를 막지는 않으므로.

@@ -1,4 +1,4 @@
-from share import *
+﻿from share import *
 import glob
 import os
 import torch
@@ -41,7 +41,12 @@ batch_size = 2
 logger_freq = 3000000000000
 learning_rate = 1e-5
 only_mid_control = True
-data_path = 'C:/Users/kelly/OneDrive/바탕 화면/For Labs/No_Submit/Dataset/'
+# protocol change: iteration speed kept degrading through a training run
+# (3.7s/it -> ~16-19s/it) with GPU at 100% util but only ~30W draw -- GPU
+# starved waiting on data, not compute-bound. data_path was still under
+# OneDrive (only checkpoints had been moved out earlier); moved the 5GB
+# dataset to a local-only directory to remove that I/O contention.
+data_path = 'C:/ai_local/diad_dataset/'
 
 # First use cpu to load models. Pytorch Lightning will automatically move it to GPUs.
 model = create_model('models/diad.yaml').cpu()
