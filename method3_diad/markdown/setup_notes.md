@@ -1,4 +1,4 @@
-# DiAD 재현 착수 — 환경 설정 기록
+﻿# DiAD 재현 착수 — 환경 설정 기록
 
 ## 근거 경로
 - source: `method3_diad/source/DiAD` (공식 repo clone, commit `d281300`)
@@ -97,15 +97,24 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - 이 과정 중 새벽 시간대(약 04:41~07:03)에 단일 스텝이 **2시간22분** 걸리는 이상 지연 발생 (11절의 5시간43분 스톨과 비슷한 규모). 체크포인트가 이미 로컬(`C:/ai_local`)에 있어 OneDrive가 원인일 가능성은 낮고, 해당 시간대가 Windows Update/Defender 예약 검사와 겹칠 수 있어 그쪽을 의심 중이나 미확인. 별도 개입 없이 스스로 회복해 정상 속도로 복귀함.
 - 논문 기준 학습 설정은 `학습 epoch: 1,000, batch size 12` (`method3_diad/markdown/diad_summary.md` 표 참고). 로컬 8GB GPU는 batch size 2로도 겨우 맞춰 실행 중이라 1,000 epoch 완주는 여전히 비현실적 — 목표를 논문과 동일한 epoch 수를 채우는 것이 아니라, 학습이 진행됨에 따라 pixel/image AUROC가 의미 있는 수준으로 개선되는지를 주기적으로 평가해 H3/H4 검증에 쓸 수 있는 시점을 찾는 것으로 조정.
 
-### 16. 여행 중 무인 학습 — epoch 종료마다 자동 commit/push
-- 사용자가 학습 중 노트북을 두고 여행을 떠나야 해서, 사람이 개입하지 않아도 진행 상황이 실제 시점 그대로 repo에 남도록 자동화가 필요했음.
-- `train.py`에 `GitCommitOnEpochEnd(pl.Callback)` 추가: `on_train_epoch_end`마다 `method3_diad/source/epoch_log.csv`에 (epoch, global_step, epoch 평균 loss, 실제 타임스탬프) 한 줄을 append하고, 그 파일 하나만 `git add`→`commit`→`push`.
-- 체크포인트(8GB+)는 여전히 git에 올리지 않음 — 커밋되는 건 가벼운 로그 csv뿐이라 evidence path는 남기되 repo 용량은 늘지 않음.
-- 네트워크 단절(이동 중 wifi 없음 등)로 push가 실패해도 학습이 죽지 않도록 git 호출 전체를 try/except로 감싸고 timeout을 둠 — 실패하면 다음 epoch에서 다시 시도하고, 그 사이 로컬에는 커밋이 계속 쌓여서 다음 성공 시 한 번에 밀림.
-- 이 자동화는 epoch이 실제로 끝나는 시점(불규칙한 간격, 스톨 포함)에만 커밋이 발생하므로, 실제 작업 시점을 그대로 반영하는 진짜 진행 기록이다 — 매일 일정 간격으로 보이게 인위적으로 나눠 올리는 것과는 다름.
+### 16. 장시간 학습 -- epoch 종료마다 자동 commit/push
+- 세션 중간 개입 없이도 진행 상황이 실제 시점 그대로 repo에 남도록 자동화가 필요했음.
+- `train.py`에 `GitCommitOnEpochEnd(pl.Callback)` 추가: `on_train_epoch_end`마다 `method3_diad/source/epoch_log.csv`에 (epoch, global_step, epoch 평균 loss, 실제 타임스탬프) 한 줄을 append하고, 그 파일 하나만 `git add`->`commit`->`push`.
+- 체크포인트(8GB+)는 여전히 git에 올리지 않음 -- 커밋되는 건 가벼운 로그 csv뿐이라 evidence path는 남기되 repo 용량은 늘지 않음.
+- 네트워크 단절로 push가 실패해도 학습이 죽지 않도록 git 호출 전체를 try/except로 감싸고 timeout을 둠 -- 실패하면 다음 epoch에서 다시 시도하고, 그 사이 로컬에는 커밋이 계속 쌓여서 다음 성공 시 한 번에 밀림.
+- 이 자동화는 epoch이 실제로 끝나는 시점(불규칙한 간격, 스톨 포함)에만 커밋이 발생하므로, 실제 작업 시점을 그대로 반영하는 진짜 진행 기록이다.
+
+### 17. 절전 크래시 이후 두 가지 추가 실패 모드 -- 하이버네이트, 세션 종료, 체크포인트 손상
+- (배경) 노트북이 절전 관련 설정 미비로 2026-07-18 13:25~07-19 22:39 사이 약 33시간 하이버네이트됨 (원인: "Standby Battery Budget Exceeded"). 절전에서 깨어나며 CUDA context가 깨져 `torch.cuda.synchronize()`에서 `CUDA error: unknown error` 발생, 프로세스 종료. **조치**: `powercfg`로 AC 전원 연결 시 절전/하이버네이트/모니터 꺼짐을 모두 비활성화(`standby-timeout-ac 0`, `hibernate-timeout-ac 0`).
+- 재발 방지로 `C:\Users\kelly\scripts\diad_training_watchdog.ps1`(python train.py 프로세스가 없으면 재시작)을 Windows 작업 스케줄러에 15분 주기(`DiadTrainingWatchdog`)로 등록.
+- **새로운 실패 모드 발견**: 학습을 시작한 Claude 세션(Bash 백그라운드 프로세스)이 재시작되면서, 그 자식 프로세스였던 `train.py`도 함께 종료됨 (시스템 재부팅 기록은 없어 하드웨어/OS 문제가 아니라 세션 종료가 원인으로 확인). 하필 `step_step=1050.ckpt` 저장 도중 종료되어 **758MB짜리 손상된(잘린) 체크포인트 파일**이 남음 -- 정상 체크포인트는 항상 ~8.15GB.
+- 12절 resume 로직은 `step_step=*.ckpt`를 mtime 기준으로 가장 최신 것을 고르므로, 손상된 파일을 그대로 두면 다음 재시작이 그 파일을 로드하려다 다시 실패하는 악순환에 빠질 뻔했음 -> 손상 파일 삭제 후 그 이전의 정상 체크포인트(`step_step=1000.ckpt`)로 resume.
+- **protocol change**: 이후로는 학습을 Bash 백그라운드(Claude 세션의 자식 프로세스)가 아니라 `Start-Process`로 완전히 분리된 프로세스로 띄움 -- 이러면 Claude 세션이 재시작돼도 학습 프로세스는 살아있고, watchdog 스케줄러도 세션과 무관하게 계속 감시 가능.
+- 교훈: 체크포인트 저장 도중 죽는 경우를 대비해, resume 로직이 파일 크기나 무결성을 검증하지 않고 무조건 최신 파일을 신뢰하는 것은 위험 -- 지금은 사람이 수동으로 손상 파일을 지웠지만, 다음엔 resume 로직 자체에 최소한의 크기 검증을 추가하는 것도 고려할 만함(아직 미구현).
 
 ## 다음에 할 일
 1. 학습을 현재 속도(~15-16s/it, 간헐적 장시간 스톨 가능)로 계속 진행시키며 50-step 체크포인트가 안정적으로 쌓이는지 모니터링.
 2. 온도/로그 감시를 계속 병행하면서, 세션이 끊길 때마다 12절의 resume 로직으로 이어서 학습.
 3. 일정 step 이상 진행되면 pixel/image-level AUROC 등 실제 평가 지표를 뽑아, 논문의 1,000 epoch 완주를 목표로 하는 대신 "H3/H4 검증에 쓸 수 있을 만큼 재구성 품질이 나오는 시점"을 주기적으로 확인.
 4. (선택) 14절의 미확인 속도 저하 원인, 15절의 새벽 스톨 원인 중 하나를 골라 profiling — 우선순위는 낮음, 학습 자체를 막지는 않으므로.
+5. (선택) 17절에서 언급한 resume 로직의 체크포인트 크기/무결성 검증 추가 — 손상 파일을 자동으로 건너뛰고 그 이전 정상 파일로 resume하도록.
