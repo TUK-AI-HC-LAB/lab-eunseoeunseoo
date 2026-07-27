@@ -46,9 +46,10 @@ model.learning_rate = learning_rate
 model.only_mid_control = only_mid_control
 
 # Misc
-dataset = MVTecDataset('test')
+data_path = 'C:/ai_local/diad_dataset/'
+dataset = MVTecDataset('test', data_path)
 # test_dataset = VisaDataset('test')
-dataloader = DataLoader(dataset, num_workers=8, batch_size=batch_size, shuffle=True)
+dataloader = DataLoader(dataset, num_workers=0, batch_size=batch_size, shuffle=True)
 pretrained_model = timm.create_model("resnet50", pretrained=True, features_only=True)
 pretrained_model = pretrained_model.cuda()
 pretrained_model.eval()

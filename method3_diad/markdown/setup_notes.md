@@ -112,9 +112,14 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - **protocol change**: 이후로는 학습을 Bash 백그라운드(Claude 세션의 자식 프로세스)가 아니라 `Start-Process`로 완전히 분리된 프로세스로 띄움 -- 이러면 Claude 세션이 재시작돼도 학습 프로세스는 살아있고, watchdog 스케줄러도 세션과 무관하게 계속 감시 가능.
 - 교훈: 체크포인트 저장 도중 죽는 경우를 대비해, resume 로직이 파일 크기나 무결성을 검증하지 않고 무조건 최신 파일을 신뢰하는 것은 위험 -- 지금은 사람이 수동으로 손상 파일을 지웠지만, 다음엔 resume 로직 자체에 최소한의 크기 검증을 추가하는 것도 고려할 만함(아직 미구현).
 
+### 18. H3/H4 검증용 평가 실행 — `test.py` Windows 버그 2건 수정
+- epoch 7 체크포인트(`step_step=3600.ckpt`)로 H3(grid I-AUROC vs PatchCore 0.977)/H4(transistor P-AUROC vs PatchCore 0.929) 검증을 위해 `test.py` 최초 실행.
+- `MVTecDataset('test')` 호출에 `root` 인자가 빠져 있어 `TypeError` → `train.py`와 동일하게 로컬 데이터셋 경로(`C:/ai_local/diad_dataset/`)를 명시.
+- `DataLoader(..., num_workers=8, ...)` + `if __name__ == '__main__':` 가드 없음 → Windows의 spawn 기반 multiprocessing이 worker마다 스크립트 전체(모델 생성·가중치 로딩 포함)를 처음부터 재실행해 멈춘 것처럼 보임(`RuntimeError: freeze_support()...`) → `num_workers=0`으로 변경해 회피(train.py에서도 이미 같은 이유로 0을 쓰고 있었음).
+- 수정 후 정상 실행 확인, 이미지당 약 4초 페이스로 1,725개 테스트 이미지 처리 중.
+
 ## 다음에 할 일
-1. 학습을 현재 속도(~15-16s/it, 간헐적 장시간 스톨 가능)로 계속 진행시키며 50-step 체크포인트가 안정적으로 쌓이는지 모니터링.
-2. 온도/로그 감시를 계속 병행하면서, 세션이 끊길 때마다 12절의 resume 로직으로 이어서 학습.
-3. 일정 step 이상 진행되면 pixel/image-level AUROC 등 실제 평가 지표를 뽑아, 논문의 1,000 epoch 완주를 목표로 하는 대신 "H3/H4 검증에 쓸 수 있을 만큼 재구성 품질이 나오는 시점"을 주기적으로 확인.
-4. (선택) 14절의 미확인 속도 저하 원인, 15절의 새벽 스톨 원인 중 하나를 골라 profiling — 우선순위는 낮음, 학습 자체를 막지는 않으므로.
-5. (선택) 17절에서 언급한 resume 로직의 체크포인트 크기/무결성 검증 추가 — 손상 파일을 자동으로 건너뛰고 그 이전 정상 파일로 resume하도록.
+1. 평가 완료 후 `method3_diad/markdown/`에 grid I-AUROC, transistor P-AUROC를 PatchCore 기준과 비교한 결과와 H3/H4 판정(지지/미결정) 기록.
+2. 평가가 끝나면 학습을 이어서 진행할지, 이 시점 결과로 다음 단계(weekly brief 작성 등)로 넘어갈지 결과에 따라 결정.
+3. (선택) 14절의 미확인 속도 저하 원인, 15절의 새벽 스톨 원인 중 하나를 골라 profiling — 우선순위는 낮음.
+4. (선택) 17절에서 언급한 resume 로직의 체크포인트 크기/무결성 검증 추가.
