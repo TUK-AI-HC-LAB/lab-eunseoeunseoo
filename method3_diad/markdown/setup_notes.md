@@ -116,10 +116,10 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - epoch 7 체크포인트(`step_step=3600.ckpt`)로 H3(grid I-AUROC vs PatchCore 0.977)/H4(transistor P-AUROC vs PatchCore 0.929) 검증을 위해 `test.py` 최초 실행.
 - `MVTecDataset('test')` 호출에 `root` 인자가 빠져 있어 `TypeError` → `train.py`와 동일하게 로컬 데이터셋 경로(`C:/ai_local/diad_dataset/`)를 명시.
 - `DataLoader(..., num_workers=8, ...)` + `if __name__ == '__main__':` 가드 없음 → Windows의 spawn 기반 multiprocessing이 worker마다 스크립트 전체(모델 생성·가중치 로딩 포함)를 처음부터 재실행해 멈춘 것처럼 보임(`RuntimeError: freeze_support()...`) → `num_workers=0`으로 변경해 회피(train.py에서도 이미 같은 이유로 0을 쓰고 있었음).
-- 수정 후 정상 실행 확인, 이미지당 약 4초 페이스로 1,725개 테스트 이미지 처리 중.
+- 수정 후 정상 실행 확인, 1,725개 테스트 이미지 전체 처리 완료. 결과와 H3/H4 판정은 `method3_diad/markdown/h3_h4_evaluation.md` 참고 — **H4 지지**(transistor P-AUROC 0.945 > PatchCore 0.929), **H3 미결정**(grid I-AUROC 0.588 < PatchCore 0.977이지만 전체 평균도 0.803으로 아직 미성숙한 모델이라 반박으로 보기 이름).
 
 ## 다음에 할 일
-1. 평가 완료 후 `method3_diad/markdown/`에 grid I-AUROC, transistor P-AUROC를 PatchCore 기준과 비교한 결과와 H3/H4 판정(지지/미결정) 기록.
-2. 평가가 끝나면 학습을 이어서 진행할지, 이 시점 결과로 다음 단계(weekly brief 작성 등)로 넘어갈지 결과에 따라 결정.
+1. H3 재평가를 위해 학습을 계속 진행 — grid I-AUROC가 epoch에 따라 개선되는지 주기적으로 재평가(다음 평가 시점은 추후 결정).
+2. H4는 이 시점 evidence로 지지 결론 확정, weekly brief에 반영.
 3. (선택) 14절의 미확인 속도 저하 원인, 15절의 새벽 스톨 원인 중 하나를 골라 profiling — 우선순위는 낮음.
 4. (선택) 17절에서 언급한 resume 로직의 체크포인트 크기/무결성 검증 추가.

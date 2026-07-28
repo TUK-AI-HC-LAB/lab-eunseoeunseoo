@@ -12,7 +12,7 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 |---|---|---|---|---|
 | 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced (mean I-AUROC 99.1%) |
 | 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | 🔬 진행 중 — zero-shot/1-shot pill 재현 완료, H2 계열 반박 |
-| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | 🔬 학습 진행 중 — H3/H4 검증용, epoch 1 완료(train loss 0.125), epoch마다 자동 기록 |
+| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | 🔬 학습 진행 중 — epoch 7 평가: **H4 지지**(transistor P-AUROC 0.945>0.929), **H3 미결정**(grid I-AUROC 0.588, 추가 학습 필요) |
 
 ---
 
@@ -24,7 +24,7 @@ PatchCore 재현(`method1_patchcore/`)에서 도출한 원인 가설 중 H2 계�
 
 | Week | Link | 비고 |
 |---|---|---|
-| 2026-W30 (current) | — | 작성 전 — DiAD 학습 진행 중 (epoch별 진행은 `method3_diad/source/epoch_log.csv`, 이슈 기록은 `method3_diad/markdown/setup_notes.md`) |
+| 2026-W31 (current) | — | 작성 전 — H3/H4 중간 평가 결과는 `method3_diad/markdown/h3_h4_evaluation.md`, epoch별 진행은 `method3_diad/source/epoch_log.csv` |
 | 2026-W28 | [meetings/2026-W28_brief.md](meetings/2026-W28_brief.md) | H2 계열 가설 반박, Candidate C(DiAD)로 전환 |
 | 2026-W27 | [meetings/2026-W27_brief.md](meetings/2026-W27_brief.md) | PatchCore 재현, H2/H3/H4 가설 도출 |
 
