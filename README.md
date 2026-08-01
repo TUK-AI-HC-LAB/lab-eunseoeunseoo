@@ -20,11 +20,13 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 
 PatchCore 재현(`method1_patchcore/`)에서 도출한 원인 가설 중 H2 계열은 WinCLIP 재현(`method2_winclip/`)으로 반박되어, 현재는 diffusion 기반 방법인 DiAD(`method3_diad/`)로 H3/H4를 검증하는 중이다. 진행 상세는 아래 weekly brief와 각 `methodN/markdown/`을 참고.
 
+> 참고: 28주차 이후 반복적인 정전으로 실험 환경(노트북) 사용이 간헐적으로 제약되어, 학습 진행 속도가 순수 연산 시간보다 느리다. 세부는 `method3_diad/markdown/setup_notes.md` 참고.
+
 ## Weekly Briefs
 
 | Week | Link | 비고 |
 |---|---|---|
-| 2026-W31 (current) | — | 작성 전 — H3/H4 중간 평가 결과는 `method3_diad/markdown/h3_h4_evaluation.md`, epoch별 진행은 `method3_diad/source/epoch_log.csv` |
+| 2026-W31 (current) | [meetings/2026-W31_brief.md](meetings/2026-W31_brief.md) | DiAD 재현 실험: H4 지지, H3 미결정 |
 | 2026-W28 | [meetings/2026-W28_brief.md](meetings/2026-W28_brief.md) | H2 계열 가설 반박, Candidate C(DiAD)로 전환 |
 | 2026-W27 | [meetings/2026-W27_brief.md](meetings/2026-W27_brief.md) | PatchCore 재현, H2/H3/H4 가설 도출 |
 
