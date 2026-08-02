@@ -118,8 +118,14 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - `DataLoader(..., num_workers=8, ...)` + `if __name__ == '__main__':` 가드 없음 → Windows의 spawn 기반 multiprocessing이 worker마다 스크립트 전체(모델 생성·가중치 로딩 포함)를 처음부터 재실행해 멈춘 것처럼 보임(`RuntimeError: freeze_support()...`) → `num_workers=0`으로 변경해 회피(train.py에서도 이미 같은 이유로 0을 쓰고 있었음).
 - 수정 후 정상 실행 확인, 1,725개 테스트 이미지 전체 처리 완료. 결과와 H3/H4 판정은 `method3_diad/markdown/h3_h4_evaluation.md` 참고 — **H4 지지**(transistor P-AUROC 0.945 > PatchCore 0.929), **H3 미결정**(grid I-AUROC 0.588 < PatchCore 0.977이지만 전체 평균도 0.803으로 아직 미성숙한 모델이라 반박으로 보기 이름).
 
+### 19. H3/H4 2차 재평가(epoch 16) — H4 역전, H3 개선 추세
+- epoch 16 체크포인트(`step_step=7400.ckpt`)로 동일 평가 재실행(`method3_diad/source/run_eval_epoch16.sh`).
+- grid I-AUROC: 0.588→**0.764**로 개선(여전히 PatchCore 0.977 미달이나 격차 축소) — H3는 여전히 미결정이나 낙관적.
+- transistor P-AUROC: 0.945→**0.923**으로 하락, PatchCore 0.929 아래로 역전 — H4를 지지에서 미결정으로 하향 조정.
+- train loss가 epoch 10~13 사이 0.108→0.118→0.123→0.114로 진동하는 것과 같은 시기라, 두 지표의 변화가 노이즈인지 실제 추세인지는 최소 한 번 더 재평가해야 구분 가능. 세부는 `method3_diad/markdown/h3_h4_evaluation.md`.
+
 ## 다음에 할 일
-1. H3 재평가를 위해 학습을 계속 진행 — grid I-AUROC가 epoch에 따라 개선되는지 주기적으로 재평가(다음 평가 시점은 추후 결정).
-2. H4는 이 시점 evidence로 지지 결론 확정, weekly brief에 반영.
+1. H3/H4 3차 재평가 — epoch 16에서 더 진행된 시점(예: epoch 25~30대)에 다시 평가해 grid 개선 추세와 transistor 하락이 각각 지속되는지 확인.
+2. weekly brief(W31)의 "다음 검증" 항목을 이번 재평가 결과로 갱신.
 3. (선택) 14절의 미확인 속도 저하 원인, 15절의 새벽 스톨 원인 중 하나를 골라 profiling — 우선순위는 낮음.
 4. (선택) 17절에서 언급한 resume 로직의 체크포인트 크기/무결성 검증 추가.

@@ -12,7 +12,7 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 |---|---|---|---|---|
 | 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced (mean I-AUROC 99.1%) |
 | 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | 🔬 진행 중 — zero-shot/1-shot pill 재현 완료, H2 계열 반박 |
-| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | 🔬 학습 진행 중 — epoch 7 평가: **H4 지지**(transistor P-AUROC 0.945>0.929), **H3 미결정**(grid I-AUROC 0.588, 추가 학습 필요) |
+| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | 🔬 학습 진행 중 — epoch 16 재평가: **H3 미결정(개선 추세)**(grid I-AUROC 0.588→0.764), **H4 미결정(역전)**(transistor P-AUROC 0.945→0.923, 0.929 아래로) |
 
 ---
 
