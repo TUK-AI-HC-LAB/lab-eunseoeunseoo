@@ -124,6 +124,12 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - transistor P-AUROC: 0.945→**0.923**으로 하락, PatchCore 0.929 아래로 역전 — H4를 지지에서 미결정으로 하향 조정.
 - train loss가 epoch 10~13 사이 0.108→0.118→0.123→0.114로 진동하는 것과 같은 시기라, 두 지표의 변화가 노이즈인지 실제 추세인지는 최소 한 번 더 재평가해야 구분 가능. 세부는 `method3_diad/markdown/h3_h4_evaluation.md`.
 
+### 20. 25-epoch마다 도는 내장 validation 비활성화 — 사용 안 하는데 매번 몇 시간씩 소모
+- `check_val_every_n_epoch=25` 설정 때문에 epoch 24 종료 시점에 첫 내장 validation이 트리거됨. `ddpm.py`의 `validation_step`을 보니 `test.py`와 동일하게 전체 DDIM 샘플링 + ResNet50 feature 비교 + anomaly map 계산을 1,725개 테스트 이미지 전부에 대해 수행하는 무거운 로직이었음.
+- 이미지당 속도가 `test.py` 단독 실행 시 ~2-4s인데 반해 학습 프로세스 안에서는 ~48s로 10배 이상 느림 — 학습용 optimizer state 등이 이미 GPU 메모리를 점유한 상태에서 같은 무거운 추론을 돌리기 때문(메모리 압박, 14/17/19절과 같은 패턴).
+- 이 validation이 로깅하는 `val_acc`는 어디에도 실제로 쓰이지 않음 — H3/H4 판단은 항상 `test.py`를 별도로 돌려서 확인해왔음(`method3_diad/markdown/h3_h4_evaluation.md`).
+- **protocol change**: `pl.Trainer(...)`에 `limit_val_batches=0` 추가해 내장 validation을 완전히 비활성화. `ckpt_callback_val_loss`(monitor=`val_acc`)는 이제 트리거될 일이 없어 사실상 무력화되지만, step 기준 체크포인트(`ckpt_callback_periodic`)가 이미 진행 상황 보존을 전담하고 있어 문제 없음.
+
 ## 다음에 할 일
 1. H3/H4 3차 재평가 — epoch 16에서 더 진행된 시점(예: epoch 25~30대)에 다시 평가해 grid 개선 추세와 transistor 하락이 각각 지속되는지 확인.
 2. weekly brief(W31)의 "다음 검증" 항목을 이번 재평가 결과로 갱신.

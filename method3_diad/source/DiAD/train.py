@@ -113,7 +113,14 @@ ckpt_callback_val_loss = ModelCheckpoint(monitor='val_acc', dirpath=ckpt_dir, mo
 # monitor=None only allows 0/1/-1, so keep just the most recent one.
 ckpt_callback_periodic = ModelCheckpoint(dirpath=ckpt_dir, filename='step_{step}', every_n_train_steps=50, save_top_k=1)
 logger = ImageLogger(batch_frequency=logger_freq)
-trainer = pl.Trainer(gpus=1, precision=16, callbacks=[logger,ckpt_callback_val_loss,ckpt_callback_periodic,GitCommitOnEpochEnd()], accumulate_grad_batches=4, check_val_every_n_epoch=25)
+# protocol change: the built-in validation_step runs the same full
+# DDIM-sampling eval as test.py (which we already run separately for
+# H3/H4 judgment) over all 1725 images, but embedded inside the training
+# process where GPU memory is already occupied by optimizer state --
+# ~48s/image here vs ~2-4s/image in a dedicated test.py run. We don't
+# use its 'val_acc' output for anything, so disable it outright instead
+# of eating this cost every 25 epochs.
+trainer = pl.Trainer(gpus=1, precision=16, callbacks=[logger,ckpt_callback_val_loss,ckpt_callback_periodic,GitCommitOnEpochEnd()], accumulate_grad_batches=4, check_val_every_n_epoch=25, limit_val_batches=0)
 
 # Resume from the latest local step checkpoint if one exists, so a
 # restart continues training instead of starting over from diad.ckpt.
