@@ -130,8 +130,15 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - 이 validation이 로깅하는 `val_acc`는 어디에도 실제로 쓰이지 않음 — H3/H4 판단은 항상 `test.py`를 별도로 돌려서 확인해왔음(`method3_diad/markdown/h3_h4_evaluation.md`).
 - **protocol change**: `pl.Trainer(...)`에 `limit_val_batches=0` 추가해 내장 validation을 완전히 비활성화. `ckpt_callback_val_loss`(monitor=`val_acc`)는 이제 트리거될 일이 없어 사실상 무력화되지만, step 기준 체크포인트(`ckpt_callback_periodic`)가 이미 진행 상황 보존을 전담하고 있어 문제 없음.
 
+### 21. epoch 24 재평가 결과 유실 확인, epoch 34로 3차 재평가 완료
+- `run_eval_epoch24.sh`(step=11350)로 3차 재평가를 시도했던 흔적은 있으나, 대응하는 `eval_results_epoch24.csv`가 한 번도 커밋되지 않았고 로컬에도 없음을 W36 브리핑 작성 중 발견. 임시 로그(`diad_test_run*.log`)도 남아있지 않았고, 체크포인트(`step_step=11350.ckpt`)도 `save_top_k=1`로 이후 덮어써져 재실행으로도 재현 불가.
+- 정황상 20절의 내장 validation(epoch 24 종료 시점 자동 발동, 결과 미저장)이 이 시점과 겹쳐 원인일 가능성이 높다고 추정 — 확정 증거는 없음.
+- epoch 34(`step_step=15650.ckpt`) 평가는 임시 로그(`diad_test_run7.log`)가 남아있어 복구 가능했음: grid I-AUROC 0.654135, transistor P-AUROC 0.921888. `method3_diad/source/eval_results_epoch34.csv`로 정리해 커밋.
+- **교훈**: 평가 실행 직후 raw csv를 바로 커밋하지 않으면(재현성 규칙, 가이드 11절) 임시 로그가 세션 재시작·시간 경과로 유실될 때 evidence 자체가 사라진다. 앞으로는 `test.py` 실행 후 결과 확인 즉시 csv 저장·커밋을 원칙으로 한다.
+- 세부 해석은 `method3_diad/markdown/h3_h4_evaluation.md`, weekly brief는 `meetings/2026-W36_brief.md`.
+
 ## 다음에 할 일
-1. H3/H4 3차 재평가 — epoch 16에서 더 진행된 시점(예: epoch 25~30대)에 다시 평가해 grid 개선 추세와 transistor 하락이 각각 지속되는지 확인.
-2. weekly brief(W31)의 "다음 검증" 항목을 이번 재평가 결과로 갱신.
+1. (완료) H3/H4 3차 재평가 — epoch 34로 완료, epoch 24는 재현 불가로 확인. 결과는 `h3_h4_evaluation.md`, `2026-W36_brief.md`에 반영.
+2. 다음 학습 방향 결정 — 계속 학습을 진행할지, DiAD 구조 자체의 한계로 보고 다른 후보를 탐색할지 논의 필요.
 3. (선택) 14절의 미확인 속도 저하 원인, 15절의 새벽 스톨 원인 중 하나를 골라 profiling — 우선순위는 낮음.
 4. (선택) 17절에서 언급한 resume 로직의 체크포인트 크기/무결성 검증 추가.
