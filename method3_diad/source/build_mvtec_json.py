@@ -69,7 +69,7 @@ def build():
         for e in train_entries:
             f.write(json.dumps(e) + "\n")
     with open(test_path, "w") as f:
-        for e in test_entries:
+        for e in test_entries: 
             f.write(json.dumps(e) + "\n")
 
     print(f"data root: {DATA_ROOT}")

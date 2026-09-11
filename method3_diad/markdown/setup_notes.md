@@ -95,7 +95,7 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 ### 15. Epoch 0 완료, 원인 불명의 2시간22분 단발성 스톨
 - global_step 478 시점(step_step=450.ckpt 저장 직후)에 epoch 0(1815 iteration) 완주, `train/loss_epoch=0.128`로 epoch 평균 loss 최초 기록. 이후 epoch 1 진행 중 — 크래시 없이 epoch 경계를 정상적으로 넘김.
 - 이 과정 중 새벽 시간대(약 04:41~07:03)에 단일 스텝이 **2시간22분** 걸리는 이상 지연 발생 (11절의 5시간43분 스톨과 비슷한 규모). 체크포인트가 이미 로컬(`C:/ai_local`)에 있어 OneDrive가 원인일 가능성은 낮고, 해당 시간대가 Windows Update/Defender 예약 검사와 겹칠 수 있어 그쪽을 의심 중이나 미확인. 별도 개입 없이 스스로 회복해 정상 속도로 복귀함.
-- 논문 기준 학습 설정은 `학습 epoch: 1,000, batch size 12` (`method3_diad/markdown/diad_summary.md` 표 참고). 로컬 8GB GPU는 batch size 2로도 겨우 맞춰 실행 중이라 1,000 epoch 완주는 여전히 비현실적 — 목표를 논문과 동일한 epoch 수를 채우는 것이 아니라, 학습이 진행됨에 따라 pixel/image AUROC가 의미 있는 수준으로 개선되는지를 주기적으로 평가해 H3/H4 검증에 쓸 수 있는 시점을 찾는 것으로 조정.
+- 논문 기준 학습 설정은 `학습 epoch: 1,000, batch size 12` (`method3_diad/markdown/AAAI24_DiAD_A_Diffusion-based_Framework_for_Multi-class_Anomaly_Detection.md` 표 참고). 로컬 8GB GPU는 batch size 2로도 겨우 맞춰 실행 중이라 1,000 epoch 완주는 여전히 비현실적 — 목표를 논문과 동일한 epoch 수를 채우는 것이 아니라, 학습이 진행됨에 따라 pixel/image AUROC가 의미 있는 수준으로 개선되는지를 주기적으로 평가해 H3/H4 검증에 쓸 수 있는 시점을 찾는 것으로 조정.
 
 ### 16. 장시간 학습 -- epoch 종료마다 자동 commit/push
 - 세션 중간 개입 없이도 진행 상황이 실제 시점 그대로 repo에 남도록 자동화가 필요했음.

@@ -29,7 +29,7 @@ Zero-shot WinCLIP이 pill 카테고리에서 PatchCore의 I-AUROC(0.968)를 넘�
 | Seed | 10 |
 | GPU | NVIDIA GeForce RTX 5060 Laptop (8GB) |
 
-**구현체 선택 근거**: 원 논문 저자는 공식 코드를 공개하지 않았다. 두 비공식 재구현체를 검토한 결과, `caoyunkang/WinClip`은 자체 재현 결과가 논문 대비 평균 21.6%p 낮게 나와(70.17% vs 91.81%) 신뢰하기 어려웠다. `mala-lab/WinCLIP`은 CVPR'24 InCTRL 논문에서 WinCLIP baseline 산출에 실제로 사용된 코드로, aggregate 재현치가 논문과 0.6%p 차이로 근접해 이쪽을 채택했다 (자세한 비교는 `winclip_summary.md`의 Implementation Notes 참고).
+**구현체 선택 근거**: 원 논문 저자는 공식 코드를 공개하지 않았다. 두 비공식 재구현체를 검토한 결과, `caoyunkang/WinClip`은 자체 재현 결과가 논문 대비 평균 21.6%p 낮게 나와(70.17% vs 91.81%) 신뢰하기 어려웠다. `mala-lab/WinCLIP`은 CVPR'24 InCTRL 논문에서 WinCLIP baseline 산출에 실제로 사용된 코드로, aggregate 재현치가 논문과 0.6%p 차이로 근접해 이쪽을 채택했다 (자세한 비교는 `CVPR23_WinCLIP_Zero-Few-Shot_Anomaly_Classification_and_Segmentation.md`의 Implementation Notes 참고).
 
 ### 기대 결과
 
