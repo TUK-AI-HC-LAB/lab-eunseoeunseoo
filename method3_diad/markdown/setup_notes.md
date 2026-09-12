@@ -116,18 +116,18 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - epoch 7 체크포인트(`step_step=3600.ckpt`)로 H3(grid I-AUROC vs PatchCore 0.977)/H4(transistor P-AUROC vs PatchCore 0.929) 검증을 위해 `test.py` 최초 실행.
 - `MVTecDataset('test')` 호출에 `root` 인자가 빠져 있어 `TypeError` → `train.py`와 동일하게 로컬 데이터셋 경로(`C:/ai_local/diad_dataset/`)를 명시.
 - `DataLoader(..., num_workers=8, ...)` + `if __name__ == '__main__':` 가드 없음 → Windows의 spawn 기반 multiprocessing이 worker마다 스크립트 전체(모델 생성·가중치 로딩 포함)를 처음부터 재실행해 멈춘 것처럼 보임(`RuntimeError: freeze_support()...`) → `num_workers=0`으로 변경해 회피(train.py에서도 이미 같은 이유로 0을 쓰고 있었음).
-- 수정 후 정상 실행 확인, 1,725개 테스트 이미지 전체 처리 완료. 결과와 H3/H4 판정은 `method3_diad/markdown/h3_h4_evaluation.md` 참고 — **H4 지지**(transistor P-AUROC 0.945 > PatchCore 0.929), **H3 미결정**(grid I-AUROC 0.588 < PatchCore 0.977이지만 전체 평균도 0.803으로 아직 미성숙한 모델이라 반박으로 보기 이름).
+- 수정 후 정상 실행 확인, 1,725개 테스트 이미지 전체 처리 완료. raw 결과: `method3_diad/source/eval_results_epoch7.csv` — **H4 지지**(transistor P-AUROC 0.945 > PatchCore 0.929), **H3 미결정**(grid I-AUROC 0.588 < PatchCore 0.977이지만 전체 평균도 0.803으로 아직 미성숙한 모델이라 반박으로 보기 이름).
 
 ### 19. H3/H4 2차 재평가(epoch 16) — H4 역전, H3 개선 추세
 - epoch 16 체크포인트(`step_step=7400.ckpt`)로 동일 평가 재실행(`method3_diad/source/run_eval_epoch16.sh`).
 - grid I-AUROC: 0.588→**0.764**로 개선(여전히 PatchCore 0.977 미달이나 격차 축소) — H3는 여전히 미결정이나 낙관적.
 - transistor P-AUROC: 0.945→**0.923**으로 하락, PatchCore 0.929 아래로 역전 — H4를 지지에서 미결정으로 하향 조정.
-- train loss가 epoch 10~13 사이 0.108→0.118→0.123→0.114로 진동하는 것과 같은 시기라, 두 지표의 변화가 노이즈인지 실제 추세인지는 최소 한 번 더 재평가해야 구분 가능. 세부는 `method3_diad/markdown/h3_h4_evaluation.md`.
+- train loss가 epoch 10~13 사이 0.108→0.118→0.123→0.114로 진동하는 것과 같은 시기라, 두 지표의 변화가 노이즈인지 실제 추세인지는 최소 한 번 더 재평가해야 구분 가능.
 
 ### 20. 25-epoch마다 도는 내장 validation 비활성화 — 사용 안 하는데 매번 몇 시간씩 소모
 - `check_val_every_n_epoch=25` 설정 때문에 epoch 24 종료 시점에 첫 내장 validation이 트리거됨. `ddpm.py`의 `validation_step`을 보니 `test.py`와 동일하게 전체 DDIM 샘플링 + ResNet50 feature 비교 + anomaly map 계산을 1,725개 테스트 이미지 전부에 대해 수행하는 무거운 로직이었음.
 - 이미지당 속도가 `test.py` 단독 실행 시 ~2-4s인데 반해 학습 프로세스 안에서는 ~48s로 10배 이상 느림 — 학습용 optimizer state 등이 이미 GPU 메모리를 점유한 상태에서 같은 무거운 추론을 돌리기 때문(메모리 압박, 14/17/19절과 같은 패턴).
-- 이 validation이 로깅하는 `val_acc`는 어디에도 실제로 쓰이지 않음 — H3/H4 판단은 항상 `test.py`를 별도로 돌려서 확인해왔음(`method3_diad/markdown/h3_h4_evaluation.md`).
+- 이 validation이 로깅하는 `val_acc`는 어디에도 실제로 쓰이지 않음 — H3/H4 판단은 항상 `test.py`를 별도로 돌려서 확인해왔음.
 - **protocol change**: `pl.Trainer(...)`에 `limit_val_batches=0` 추가해 내장 validation을 완전히 비활성화. `ckpt_callback_val_loss`(monitor=`val_acc`)는 이제 트리거될 일이 없어 사실상 무력화되지만, step 기준 체크포인트(`ckpt_callback_periodic`)가 이미 진행 상황 보존을 전담하고 있어 문제 없음.
 
 ### 21. epoch 24 재평가 결과 유실 확인, epoch 34로 3차 재평가 완료
@@ -135,10 +135,10 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - 정황상 20절의 내장 validation(epoch 24 종료 시점 자동 발동, 결과 미저장)이 이 시점과 겹쳐 원인일 가능성이 높다고 추정 — 확정 증거는 없음.
 - epoch 34(`step_step=15650.ckpt`) 평가는 임시 로그(`diad_test_run7.log`)가 남아있어 복구 가능했음: grid I-AUROC 0.654135, transistor P-AUROC 0.921888. `method3_diad/source/eval_results_epoch34.csv`로 정리해 커밋.
 - **교훈**: 평가 실행 직후 raw csv를 바로 커밋하지 않으면(재현성 규칙, 가이드 11절) 임시 로그가 세션 재시작·시간 경과로 유실될 때 evidence 자체가 사라진다. 앞으로는 `test.py` 실행 후 결과 확인 즉시 csv 저장·커밋을 원칙으로 한다.
-- 세부 해석은 `method3_diad/markdown/h3_h4_evaluation.md`, weekly brief는 `meetings/2026-W36_brief.md`.
+- weekly brief는 `meetings/2026-W36_brief.md`.
 
 ## 다음에 할 일
-1. (완료) H3/H4 3차 재평가 — epoch 34로 완료, epoch 24는 재현 불가로 확인. 결과는 `h3_h4_evaluation.md`, `2026-W36_brief.md`에 반영.
+1. (완료) H3/H4 3차 재평가 — epoch 34로 완료, epoch 24는 재현 불가로 확인. 결과는 `2026-W36_brief.md`에 반영.
 2. 다음 학습 방향 결정 — 계속 학습을 진행할지, DiAD 구조 자체의 한계로 보고 다른 후보를 탐색할지 논의 필요.
 3. (선택) 14절의 미확인 속도 저하 원인, 15절의 새벽 스톨 원인 중 하나를 골라 profiling — 우선순위는 낮음.
 4. (선택) 17절에서 언급한 resume 로직의 체크포인트 크기/무결성 검증 추가.
