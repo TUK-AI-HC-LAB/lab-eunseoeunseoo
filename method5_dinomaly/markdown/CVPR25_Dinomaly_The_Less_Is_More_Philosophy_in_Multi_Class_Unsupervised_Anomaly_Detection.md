@@ -68,6 +68,12 @@ denoising autoencoder에서 노이즈를 넣는 것과 같은 원리로, 이 장
 - Linear Attention(`φ(Q)(φ(Kᵀ)V)`, 원래는 계산량을 $O(N^2d)$→$O(Nd^2)$로 줄이려는 경량화 버전)은 Softmax가 없어 특정 위치에 집중을 못 하고 attention이 이미지 전체에 퍼진다 — 원래 이건 "집중 못 하는" 단점으로 여겨졌다.
 - Dinomaly는 attention이 전체로 퍼지면 decoder가 한 위치의 정보만 그대로 베껴서 넘기기 어려워져(멀리 있는 정보까지 강제로 섞이니까) Identity Mapping이 줄어든다. 계산량 감소는 덤.
 
+**수식으로 보면**
+- Q/K/V 생성: $\mathbf{Q}=\mathbf{X}\mathbf{W}^Q,\ \mathbf{K}=\mathbf{X}\mathbf{W}^K,\ \mathbf{V}=\mathbf{X}\mathbf{W}^V$ (입력 $\mathbf{X}$에 학습 가능한 가중치를 곱해 세 행렬을 만든다.)
+- Softmax Attention: $\text{Attention}(\mathbf{Q},\mathbf{K},\mathbf{V})=\text{Softmax}\!\left(\dfrac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d}}\right)\mathbf{V}$ — query-key 유사도를 Softmax로 정규화해 특정 위치에 뾰족하게 집중한다.
+- Linear Attention: $\text{LA}(\mathbf{Q},\mathbf{K},\mathbf{V})=\phi(\mathbf{Q})\big(\phi(\mathbf{K}^T)\mathbf{V}\big)$, $\phi(x)=\text{elu}(x)+1$ — 곱셈 순서를 바꿔 계산량을 $O(N^2d)\to O(Nd^2)$로 줄이는 대신, Softmax의 뾰족한 집중력을 잃는다.
+- Identity Mapping 위험을 보여주는 예시(3×3 기준): $\text{Conv Kernel}=\begin{bmatrix}0&0&0\\0&1&0\\0&0&0\end{bmatrix}$, $\text{Attn Map}=\begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix}$ — 둘 다 "자기 자신 위치의 값만 그대로 통과시키는" 형태로 수렴할 수 있다는 뜻.
+
 ### 3-5. Loose Reconstruction
 - 기존 방법은 encoder와 decoder의 층을 하나하나 정확히 맞춰서 복원시켰는데, 이렇게 너무 정확히 따라 하게 하면 decoder가 불량까지 그대로 베껴버린다(Identity Mapping).
 - **Loose Constraint(제약)**: 층별로 딱 맞추는 대신, 여러 층을 얕은 층·깊은 층 2개 그룹으로만 크게 묶어서 복원 — 덜 정확하게 맞춰도 되니 decoder가 불량까지 억지로 베끼려는 압박이 줄어든다.
