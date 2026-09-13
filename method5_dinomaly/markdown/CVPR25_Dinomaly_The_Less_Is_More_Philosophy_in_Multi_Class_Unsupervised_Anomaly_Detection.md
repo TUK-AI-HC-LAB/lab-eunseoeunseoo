@@ -63,6 +63,7 @@ Dropout은 원래 과적합 방지용으로 쓰이지만, 여기서는 '일부 f
 denoising autoencoder에서 노이즈를 넣는 것과 같은 원리로, 이 장치 하나만으로도 별도 모듈 없이 decoder가 입력이 이상이든 아니든 정상 feature를 복원하려고 시도하게 만들어 identity mapping을 완화한다.
 
 ### 3-4. Unfocused Linear Attention
+![Softmax Attention vs Linear Attention 비교 (Fig. 3): attention map 시각화와 거리별 attention weight 분포](image-1.png)
 - Softmax Attention(`Softmax(QKᵀ)V`)은 쿼리와 관련된 위치에 좁게 집중하는데, 이게 자기 자신 위치에 집중하면 입력을 그대로 다음 층에 복사하는 Identity Mapping이 된다.
 - Linear Attention(`φ(Q)(φ(Kᵀ)V)`, 원래는 계산량을 $O(N^2d)$→$O(Nd^2)$로 줄이려는 경량화 버전)은 Softmax가 없어 특정 위치에 집중을 못 하고 attention이 이미지 전체에 퍼진다 — 원래 이건 "집중 못 하는" 단점으로 여겨졌다.
 - Dinomaly는 attention이 전체로 퍼지면 decoder가 한 위치의 정보만 그대로 베껴서 넘기기 어려워져(멀리 있는 정보까지 강제로 섞이니까) Identity Mapping이 줄어든다. 계산량 감소는 덤.
