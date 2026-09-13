@@ -1,6 +1,6 @@
 # Dinomaly: The Less Is More Philosophy in Multi-Class Unsupervised Anomaly Detection — 논문 조사 노트
 
-PDF 파일 경로 : `related_work/paper/W38_CVPR25_Dinomaly_The_Less_Is_More_Philosophy_in_Multi_Class_Unsupervised_Anomaly_Detection.pdf`
+PDF 파일 경로 : `method5_dinomaly/paper/CVPR25_Dinomaly_The_Less_Is_More_Philosophy_in_Multi_Class_Unsupervised_Anomaly_Detection.pdf`
 
 ---
 
