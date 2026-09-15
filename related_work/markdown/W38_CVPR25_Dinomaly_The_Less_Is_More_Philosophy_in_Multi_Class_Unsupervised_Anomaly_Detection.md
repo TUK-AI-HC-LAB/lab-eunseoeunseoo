@@ -44,7 +44,7 @@ diffusion 기반 재구성(DiAD/GLAD)과 달리, frozen foundation Transformer�
 
 ## 3. 방법 — 단계별로, 예시와 함께
 ### 3-1. 전체 구조 (Dinomaly Framework)
-![Dinomaly 프레임워크 구조도 (Fig. 2): encoder-bottleneck-decoder와 attention/MLP 블록 상세](image.png)
+<img width="998" height="356" alt="image" src="https://github.com/user-attachments/assets/a3acb62e-fb69-4bf2-9d8a-6ccc98b38ee7" />
 encoder-bottleneck-decoder 3단 구조로 이뤄진다.
 encoder는 사전학습된 ViT(기본값: DINOv2-Register로 사전학습한 ViT-Base/14)를 그대로 freeze해서 쓰고, 12개 층 중 중간 8개 층의 feature를 뽑는다.
 bottleneck은 그냥 MLP(feed-forward network) 하나다.
@@ -63,7 +63,8 @@ Dropout은 원래 과적합 방지용으로 쓰이지만, 여기서는 '일부 f
 denoising autoencoder에서 노이즈를 넣는 것과 같은 원리로, 이 장치 하나만으로도 별도 모듈 없이 decoder가 입력이 이상이든 아니든 정상 feature를 복원하려고 시도하게 만들어 identity mapping을 완화한다.
 
 ### 3-4. Unfocused Linear Attention
-![Softmax Attention vs Linear Attention 비교 (Fig. 3): attention map 시각화와 거리별 attention weight 분포](image-1.png)
+<img width="838" height="442" alt="image" src="https://github.com/user-attachments/assets/32d8b91b-fb6b-4dd1-aae2-9dd01112ce34" />
+
 - Softmax Attention(`Softmax(QKᵀ)V`)은 쿼리와 관련된 위치에 좁게 집중하는데, 이게 자기 자신 위치에 집중하면 입력을 그대로 다음 층에 복사하는 Identity Mapping이 된다.
 - Linear Attention(`φ(Q)(φ(Kᵀ)V)`, 원래는 계산량을 $O(N^2d)$→$O(Nd^2)$로 줄이려는 경량화 버전)은 Softmax가 없어 특정 위치에 집중을 못 하고 attention이 이미지 전체에 퍼진다 — 원래 이건 "집중 못 하는" 단점으로 여겨졌다.
 - Dinomaly는 attention이 전체로 퍼지면 decoder가 한 위치의 정보만 그대로 베껴서 넘기기 어려워져(멀리 있는 정보까지 강제로 섞이니까) Identity Mapping이 줄어든다. 계산량 감소는 덤.
