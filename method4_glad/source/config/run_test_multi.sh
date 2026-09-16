@@ -20,7 +20,7 @@ export PRETRAINED='C:/ai_local/glad_models/stable-diffusion-v1-4'
 export OUTPUT_DIR='bs1_grad4_eps_anomaly2_multiclass'
 export SEED=0
 
-GLAD_SRC="$(cd "$(dirname "$0")/GLAD" && pwd)"
+GLAD_SRC="$(cd "$(dirname "$0")/../GLAD" && pwd)"
 mkdir -p /c/ai_local/glad_run
 cd /c/ai_local/glad_run
 "/c/Users/kelly/anaconda3/envs/glad/python.exe" -m accelerate.commands.launch --num_processes=1 --mixed_precision=fp16 "$GLAD_SRC/main_multi.py" \

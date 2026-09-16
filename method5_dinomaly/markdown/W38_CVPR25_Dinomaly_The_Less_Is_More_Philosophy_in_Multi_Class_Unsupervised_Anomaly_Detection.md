@@ -1,6 +1,6 @@
-# Dinomaly: The Less Is More Philosophy in Multi-Class Unsupervised Anomaly Detection — 논문 조사 노트
+# Dinomaly: The Less Is More Philosophy in Multi-Class Unsupervised Anomaly Detection
 
-PDF 파일 경로 : `method5_dinomaly/paper/CVPR25_Dinomaly_The_Less_Is_More_Philosophy_in_Multi_Class_Unsupervised_Anomaly_Detection.pdf`
+PDF 파일 경로 : `method5_dinomaly/paper/W38_CVPR25_Dinomaly_The_Less_Is_More_Philosophy_in_Multi_Class_Unsupervised_Anomaly_Detection.pdf`
 
 ---
 
@@ -121,6 +121,6 @@ Dinomaly는 Foundation Transformer, Noisy Bottleneck, Linear Attention, Loose Re
 
 - **계열이 같은가/다른가**: 큰 계열은 DiAD/GLAD와 같은 재구성 기반(reconstruction-based) — 입력과 복원 결과의 차이를 anomaly score로 쓴다는 원리는 동일하다. 다만 구체적 메커니즘은 완전히 다르다 — DiAD/GLAD는 diffusion으로 이미지를 반복적으로 복원하지만, Dinomaly는 frozen ViT feature를 decoder 한 번의 forward pass로만 복원한다.
 - **접근이 다른가**: diffusion 기반 반복 denoising이 없는 단일 forward pass 재구성이라, 학습/추론 비용이 DiAD/GLAD와 크게 다르다(실측 iter당 약 0.6초 vs GLAD 약 47~70초/step).
-- **우리 피드백/가설과의 연결**: 실제로 batch_size=4로 돌려본 결과, grid I-AUROC 0.9975로 PatchCore(0.977)를 앞서 H3를 지지하는 데이터 포인트가 됐고, transistor P-AUROC는 0.9238로 PatchCore(0.929)에 근접했지만 아직 못 넘어서 H4는 미결정으로 남음(`method5_dinomaly/source/eval_results_batch4_iter10000.csv`).
+- **우리 피드백/가설과의 연결**: 실제로 batch_size=4로 돌려본 결과, grid I-AUROC 0.9975로 PatchCore(0.977)를 앞서 H3를 지지하는 데이터 포인트가 됐고, transistor P-AUROC는 0.9238로 PatchCore(0.929)에 근접했지만 아직 못 넘어서 H4는 미결정으로 남음(`method5_dinomaly/source/result/eval_results_batch4_iter10000.csv`).
 - **참고할 점 / 주의할 점**: 원 논문은 batch=16, RTX3090(24GB) 기준으로 설계돼 있어, 우리 8GB GPU에서는 시간 소요가 꽤 될것으로 예상됨.
 

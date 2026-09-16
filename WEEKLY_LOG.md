@@ -14,7 +14,7 @@
 ### Plan until the next meeting, in measurable units
 - [x] Set up personal repository structure → `README.md`, `WEEKLY_LOG.md`, `meetings/`, `related_work/`
 - [x] Read PatchCore paper and write summary → `method1_patchcore/markdown/CVPR22_PatchCore_Towards_Total_Recall_in_Industrial_Anomaly_Detection.md`
-- [x] Reproduce PatchCore baseline on all 15 MVTec AD categories → `method1_patchcore/source/results/baseline_20260628.csv` (I-AUROC 99.1%, P-AUROC 98.1%)
+- [x] Reproduce PatchCore baseline on all 15 MVTec AD categories → `method1_patchcore/source/result/baseline_20260628.csv` (I-AUROC 99.1%, P-AUROC 98.1%)
 - [x] Write baseline analysis note → `method1_patchcore/markdown/baseline_analysis.md`
 - [ ] Decide next sub-direction (Candidate A/B/C) → pending W26 meeting decision
 

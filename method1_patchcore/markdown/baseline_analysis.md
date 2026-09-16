@@ -3,8 +3,8 @@
 ## Experiment: Baseline Reproduction on MVTec AD (15 categories)
 
 - commit: `fcaa92f` (patchcore-inspection)
-- sh: `method1_patchcore/source/run_baseline.sh`
-- csv: `method1_patchcore/source/results/baseline_20260628.csv`
+- sh: `method1_patchcore/source/config/run_baseline.sh`
+- csv: `method1_patchcore/source/result/baseline_20260628.csv`
 
 ---
 
@@ -55,7 +55,7 @@ Columns: **I-AUROC** = image-level anomaly detection AUROC (higher is better, ra
 | zipper | 0.992 | 0.989 | 0.986 |
 | **mean** | **0.991** | **0.981** | **0.974** |
 
-Raw data: `method1_patchcore/source/results/baseline_20260628.csv`
+Raw data: `method1_patchcore/source/result/baseline_20260628.csv`
 
 ### Comparison with Paper
 

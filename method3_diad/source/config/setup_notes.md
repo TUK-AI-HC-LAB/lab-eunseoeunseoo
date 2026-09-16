@@ -1,9 +1,9 @@
 ﻿# DiAD 재현 착수 — 환경 설정 기록
 
 ## 근거 경로
-- source: `method3_diad/source/DiAD` (공식 repo clone, commit `d281300`)
-- data manifest 생성 script: `method3_diad/source/build_mvtec_json.py`
-- generated manifest: `method3_diad/source/DiAD/training/MVTec-AD/{train,test}.json`
+- source: `method3_diad/source/code/DiAD` (공식 repo clone, commit `d281300`)
+- data manifest 생성 script: `method3_diad/source/code/build_mvtec_json.py`
+- generated manifest: `method3_diad/source/code/DiAD/training/MVTec-AD/{train,test}.json`
 - conda env: `diad` (python 3.10), 로컬 전용, repo에는 미포함
 
 ## 진행 순서와 확인된 것
@@ -69,7 +69,7 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - 이후 GPU 온도를 주기적으로 폴링해 85°C 이상이면 경고하는 감시 루틴을 병행 운용.
 
 ### 11. 체크포인트가 OneDrive 동기화 폴더에 저장되던 버그 — 24.7GB 불필요 동기화 + 5시간43분 스톨
-- `ckpt_dir`을 명시적으로 지정하지 않았을 때 기본값이 `./val_ckpt/`로 잡혀, `method3_diad/source/DiAD/val_ckpt/` 즉 OneDrive 동기화 대상 폴더 안에 8.24GB짜리 체크포인트가 3개(총 24.7GB) 쌓인 것을 뒤늦게 발견.
+- `ckpt_dir`을 명시적으로 지정하지 않았을 때 기본값이 `./val_ckpt/`로 잡혀, `method3_diad/source/code/DiAD/val_ckpt/` 즉 OneDrive 동기화 대상 폴더 안에 8.24GB짜리 체크포인트가 3개(총 24.7GB) 쌓인 것을 뒤늦게 발견.
 - 학습 로그에서 step 707→708 사이 한 스텝이 5시간43분 걸린 비정상 구간을 발견, 시점이 체크포인트 저장 직후와 일치 → OneDrive가 백그라운드에서 해당 파일을 업로드하려고 시도하면서 디스크 I/O를 붙잡아 학습이 사실상 멈췄던 것으로 추정(6절의 체크포인트 로딩 스톨과 동일한 근본 원인).
 - **protocol change**: `train.py`에 `ckpt_dir = 'C:/ai_local/diad_val_ckpt/'`를 명시하고 두 `ModelCheckpoint` 콜백 모두 이 경로를 쓰도록 변경, 기존 체크포인트도 이 경로로 이동. 오래된 체크포인트는 정리하고 최신 것만 유지.
 - `.gitignore`에 `lightning_logs/`, `val_ckpt/`, `log`, `log_image/` 추가 (체크포인트 자체는 이미 `*.ckpt` 규칙으로 제외되지만, 잘못된 경로에 생성된 관련 폴더/로그가 실수로 스테이징되는 것도 방지).
@@ -99,7 +99,7 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 
 ### 16. 장시간 학습 -- epoch 종료마다 자동 commit/push
 - 세션 중간 개입 없이도 진행 상황이 실제 시점 그대로 repo에 남도록 자동화가 필요했음.
-- `train.py`에 `GitCommitOnEpochEnd(pl.Callback)` 추가: `on_train_epoch_end`마다 `method3_diad/source/epoch_log.csv`에 (epoch, global_step, epoch 평균 loss, 실제 타임스탬프) 한 줄을 append하고, 그 파일 하나만 `git add`->`commit`->`push`.
+- `train.py`에 `GitCommitOnEpochEnd(pl.Callback)` 추가: `on_train_epoch_end`마다 `method3_diad/source/result/epoch_log.csv`에 (epoch, global_step, epoch 평균 loss, 실제 타임스탬프) 한 줄을 append하고, 그 파일 하나만 `git add`->`commit`->`push`.
 - 체크포인트(8GB+)는 여전히 git에 올리지 않음 -- 커밋되는 건 가벼운 로그 csv뿐이라 evidence path는 남기되 repo 용량은 늘지 않음.
 - 네트워크 단절로 push가 실패해도 학습이 죽지 않도록 git 호출 전체를 try/except로 감싸고 timeout을 둠 -- 실패하면 다음 epoch에서 다시 시도하고, 그 사이 로컬에는 커밋이 계속 쌓여서 다음 성공 시 한 번에 밀림.
 - 이 자동화는 epoch이 실제로 끝나는 시점(불규칙한 간격, 스톨 포함)에만 커밋이 발생하므로, 실제 작업 시점을 그대로 반영하는 진짜 진행 기록이다.
@@ -116,10 +116,10 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 - epoch 7 체크포인트(`step_step=3600.ckpt`)로 H3(grid I-AUROC vs PatchCore 0.977)/H4(transistor P-AUROC vs PatchCore 0.929) 검증을 위해 `test.py` 최초 실행.
 - `MVTecDataset('test')` 호출에 `root` 인자가 빠져 있어 `TypeError` → `train.py`와 동일하게 로컬 데이터셋 경로(`C:/ai_local/diad_dataset/`)를 명시.
 - `DataLoader(..., num_workers=8, ...)` + `if __name__ == '__main__':` 가드 없음 → Windows의 spawn 기반 multiprocessing이 worker마다 스크립트 전체(모델 생성·가중치 로딩 포함)를 처음부터 재실행해 멈춘 것처럼 보임(`RuntimeError: freeze_support()...`) → `num_workers=0`으로 변경해 회피(train.py에서도 이미 같은 이유로 0을 쓰고 있었음).
-- 수정 후 정상 실행 확인, 1,725개 테스트 이미지 전체 처리 완료. raw 결과: `method3_diad/source/eval_results_epoch7.csv` — **H4 지지**(transistor P-AUROC 0.945 > PatchCore 0.929), **H3 미결정**(grid I-AUROC 0.588 < PatchCore 0.977이지만 전체 평균도 0.803으로 아직 미성숙한 모델이라 반박으로 보기 이름).
+- 수정 후 정상 실행 확인, 1,725개 테스트 이미지 전체 처리 완료. raw 결과: `method3_diad/source/result/eval_results_epoch7.csv` — **H4 지지**(transistor P-AUROC 0.945 > PatchCore 0.929), **H3 미결정**(grid I-AUROC 0.588 < PatchCore 0.977이지만 전체 평균도 0.803으로 아직 미성숙한 모델이라 반박으로 보기 이름).
 
 ### 19. H3/H4 2차 재평가(epoch 16) — H4 역전, H3 개선 추세
-- epoch 16 체크포인트(`step_step=7400.ckpt`)로 동일 평가 재실행(`method3_diad/source/run_eval_epoch16.sh`).
+- epoch 16 체크포인트(`step_step=7400.ckpt`)로 동일 평가 재실행(`method3_diad/source/config/run_eval_epoch16.sh`).
 - grid I-AUROC: 0.588→**0.764**로 개선(여전히 PatchCore 0.977 미달이나 격차 축소) — H3는 여전히 미결정이나 낙관적.
 - transistor P-AUROC: 0.945→**0.923**으로 하락, PatchCore 0.929 아래로 역전 — H4를 지지에서 미결정으로 하향 조정.
 - train loss가 epoch 10~13 사이 0.108→0.118→0.123→0.114로 진동하는 것과 같은 시기라, 두 지표의 변화가 노이즈인지 실제 추세인지는 최소 한 번 더 재평가해야 구분 가능.
@@ -133,7 +133,7 @@ OneDrive 동기화 폴더 안에서 6GB 체크포인트를 읽으면 응답이 �
 ### 21. epoch 24 재평가 결과 유실 확인, epoch 34로 3차 재평가 완료
 - `run_eval_epoch24.sh`(step=11350)로 3차 재평가를 시도했던 흔적은 있으나, 대응하는 `eval_results_epoch24.csv`가 한 번도 커밋되지 않았고 로컬에도 없음을 W36 브리핑 작성 중 발견. 임시 로그(`diad_test_run*.log`)도 남아있지 않았고, 체크포인트(`step_step=11350.ckpt`)도 `save_top_k=1`로 이후 덮어써져 재실행으로도 재현 불가.
 - 정황상 20절의 내장 validation(epoch 24 종료 시점 자동 발동, 결과 미저장)이 이 시점과 겹쳐 원인일 가능성이 높다고 추정 — 확정 증거는 없음.
-- epoch 34(`step_step=15650.ckpt`) 평가는 임시 로그(`diad_test_run7.log`)가 남아있어 복구 가능했음: grid I-AUROC 0.654135, transistor P-AUROC 0.921888. `method3_diad/source/eval_results_epoch34.csv`로 정리해 커밋.
+- epoch 34(`step_step=15650.ckpt`) 평가는 임시 로그(`diad_test_run7.log`)가 남아있어 복구 가능했음: grid I-AUROC 0.654135, transistor P-AUROC 0.921888. `method3_diad/source/result/eval_results_epoch34.csv`로 정리해 커밋.
 - **교훈**: 평가 실행 직후 raw csv를 바로 커밋하지 않으면(재현성 규칙, 가이드 11절) 임시 로그가 세션 재시작·시간 경과로 유실될 때 evidence 자체가 사라진다. 앞으로는 `test.py` 실행 후 결과 확인 즉시 csv 저장·커밋을 원칙으로 한다.
 - weekly brief는 `meetings/2026-W36_brief.md`.
 

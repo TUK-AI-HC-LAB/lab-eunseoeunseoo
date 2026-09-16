@@ -10,7 +10,7 @@
 공식 repo(`https://github.com/hyao1/GLAD`)를 `method4_glad/source/GLAD`에 클론. multi-category 설정(`main_multi.py`, `train_multi.sh` 기반, MVTec-AD 15개 카테고리 공동학습 — DiAD와 동일 조건)으로 재현.
 
 ### 환경/의존성 이슈
-- `bitsandbytes==0.37.2`(원 저자 pin)가 Windows에서 CUDA 인식을 못 함(Linux 전용 빌드) → `0.49.2`로 교체. DiAD 때(`method3_diad/markdown/setup_notes.md`)와 동일한 이슈.
+- `bitsandbytes==0.37.2`(원 저자 pin)가 Windows에서 CUDA 인식을 못 함(Linux 전용 빌드) → `0.49.2`로 교체. DiAD 때(`method3_diad/source/config/setup_notes.md`)와 동일한 이슈.
 - `diffusers==0.20.0.dev0`(dev 프리릴리즈, PyPI 미배포) → 안정 버전 `0.20.0`으로 대체.
 - `transformers`/`huggingface-hub`를 최신으로 깔면 `diffusers==0.20.0`과 API 불일치 → `transformers==4.30.2`, `huggingface-hub==0.16.4`로 고정.
 - `kornia`, `pandas`, `transformers`가 실제로는 import되지만 `requirements.txt`에 누락돼 있었음 → 별도 설치.
@@ -36,4 +36,4 @@
 ## 다음에 할 일
 - 노트북 팬 강제 풀가동 방법 조사 (W37 피드백 요청 항목, 아직 미착수).
 - GLAD 학습을 계속 진행하며 첫 판단 가능한 체크포인트에서 category-wise I-AUROC/P-AUROC 평가 실행.
-- SimpleNet/Reverse Distillation/Dinomaly 4개 방법 중 어느 것부터 어느 머신에서 재현할지 배분 결정 — 데스크탑(12GB)이 VRAM 여유가 더 크므로 `method3_diad/markdown/setup_notes.md` 7-8절에서 겪은 8GB 한계(Adam optimizer state OOM)를 우선 이쪽에서 회피 가능한지 검토.
+- SimpleNet/Reverse Distillation/Dinomaly 4개 방법 중 어느 것부터 어느 머신에서 재현할지 배분 결정 — 데스크탑(12GB)이 VRAM 여유가 더 크므로 `method3_diad/source/config/setup_notes.md` 7-8절에서 겪은 8GB 한계(Adam optimizer state OOM)를 우선 이쪽에서 회피 가능한지 검토.

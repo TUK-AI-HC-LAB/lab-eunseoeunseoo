@@ -4,7 +4,7 @@
 # Requires: conda env "patchcore" (torch+cuda already installed there)
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$SCRIPT_DIR/WinCLIP"
+cd "$SCRIPT_DIR/../code/WinCLIP"
 
 # conda is not reliably on PATH in this shell; call the env's python directly.
 CONDA_ENV_PYTHON="/c/Users/kelly/anaconda3/envs/patchcore/python.exe"

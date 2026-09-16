@@ -7,7 +7,7 @@
 DATAPATH="/path/to/mvtec"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-cd "$SCRIPT_DIR/patchcore-inspection"
+cd "$SCRIPT_DIR/../code/patchcore-inspection"
 
 python bin/run_patchcore.py \
   --gpu 0 --seed 0 \

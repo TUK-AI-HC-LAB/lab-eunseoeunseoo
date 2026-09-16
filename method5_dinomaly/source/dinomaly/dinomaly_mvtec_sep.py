@@ -88,7 +88,8 @@ def train(item):
 
     train_data = ImageFolder(root=train_path, transform=data_transform)
     test_data = MVTecDataset(root=test_path, transform=data_transform, gt_transform=gt_transform, phase="test")
-    train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=4,
+    # num_workers 4->0: Windows spawn multiprocessing issue, same fix as method3_diad/method4_glad/dinomaly_mvtec_uni.py.
+    train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=0,
                                                    drop_last=True)
     test_dataloader = torch.utils.data.DataLoader(test_data, batch_size=batch_size, shuffle=False, num_workers=4)
 
@@ -208,7 +209,8 @@ if __name__ == '__main__':
     logger = get_logger(args.save_name, os.path.join(args.save_dir, args.save_name))
     print_fn = logger.info
 
-    device = 'cuda:1' if torch.cuda.is_available() else 'cpu'
+    # cuda:1 -> cuda:0: original assumed a multi-GPU machine; this laptop has one GPU (device 0).
+    device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     print_fn(device)
 
     result_list = []

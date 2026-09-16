@@ -1,8 +1,6 @@
-# GLAD: Towards Better Reconstruction with Global and Local Adaptive Diffusion Models — 논문 조사 노트
+# GLAD: Towards Better Reconstruction with Global and Local Adaptive Diffusion Models 
 
 PDF 파일 경로 : `method4_glad/paper/ECCV24_GLAD_Towards_Better_Reconstruction_with_Global_and_Local_Adaptive_Diffusion_Models_for_Unsupervised_Anomaly_Detection.pdf`
-
-> 2026-09-07: 교수님 지시로 DiAD(method3_diad) 재현을 중단하고 GLAD를 직접 재현·실험하는 방향으로 전환 — 이 문서를 related_work에서 method4_glad로 이동함.
 
 ---
 

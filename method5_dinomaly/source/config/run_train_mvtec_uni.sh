@@ -8,7 +8,7 @@
 DATA_PATH='C:/ai_local/diad_dataset'
 SAVE_DIR='C:/ai_local/dinomaly_run/saved_results'
 
-cd "$(dirname "$0")/dinomaly"
+cd "$(dirname "$0")/../dinomaly"
 "/c/Users/kelly/anaconda3/envs/dinomaly/python.exe" dinomaly_mvtec_uni.py \
     --data_path "$DATA_PATH" \
     --save_dir "$SAVE_DIR" \

@@ -3,8 +3,8 @@
 ## 실험 1: pill 카테고리 zero-shot WinCLIP vs PatchCore
 
 - commit: `39ae367` (mala-lab/WinCLIP)
-- sh: `method2_winclip/source/run_pill_zeroshot.sh`
-- csv: `method2_winclip/source/WinCLIP/results/pill_zeroshot.csv`
+- sh: `method2_winclip/source/config/run_pill_zeroshot.sh`
+- csv: `method2_winclip/source/code/WinCLIP/results/pill_zeroshot.csv`
 
 ---
 
@@ -39,7 +39,7 @@ H2가 맞다면 WinCLIP pill I-AUROC ≥ 0.968 (PatchCore 수준 또는 그 이�
 
 | 지표 | PatchCore (pill) | WinCLIP zero-shot 논문 published | WinCLIP zero-shot 오늘 재현 | Raw Path |
 |---|---|---|---|---|
-| I-AUROC | 0.968 | 0.791 | **0.812** | `method2_winclip/source/WinCLIP/results/pill_zeroshot.csv` |
+| I-AUROC | 0.968 | 0.791 | **0.812** | `method2_winclip/source/code/WinCLIP/results/pill_zeroshot.csv` |
 | AUPR | — | — | 0.963 | 〃 |
 | F1-max | — | — | 0.916 | 〃 |
 
@@ -54,8 +54,8 @@ H2가 맞다면 WinCLIP pill I-AUROC ≥ 0.968 (PatchCore 수준 또는 그 이�
 ## 실험 2: pill 카테고리 WinCLIP+ 1-shot vs PatchCore
 
 - commit: `39ae367` (mala-lab/WinCLIP) + 로컬 수정 (아래 "구현 변경" 참고)
-- sh: `method2_winclip/source/run_pill_1shot.sh`
-- csv: `method2_winclip/source/WinCLIP/results/pill_1shot.csv`
+- sh: `method2_winclip/source/config/run_pill_1shot.sh`
+- csv: `method2_winclip/source/code/WinCLIP/results/pill_1shot.csv`
 
 ### 질문
 
@@ -79,7 +79,7 @@ H2-few-shot이 맞다면 WinCLIP+ 1-shot pill I-AUROC ≥ 0.968.
 
 | 지표 | PatchCore (pill) | WinCLIP zero-shot | WinCLIP+ 1-shot | Raw Path |
 |---|---|---|---|---|
-| I-AUROC | 0.968 | 0.812 | **0.853** | `method2_winclip/source/WinCLIP/results/pill_1shot.csv` |
+| I-AUROC | 0.968 | 0.812 | **0.853** | `method2_winclip/source/code/WinCLIP/results/pill_1shot.csv` |
 | AUPR | — | 0.963 | 0.972 | 〃 |
 | F1-max | — | 0.916 | 0.916 | 〃 |
 

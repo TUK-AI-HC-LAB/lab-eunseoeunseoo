@@ -12,7 +12,7 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 |---|---|---|---|---|
 | 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced (mean I-AUROC 99.1%) |
 | 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | ✅ Reproduced — zero-shot/1-shot pill 재현 완료, H2 계열 반박 |
-| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | ⏸ 중단(2026-09-07, 교수님 지시) — epoch 58까지 학습, H3/H4 최종 판단은 미결정으로 남김(3개 지점 raw 결과: `method3_diad/source/eval_results_epoch7/16/34.csv`) |
+| 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | ⏸ 중단(2026-09-07, 교수님 지시) — epoch 58까지 학습, H3/H4 최종 판단은 미결정으로 남김(3개 지점 raw 결과: `method3_diad/source/result/eval_results_epoch7/16/34.csv`) |
 | 4 | `method4_glad/` | Yao et al., GLAD: Towards Better Reconstruction with Global and Local Adaptive Diffusion Models for Unsupervised Anomaly Detection | ECCV 2024 | 🔬 학습 중(데스크톱, RTX 5070/12GB) — `train_batch_size=2`, `gradient_accumulation_steps=16`(effective batch 32)로 원 논문과 동일한 effective batch로 재현 중 |
 | 5 | `method5_dinomaly/` | Guo et al., Dinomaly: The Less Is More Philosophy in Multi-Class Unsupervised Anomaly Detection | CVPR 2025 | 🔬 학습 중(노트북, RTX 5060/8GB) — diffusion 없는 구조라 GLAD/DiAD보다 훨씬 빠르게 진행 중 |
 

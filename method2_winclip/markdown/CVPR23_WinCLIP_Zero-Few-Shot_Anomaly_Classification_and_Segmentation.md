@@ -21,7 +21,7 @@ No official code exists for WinCLIP. Two unofficial re-implementations were chec
 | [caoyunkang/WinClip](https://github.com/caoyunkang/WinClip) | 70.17% | Poor — large per-category gaps (e.g. grid 98.8%→48.9%, metal_nut 97.1%→37.6%) |
 | [mala-lab/WinCLIP](https://github.com/mala-lab/WinCLIP) | ~91.2% (via CVPR'24 InCTRL paper, which uses this code for its WinCLIP baseline) | Good — matches paper within ~0.6%p in aggregate |
 
-Using `mala-lab/WinCLIP` for reproduction (`method2_winclip/source/WinCLIP/`) because it is the only candidate with external validation (used as a baseline in a peer-reviewed paper).
+Using `mala-lab/WinCLIP` for reproduction (`method2_winclip/source/code/WinCLIP/`) because it is the only candidate with external validation (used as a baseline in a peer-reviewed paper).
 
 **Risk carried forward**: this guide's paper-selection priority (`README.md` 10장) ranks "official GitHub code exists" above candidates without it. WinCLIP fails that criterion — the absence of official code is exactly why the two unofficial re-implementations diverge so much. Cross-checking against the paper's own published per-category table (see below) is used to compensate.
 
