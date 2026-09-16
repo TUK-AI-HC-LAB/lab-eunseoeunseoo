@@ -14,7 +14,7 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 | 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | ✅ Reproduced — zero-shot/1-shot pill 재현 완료, H2 계열 반박 |
 | 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | ⏸ 중단(2026-09-07, 교수님 지시) — epoch 58까지 학습, H3/H4 최종 판단은 미결정으로 남김(3개 지점 raw 결과: `method3_diad/source/result/eval_results_epoch7/16/34.csv`) |
 | 4 | `method4_glad/` | Yao et al., GLAD: Towards Better Reconstruction with Global and Local Adaptive Diffusion Models for Unsupervised Anomaly Detection | ECCV 2024 | 🔬 학습 중(데스크톱, RTX 5070/12GB) — `train_batch_size=2`, `gradient_accumulation_steps=16`(effective batch 32)로 원 논문과 동일한 effective batch로 재현 중 |
-| 5 | `method5_dinomaly/` | Guo et al., Dinomaly: The Less Is More Philosophy in Multi-Class Unsupervised Anomaly Detection | CVPR 2025 | 🔬 학습 중(노트북, RTX 5060/8GB) — diffusion 없는 구조라 GLAD/DiAD보다 훨씬 빠르게 진행 중 |
+| 5 | `method5_dinomaly/` | Guo et al., Dinomaly: The Less Is More Philosophy in Multi-Class Unsupervised Anomaly Detection | CVPR 2025 | ✅ multi-class 완료(batch=16, 원 논문 설정) — grid I-AUROC 0.9983, transistor P-AUROC 0.9335로 PatchCore 상회(H3·H4 모두 지지). 🔬 class-separated(15개 카테고리) 재현 진행 중(노트북, RTX 5060/8GB) |
 
 ---
 
@@ -40,7 +40,7 @@ GLAD[ECCV 2024]의 supplementary(multi-category, DiAD와 동일 조건)에 인�
 ### 다음 방향
 2026-09-07 교수님 지시로 DiAD 재현을 중단하고, 피드백에서 언급된 4개 방법(GLAD/SimpleNet/Reverse Distillation/Dinomaly) 재현으로 전환했다. 현재 두 기기에서 병렬로 진행 중이다:
 - **데스크톱(RTX 5070/12GB)**: GLAD(`method4_glad/`) 학습 — `train_batch_size=2`, `gradient_accumulation_steps=16`(effective batch 32)로 원 논문과 동일한 effective batch 재현.
-- **노트북(RTX 5060/8GB)**: Dinomaly(`method5_dinomaly/`) 학습 — diffusion이 없는 구조라 GLAD보다 훨씬 빠르게 진행.
+- **노트북(RTX 5060/8GB)**: Dinomaly(`method5_dinomaly/`) — multi-class(batch=16, 원 논문 설정) 학습 완료, grid·transistor 모두 PatchCore 상회. 현재 class-separated(15개 카테고리) 재현 진행 중.
 
 SimpleNet, Reverse Distillation은 아직 착수 전.
 
