@@ -46,10 +46,23 @@ diffusion 기반 재구성(DiAD/GLAD)과 달리, frozen foundation Transformer�
 ### 3-1. 전체 구조 (Dinomaly Framework)
 <img width="1232" height="420" alt="image" src="https://github.com/user-attachments/assets/9a82ed48-f664-4ec8-93ed-b4eeb89a0789" />
 
-encoder-bottleneck-decoder 3단 구조로 이뤄진다.
-encoder는 사전학습된 ViT(기본값: DINOv2-Register로 사전학습한 ViT-Base/14)를 그대로 freeze해서 쓰고, 12개 층 중 중간 8개 층의 feature를 뽑는다.
-bottleneck은 그냥 MLP(feed-forward network) 하나다.
-decoder는 8층 Transformer로, encoder가 뽑은 feature를 다시 복원하도록 코사인 유사도를 최대화하는 방식으로 학습한다. 테스트 시에는 정상 영역은 잘 복원되지만 이상 영역은 복원에 실패한다는 전제로, 복원 오차 자체가 anomaly map이 된다.
+encoder-bottleneck-decoder 3단 구조이되, encoder에서 나온 feature가 **두 경로**로 갈라져서 흐른다는 게 핵심이다.
+
+**0. 입력 → patchify → encoder**
+입력 이미지를 14×14 patch로 잘라 토큰 시퀀스로 만든 뒤(392×392 입력 기준 28×28=784개 patch), 사전학습된 ViT(기본값 DINOv2-Register ViT-Base/14)에 통과시킨다. encoder는 **완전히 freeze**(`torch.no_grad()`)돼 있어서 학습 내내 가중치가 안 바뀐다 — 학습 중에도 테스트 때와 똑같이 "이미 잘 훈련된 눈"으로 feature만 뽑아주는 역할. 층을 지날 때마다 각 patch가 주변(이론상 이미지 전체) 문맥을 반영해서, 구체적인 픽셀 디테일(정확한 색·각도 등)은 옅어지고 "이게 무슨 패턴/역할인지"에 가까운 의미 위주 표현으로 바뀌고, 12개 층 중 중간 8개 층(얕은 2개·깊은 2개는 버림)을 지날 때마다 그 시점 feature를 저장해둔다(`en_list`).
+
+**A. 경로 A — clean, 학습 목표**
+`en_list`(8개)를 저수준 4개·고수준 4개, 2개 그룹으로 나눠 각각 더해(fuse) `en_low`, `en_high`를 만든다. bottleneck을 거치지 않은 **원본 feature**로, "실제 입력이 뭐였는지"를 그대로 담고 있다.
+
+**B. 경로 B — noisy, 실제 예측**
+같은 `en_list` 8개를 이번엔 전부 하나로 합쳐 **Noisy Bottleneck**(MLP 1개, 3-3 참고)에 넣는다. 여기서 dropout으로 feature가 일부러 훼손된 뒤, 8층 **Transformer Decoder**를 순차로 통과해 층별 출력을 만들고, 이것도 encoder와 같은 2개 그룹으로 나눠 `de_low`, `de_high`를 만든다.
+
+**비교 → anomaly map**
+그룹별로 `en`(경로 A, "실제로 뭐가 있었는지")과 `de`(경로 B, "모델이 아는 정상 기준으로 복원한 것")의 코사인 유사도 차이를 구한다. 학습 때는 이 차이(정확히는 hard-mining 버전)가 loss가 되고, 테스트 때는 같은 계산이 anomaly map이 된다.
+
+**왜 이게 이상탐지가 되는가**: decoder는 학습 내내 "dropout으로 훼손된 입력을 보고도 원본(정상) feature를 복원하라"는 압박만 받는다 — 매번 다르게 훼손되니 특정 그림을 외울 수 없고, "이 카테고리의 정상이라면 마땅히 이래야 한다"는 규칙 자체를 배우게 된다. **dropout은 학습 때만 켜져 있고 테스트 때는 꺼진다**(PyTorch 표준 동작, `ViTill`이 이를 따로 바꾸지 않음 — `models/uad.py` 확인). 그래서 테스트 때 decoder는 훼손 없는 완전한 feature를 받지만, 학습 때 생긴 "정상 쪽으로 복원하려는 습관(=가중치)"을 그대로 적용한다. 진짜 정상이면 en과 de가 일치하고, 진짜 이상이면 en(실제 이상 그대로)과 de(decoder가 아는 정상으로 잘못 복원한 것)가 어긋나 그 차이가 anomaly map으로 드러난다.
+
+**참고**: 학습 데이터는 전부 정상 이미지뿐이라, 학습 중 en/de 차이는 "이상탐지 신호"가 아니라 순수한 학습 신호(loss)다. 이상 이미지가 실제로 섞여 들어와서 그 차이가 진짜 의미를 갖는 건 테스트(evaluation) 시점뿐이다.
 
 ### 3-2. Foundation Transformer
 - encoder로 DINOv2-Register 사전학습 ViT-Base/14 사용(대규모 데이터셋 자기지도학습 기반 범용 시각 표현 모델).
@@ -58,10 +71,25 @@ decoder는 8층 Transformer로, encoder가 뽑은 feature를 다시 복원하도
 
 
 ### 3-3. Noisy Bottleneck
-기존 연구들은 identity mapping을 막으려고 정교하게 설계한 pseudo anomaly(가짜 이상)를 입력 이미지나 encoder feature에 주입했다.
-Dinomaly는 그 대신 MLP bottleneck에 원래 있는 **Dropout을 켠다.**
-Dropout은 원래 과적합 방지용으로 쓰이지만, 여기서는 '일부 feature를 무작위로 지워서 정상 표현을 인위적으로 훼손하는 pseudo feature anomaly' 역할을 한다고 재해석한다.
-denoising autoencoder에서 노이즈를 넣는 것과 같은 원리로, 이 장치 하나만으로도 별도 모듈 없이 decoder가 입력이 이상이든 아니든 정상 feature를 복원하려고 시도하게 만들어 identity mapping을 완화한다.
+
+**identity mapping 문제부터**: decoder가 강력하면, loss(en·de 코사인 차이 최소화)를 만족하는 가장 쉬운 방법은 "정상 패턴을 이해해서 복원하기"가 아니라 그냥 **입력을 그대로 베끼는 것**이다(베끼면 en=de, loss=0). 이렇게 학습된 decoder는 테스트 때 이상 이미지가 들어와도 그 이상 패턴까지 그대로 베껴버려서 en·de 차이가 항상 작게 나오고, 이상탐지가 실패한다. 이게 identity mapping 문제다.
+
+**dropout으로 막는 원리**: 기존 연구들은 이를 막으려고 정교하게 설계한 pseudo anomaly(가짜 이상)를 입력 이미지나 encoder feature에 주입했다. Dinomaly는 그 대신 MLP bottleneck에 원래 있는 **Dropout을 켠다** — `bMlp`(`models/vision_transformer.py`) 안에서 fc1 통과 전/GELU 통과 후/fc2 통과 후, 한 forward에 **3번** 적용된다. Dropout이 feature 일부를 랜덤하게 지워버리면 decoder는 애초에 원본을 본 적이 없으니 "그대로 베끼는" 선택지 자체가 사라진다. 그런데도 loss는 여전히 훼손 안 된 원본(경로 A)과 비슷해지길 요구하니, decoder는 "일부가 지워진 정상 feature를 보고 원래 온전한 모습을 추론해서 채워넣는 법"을 배우게 된다. 매 forward마다 지워지는 위치가 달라지므로 특정 그림을 외우는 것으로는 안 되고, 그 카테고리의 정상 패턴 자체(반복 규칙, 정상 배치 등)를 학습해야만 한다.
+
+**중요: dropout은 학습 때만 작동한다.** PyTorch dropout은 `model.eval()`이 되면 자동으로 꺼지는데, Dinomaly의 `ViTill`은 이 기본 동작을 따로 바꾸지 않는다. 즉 테스트 때 decoder는 훼손 안 된 완전한 feature를 받지만, 학습 때 형성된 "정상 쪽으로 복원하려는 습관(가중치)"을 그대로 적용해버려서 이상 부분만 정상처럼 잘못 복원한다 — 이 어긋남이 anomaly map이다. dropout은 "훼손 위치를 찾아내는 능력"을 학습시키는 게 아니라, "무엇을 보든 정상 패턴 쪽으로 복원하는 습관" 자체를 만드는 장치다.
+
+**ablation 근거 (Table A5, A8, MVTec-AD — `paper/W38_..._Dinomaly_....pdf` p.5-6)**:
+
+| 조건 | Image AUROC | Pixel AUROC |
+|---|---|---|
+| No Noise (dropout=0) | 99.19 | 97.55 |
+| Dropout p=0.1 | 99.54 | 98.35 |
+| **Dropout p=0.2 (default)** | 99.60 | 98.35 |
+| Dropout p=0.3 | 99.65 | 98.34 |
+| Patch Masking (최고, p=0.1) | 99.27 | 97.92 |
+| Feature Jitter (최고, scale=20) | 99.59 | 98.23 |
+
+No Noise 대비 dropout을 켜는 순간 AUROC가 분명히 오른다 — identity mapping이 실제로 완화된다는 직접 증거. Patch Masking·Feature Jitter 같은 다른 noise 방식도 성능은 비슷한데, 논문이 dropout을 최종 채택한 이유는 "**Dropout is more robust to the noisy scale hyperparameter, and more elegant without introducing new modules**"(p.6 본문) — dropout rate에 덜 민감하고(0.1~0.5 전 구간이 비슷하게 좋음, Table A5) PyTorch에 이미 있는 모듈이라 별도 구현이 필요 없다는 효율성 때문이다.
 
 ### 3-4. Unfocused Linear Attention
 <img width="1220" height="664" alt="image" src="https://github.com/user-attachments/assets/0e641e3b-d56e-440e-8db4-fe94ebfce61d" />
