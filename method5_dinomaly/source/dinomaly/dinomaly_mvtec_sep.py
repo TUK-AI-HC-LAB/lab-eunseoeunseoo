@@ -91,7 +91,7 @@ def train(item):
     # num_workers 4->0: Windows spawn multiprocessing issue, same fix as method3_diad/method4_glad/dinomaly_mvtec_uni.py.
     train_dataloader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=0,
                                                    drop_last=True)
-    test_dataloader = torch.utils.data.DataLoader(test_data, batch_size=batch_size, shuffle=False, num_workers=4)
+    test_dataloader = torch.utils.data.DataLoader(test_data, batch_size=batch_size, shuffle=False, num_workers=0)
 
     # encoder_name = 'dinov2reg_vit_small_14'
     encoder_name = 'dinov2reg_vit_base_14'
@@ -201,11 +201,14 @@ if __name__ == '__main__':
     parser.add_argument('--save_dir', type=str, default='./saved_results')
     parser.add_argument('--save_name', type=str,
                         default='vitill_mvtec_sep_dinov2br_c392_en29_bn4dp2_de8_elaelu_md2_i1_it10k_sadm2e3_wd1e4_w1hcosa_ghmp09f01w1k_b16_ev_s1')
+    parser.add_argument('--items', type=str, default='',
+                        help='comma-separated subset of categories to run (for resuming after a crash); default runs all 15')
     args = parser.parse_args()
 
     item_list = ['carpet', 'grid', 'leather', 'tile', 'wood', 'bottle', 'cable', 'capsule',
                  'hazelnut', 'metal_nut', 'pill', 'screw', 'toothbrush', 'transistor', 'zipper']
-    # item_list = ['leather']
+    if args.items:
+        item_list = args.items.split(',')
     logger = get_logger(args.save_name, os.path.join(args.save_dir, args.save_name))
     print_fn = logger.info
 

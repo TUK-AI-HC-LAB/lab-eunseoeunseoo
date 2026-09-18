@@ -8,7 +8,6 @@ from torch.nn import functional as F
 from sklearn.metrics import roc_auc_score, f1_score, recall_score, accuracy_score, precision_recall_curve, \
     average_precision_score
 import cv2
-import matplotlib.pyplot as plt
 from sklearn.metrics import auc
 from skimage import measure
 import pandas as pd
@@ -666,7 +665,7 @@ def compute_pro(masks: ndarray, amaps: ndarray, num_th: int = 200) -> None:
     assert isinstance(num_th, int), "type(num_th) must be int"
 
     df = pd.DataFrame([], columns=["pro", "fpr", "threshold"])
-    binary_amaps = np.zeros_like(amaps, dtype=np.bool)
+    binary_amaps = np.zeros_like(amaps, dtype=bool)
 
     min_th = amaps.min()
     max_th = amaps.max()
