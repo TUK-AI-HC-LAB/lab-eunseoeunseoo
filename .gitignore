@@ -28,6 +28,7 @@ lightning_logs/
 val_ckpt/
 log
 log_image/
+events.out.tfevents.*
 
 # Environments
 __pycache__/
