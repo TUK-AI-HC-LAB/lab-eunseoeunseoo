@@ -128,7 +128,8 @@ def train(item):
     decoder = nn.ModuleList(decoder)
 
     model = ViTill(encoder=encoder, bottleneck=bottleneck, decoder=decoder, target_layers=target_layers,
-                   mask_neighbor_size=0, fuse_layer_encoder=fuse_layer_encoder, fuse_layer_decoder=fuse_layer_decoder)
+                   mask_neighbor_size=0, fuse_layer_encoder=fuse_layer_encoder, fuse_layer_decoder=fuse_layer_decoder,
+                   use_checkpoint=True)
     model = model.to(device)
     trainable = nn.ModuleList([bottleneck, decoder])
 
@@ -193,7 +194,8 @@ def train(item):
 
 
 if __name__ == '__main__':
-    os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
+    # CUDA_LAUNCH_BLOCKING=1 removed: forces synchronous kernel launches, adding
+    # per-launch overhead under WDDM without changing training math. Diagnostic-only change.
     import argparse
 
     parser = argparse.ArgumentParser(description='')

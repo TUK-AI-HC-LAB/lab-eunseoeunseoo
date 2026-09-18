@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.modules.batchnorm import _BatchNorm
+from torch.utils.checkpoint import checkpoint
 from sklearn.cluster import KMeans
 import math
 
@@ -19,6 +20,7 @@ class ViTill(nn.Module):
             mask_neighbor_size=0,
             remove_class_token=False,
             encoder_require_grad_layer=[],
+            use_checkpoint=False,
     ) -> None:
         super(ViTill, self).__init__()
         self.encoder = encoder
@@ -29,6 +31,11 @@ class ViTill(nn.Module):
         self.fuse_layer_decoder = fuse_layer_decoder
         self.remove_class_token = remove_class_token
         self.encoder_require_grad_layer = encoder_require_grad_layer
+        # gradient checkpointing for bottleneck/decoder only (encoder already runs under
+        # no_grad below, so it has no backward activations to save). Trades recompute for
+        # VRAM headroom without changing batch size / iters / precision -- see 2026-09-18
+        # VRAM oversubscription diagnosis (dedicated ~7.9GB + ~2.7GB shared on an 8GB card).
+        self.use_checkpoint = use_checkpoint
 
         if not hasattr(self.encoder, 'num_register_tokens'):
             self.encoder.num_register_tokens = 0
@@ -54,8 +61,19 @@ class ViTill(nn.Module):
             en_list = [e[:, 1 + self.encoder.num_register_tokens:, :] for e in en_list]
 
         x = self.fuse_feature(en_list)
+
+        do_checkpoint = self.use_checkpoint and self.training and torch.is_grad_enabled()
+        if do_checkpoint and not x.requires_grad:
+            # x comes from no_grad encoder features; checkpoint (use_reentrant=False) computes
+            # parameter gradients correctly either way, but requires_grad=True on the input
+            # avoids relying on that edge-case behavior.
+            x.requires_grad_(True)
+
         for i, blk in enumerate(self.bottleneck):
-            x = blk(x)
+            if do_checkpoint:
+                x = checkpoint(blk, x, use_reentrant=False, preserve_rng_state=True)
+            else:
+                x = blk(x)
 
         if self.mask_neighbor_size > 0:
             attn_mask = self.generate_mask(side, x.device)
@@ -64,7 +82,10 @@ class ViTill(nn.Module):
 
         de_list = []
         for i, blk in enumerate(self.decoder):
-            x = blk(x, attn_mask=attn_mask)
+            if do_checkpoint:
+                x = checkpoint(blk, x, False, attn_mask, use_reentrant=False, preserve_rng_state=True)
+            else:
+                x = blk(x, attn_mask=attn_mask)
             de_list.append(x)
         de_list = de_list[::-1]
 

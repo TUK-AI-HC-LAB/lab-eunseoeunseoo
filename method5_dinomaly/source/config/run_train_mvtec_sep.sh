@@ -12,4 +12,4 @@ cd "$(dirname "$0")/../dinomaly"
 "/c/Users/kelly/anaconda3/envs/dinomaly/python.exe" dinomaly_mvtec_sep.py \
     --data_path "$DATA_PATH" \
     --save_dir "$SAVE_DIR" \
-    --save_name "dinomaly_mvtec_sep_b16_paper_setting"
+    --save_name "dinomaly_mvtec_sep_b16_v2"
