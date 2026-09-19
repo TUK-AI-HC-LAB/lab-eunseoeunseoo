@@ -1,0 +1,16 @@
+category,pixel_auroc,image_auroc,pixel_aupro
+carpet,0.99,0.99,0.97
+bottle,0.987,0.999,0.966
+hazelnut,0.989,1.0,0.955
+leather,0.994,1.0,0.991
+cable,0.973,0.974,0.91
+capsule,0.987,0.98,0.958
+grid,0.992,1.0,0.971
+pill,0.982,0.966,0.965
+transistor,0.927,0.966,0.783
+metal_nut,0.973,1.0,0.925
+screw,0.996,0.975,0.982
+toothbrush,0.99,0.994,0.941
+zipper,0.982,0.979,0.955
+tile,0.956,0.995,0.907
+wood,0.953,0.993,0.909
