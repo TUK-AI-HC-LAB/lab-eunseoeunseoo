@@ -46,3 +46,6 @@ Thumbs.db
 # Secrets
 *.env
 .env.*
+
+# SimpleNet training output (weights/logs, large)
+method6_simplenet/source/code/SimpleNet/results/
