@@ -11,11 +11,12 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 | # | Folder | Paper | Venue | Status |
 |---|---|---|---|---|
 | 1 | `method1_patchcore/` | Roth et al., Towards Total Recall in Industrial Anomaly Detection | CVPR 2022 | ✅ Reproduced (mean I-AUROC 99.1%) |
-| 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | ✅ Reproduced — zero-shot/1-shot pill 재현 완료, H2 계열 반박. grid/transistor 전체 재현은 착수 전(H3만, 픽셀 레벨 미구현) |
+| 2 | `method2_winclip/` | Jeong et al., WinCLIP: Zero-/Few-Shot Anomaly Classification and Segmentation | CVPR 2023 | ✅ Reproduced — zero-shot/1-shot pill 재현 완료, H2 계열 반박. MVTec 15개 카테고리 zero-shot/1-shot 전체 실행 결과 CSV는 추가됨(`method2_winclip/source/result/mvtec_all_*.csv`), H2 판단은 pill 기준 그대로. H3만, 픽셀 레벨 미구현 |
 | 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | ⏸ 중단(2026-09-07, 교수님 지시) — epoch 58까지 학습, H3/H4 최종 판단은 미결정으로 남김(3개 지점 raw 결과: `method3_diad/source/result/eval_results_epoch7/16/34.csv`) |
 | 4 | `method4_glad/` | Yao et al., GLAD: Towards Better Reconstruction with Global and Local Adaptive Diffusion Models for Unsupervised Anomaly Detection | ECCV 2024 | ✅ 완료(데스크톱, RTX 5070/12GB, batch=32, 20000 step, 원 논문과 동일 설정) — grid I-AUROC 0.996(H3 지지), transistor P-AUROC 0.710(H4 반박, 비단조 악화). 논문 자체 보고치(Table S7) 대비도 전 지표 격차 있음(원인 미확인) |
-| 5 | `method5_dinomaly/` | Guo et al., Dinomaly: The Less Is More Philosophy in Multi-Class Unsupervised Anomaly Detection | CVPR 2025 | ✅ multi-class 완료(batch=16, 원 논문 설정) — grid I-AUROC 0.9983, transistor P-AUROC 0.9335로 PatchCore 상회(H3·H4 모두 지지). 🔬 class-separated(PatchCore와 동일 setting, 15개 카테고리)는 데스크톱에서 진행 중(5/15 완료). 노트북에서 batch=16 VRAM 오버서브스크립션(전용 메모리 포화+공유 메모리 spill로 5~8배 저속) 진단·해결(gradient checkpointing, 코드는 로컬에 있고 커밋 전) |
-| 6 | `method6_simplenet/` | Liu et al., SimpleNet: A Simple Network for Image Anomaly Detection and Localization | CVPR 2023 | 🔬 학습 중(노트북, RTX 5060/8GB) — class-separated, 공식 repo 그대로(batch=8, meta_epochs=40, gan_epochs=4) |
+| 5 | `method5_dinomaly/` | Guo et al., Dinomaly: The Less Is More Philosophy in Multi-Class Unsupervised Anomaly Detection | CVPR 2025 | ✅ 완료 — multi-class(batch=16, 원 논문 설정) grid I-AUROC 0.9983 / transistor P-AUROC 0.9335, class-separated(PatchCore와 동일 setting, 15개 카테고리) grid 1.0000 / transistor 0.9493(mean I-AUROC 99.75%, P-AUROC 98.38%)로 PatchCore 상회(H3·H4 모두 지지). 노트북 batch=16 VRAM 오버서브스크립션(5~8배 저속)은 gradient checkpointing으로 해결 |
+| 6 | `method6_simplenet/` | Liu et al., SimpleNet: A Simple Network for Image Anomaly Detection and Localization | CVPR 2023 | ✅ 완료(노트북, RTX 5060/8GB, 약 21시간) — class-separated 15개 카테고리, 공식 repo 설정 그대로(batch=8, meta_epochs=40, gan_epochs=4). mean I-AUROC 0.9963 / P-AUROC 0.9787 / PRO 0.9127. 결과는 best epoch 기준이라 마지막 epoch 값과 다를 수 있음(상세는 result README). 논문 보고치와의 대조는 미실시 |
+| 7 | `method7_reverse_distillation/` | Deng & Li, Anomaly Detection via Reverse Distillation from One-Class Embedding | CVPR 2022 | ✅ 완료 — class-separated 15개 카테고리, batch=16·epoch=200(원 논문 설정). mean I-AUROC 0.987 / P-AUROC 0.978 / PRO 0.939로 논문 보고치와 거의 일치 |
 
 ---
 
@@ -26,8 +27,9 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 2. WinCLIP 재현(`method2_winclip/`) → H2 계열 반박.
 3. DiAD 재현(`method3_diad/`) → H3/H4를 epoch 7/16/34 3개 지점에서 검증, 미결정인 채로 2026-09-07 교수님 지시로 중단.
 4. GLAD 재현(`method4_glad/`) → 데스크톱에서 원 논문과 동일 설정(batch=32)으로 완주. H3 지지, H4 반박(비단조 악화).
-5. Dinomaly 재현(`method5_dinomaly/`) → multi-class 완료(H3·H4 모두 지지, 논문 수준 재현 확인). class-separated는 진행 중.
-6. SimpleNet 재현(`method6_simplenet/`) → 현재 단계, 착수.
+5. Dinomaly 재현(`method5_dinomaly/`) → multi-class·class-separated 모두 완료(H3·H4 모두 지지).
+6. SimpleNet 재현(`method6_simplenet/`) → class-separated 완료(H3 지지, H4는 epoch 선택에 따라 갈림).
+7. Reverse Distillation 재현(`method7_reverse_distillation/`) → class-separated 완료(H3 지지, H4 미결정에 가까움).
 
 ### 현재 상태 — H3/H4 누적 현황
 | 방법 | setting | grid I-AUROC (H3) | transistor P-AUROC (H4) | 판단 |
@@ -36,18 +38,18 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 | DiAD (epoch34, 재현) | multi-class | 0.654 | 0.922 | H3 미결정, H4 미결정(반박에 가까움) |
 | GLAD (checkpoint20000, 완주) | multi-class | **0.996** | 0.710 | H3 지지, H4 반박(비단조 악화) |
 | Dinomaly (batch=16, 완주) | multi-class | 0.9983 | 0.9335 | H3 지지, H4 지지 |
-| Dinomaly (class-separated) | class-separated(PatchCore와 동일) | 진행 중(데스크톱, 5/15) | 진행 중 | — |
+| Dinomaly (class-separated, 완주) | class-separated(PatchCore와 동일) | 1.0000 | 0.9493 | H3 지지, H4 지지 |
+| SimpleNet (best epoch, 완주) | class-separated(PatchCore와 동일) | 0.9992 | 0.9682 | H3 지지, H4 조건부 지지(마지막 epoch 기준 transistor P-AUROC 0.8995로 PatchCore 미달) |
+| Reverse Distillation (완주) | class-separated(PatchCore와 동일) | 1.000 | 0.927 | H3 지지, H4 미결정에 가까움(PatchCore 0.929 대비 -0.002) |
 
-DiAD·GLAD(둘 다 diffusion 기반) 모두 H4(transistor)를 PatchCore 대비 반박/미결정으로 내는 경향이 반복되는 반면, Dinomaly(diffusion 없는 재구성 방법)는 H4까지 지지 — "재구성/생성 기반 접근 일반"이 아니라 diffusion 계열 특유의 한계일 가능성이 제기됨(추가 검증 필요). GLAD·DiAD 둘 다 논문 자체 보고치 대비 재현 격차가 있어(GLAD는 batch까지 맞췄는데도 격차 있음, 원인 미확인) 이 판단은 잠정적.
+DiAD·GLAD(둘 다 diffusion 기반)는 H4(transistor)를 PatchCore 대비 반박/미결정으로 내는 반면, Dinomaly는 H4까지 지지, SimpleNet은 epoch 선택에 따라 갈리고 Reverse Distillation은 미결정에 가까워 H4 판단은 방법마다 갈린다. H3(grid)는 diffusion 계열 중 GLAD와 diffusion이 아닌 Dinomaly·SimpleNet·Reverse Distillation 모두에서 지지로 반복된다. GLAD·DiAD는 논문 자체 보고치 대비 재현 격차가 있어(GLAD는 batch까지 맞췄는데도 격차 있음, 원인 미확인) 이 판단은 잠정적.
 
 ### 다음 방향
-2026-09-07 교수님 지시로 DiAD 재현을 중단하고, 피드백에서 언급된 4개 방법(GLAD/SimpleNet/Reverse Distillation/Dinomaly) 재현으로 전환했다. GLAD 완주 후 기기 역할이 재배치되어 현재는:
-- **데스크톱(RTX 5070/12GB)**: Dinomaly class-separated(`method5_dinomaly/`, PatchCore와 동일 setting) 학습 중, 5/15 완료.
-- **노트북(RTX 5060/8GB)**: SimpleNet(`method6_simplenet/`, class-separated) 학습 중.
+2026-09-07 교수님 지시로 DiAD 재현을 중단하고, 피드백에서 언급된 4개 방법(GLAD/SimpleNet/Reverse Distillation/Dinomaly) 재현으로 전환했고, 4개 모두 재현을 마쳤다(GLAD는 데스크톱, SimpleNet·Reverse Distillation은 노트북, Dinomaly는 노트북 multi-class와 데스크톱 class-separated).
 
-노트북에서 Dinomaly class-separated 시도 중 batch=16이 VRAM 오버서브스크립션으로 5~8배 저속화되는 문제를 진단·해결(gradient checkpointing)했으나, 이 수정은 아직 커밋되지 않은 상태로 로컬에만 있음(다음 커밋에서 반영 예정) — 데스크톱은 12GB VRAM이라 이 문제 없이 진행 중.
-
-Reverse Distillation은 아직 착수 전.
+- 재현 결과를 종합해 H3/H4 판단을 갱신하는 것이 다음 단계다.
+- SimpleNet은 논문 보고치와의 대조가 아직 안 됐다(논문 요약 `markdown/` 미작성).
+- 피드백 4(노트북 batch=16 저속 원인) 대응 raw 로그는 `method5_dinomaly/source/result/`에 있다.
 
 ### 참고
 - 진행 상세는 아래 weekly brief와 각 `methodN/markdown/`을 참고.
@@ -76,4 +78,5 @@ Reverse Distillation은 아직 착수 전.
 - [method4_glad/](method4_glad/)
 - [method5_dinomaly/](method5_dinomaly/)
 - [method6_simplenet/](method6_simplenet/)
+- [method7_reverse_distillation/](method7_reverse_distillation/)
 - [related_work/](related_work/)
