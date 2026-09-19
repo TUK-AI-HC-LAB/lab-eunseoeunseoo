@@ -14,7 +14,7 @@ import torch
 
 import main as winclip_main
 
-DATA_ROOT = os.path.abspath(
+DATA_ROOT = os.environ.get("WINCLIP_DATA_ROOT") or os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "No_Submit", "Dataset")
 )
 

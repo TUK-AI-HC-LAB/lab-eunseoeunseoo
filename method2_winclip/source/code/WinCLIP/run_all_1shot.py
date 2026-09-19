@@ -1,10 +1,11 @@
-"""Zero-shot WinCLIP on all 15 MVTec-AD categories (H3/H4 비교표용 전체 재현).
+"""WinCLIP+ (1-shot) on all 15 MVTec-AD categories.
 
-pill 카테고리 전용 run_pill_zeroshot.py와 같은 설정(seed=10, ViT-B-16-plus-240,
-zero-shot)을 15개 카테고리 전체에 대해 반복 실행하고 결과를 하나의 csv로 저장한다.
+Same setup as run_all_zeroshot.py (seed=10, ViT-B-16-plus-240) but with a
+single normal reference image added per category, mirroring run_pill_1shot.py's
+zero-shot vs 1-shot follow-up, extended to the full category sweep.
 
-Usage: run from this directory with the patchcore conda env:
-    conda run -n patchcore python run_all_zeroshot.py
+Usage: run from this directory with the winclip conda env:
+    conda run -n winclip python run_all_1shot.py
 """
 import csv
 import os
@@ -35,19 +36,19 @@ if __name__ == "__main__":
             "dataset_root_dir": os.path.dirname(DATA_ROOT),
             "data_dir": DATA_ROOT,
             "obj_type": cat,
-            "shot": 0,
+            "shot": 1,
         }
         with torch.no_grad(), torch.cuda.amp.autocast():
             gt_list, score_list, auroc, aupr, f1_max = winclip_main.run(config)
         elapsed = time.time() - cat_t0
         print(f"{cat}: I-AUROC={auroc:.4f} AUPR={aupr:.4f} F1-max={f1_max:.4f} ({elapsed:.1f}s)")
-        rows.append([cat, 0, auroc, aupr, f1_max, elapsed])
+        rows.append([cat, 1, auroc, aupr, f1_max, elapsed])
 
     total_elapsed = time.time() - t0
     print(f"total elapsed: {total_elapsed:.1f}s for {len(categories)} categories")
 
     os.makedirs("results", exist_ok=True)
-    out_path = os.path.join("results", "mvtec_all_zeroshot.csv")
+    out_path = os.path.join("results", "mvtec_all_1shot.csv")
     with open(out_path, "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["category", "shot", "i_auroc", "aupr", "f1_max", "elapsed_sec"])
@@ -55,5 +56,5 @@ if __name__ == "__main__":
         mean_auroc = np.mean([r[2] for r in rows])
         mean_aupr = np.mean([r[3] for r in rows])
         mean_f1 = np.mean([r[4] for r in rows])
-        w.writerow(["mean", 0, mean_auroc, mean_aupr, mean_f1, total_elapsed])
+        w.writerow(["mean", 1, mean_auroc, mean_aupr, mean_f1, total_elapsed])
     print(f"saved: {out_path}")
