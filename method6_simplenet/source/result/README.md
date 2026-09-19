@@ -43,8 +43,34 @@
 - **H3**: **지지**. best·마지막 epoch 모두 PatchCore 상회.
 - **H4**: best epoch 기준으로는 **지지**(0.9682>0.929)이나, 마지막 epoch 기준으로는 PatchCore에 못 미침(0.8995<0.929). epoch 선택 방식에 따라 판단이 갈리므로 조건부 지지로 기록.
 
+## 원 논문 보고치와 대조 (논문 Table 1, MVTec-AD, class-separated, I-AUROC%/P-AUROC%)
+논문 PDF(`method6_simplenet/paper/`) p.6 Table 1의 SimpleNet 열을 읽어 대조함(텍스처 평균 99.8/97.5, 물체 평균 99.5/98.4가 개별 값의 평균과 일치함을 확인). 재현 값은 위 결과 표(best epoch 기준)를 %로 환산.
+
+| 카테고리 | 논문 I | 재현 I | 차이 | 논문 P | 재현 P | 차이 |
+|---|---|---|---|---|---|---|
+| carpet | 99.7 | 99.6 | -0.1 | 98.2 | 97.9 | -0.3 |
+| grid | 99.7 | 99.9 | +0.2 | 98.8 | 98.2 | -0.6 |
+| leather | 100.0 | 100.0 | 0.0 | 99.2 | 99.2 | 0.0 |
+| tile | 99.8 | 99.8 | 0.0 | 97.0 | 96.4 | -0.6 |
+| wood | 100.0 | 100.0 | 0.0 | 94.5 | 94.0 | -0.5 |
+| bottle | 100.0 | 100.0 | 0.0 | 98.0 | 98.0 | 0.0 |
+| cable | 99.9 | 100.0 | +0.1 | 97.6 | 97.4 | -0.2 |
+| capsule | 97.7 | 97.9 | +0.2 | 98.9 | 98.9 | 0.0 |
+| hazelnut | 100.0 | 99.8 | -0.2 | 97.9 | 97.6 | -0.3 |
+| metal_nut | 100.0 | 100.0 | 0.0 | 98.8 | 98.7 | -0.1 |
+| pill | 99.0 | 98.8 | -0.2 | 98.6 | 98.3 | -0.3 |
+| screw | 98.2 | 98.8 | +0.6 | 99.3 | 99.2 | -0.1 |
+| toothbrush | 99.7 | 100.0 | +0.3 | 98.5 | 98.5 | 0.0 |
+| transistor | 100.0 | 100.0 | 0.0 | 97.6 | 96.8 | -0.8 |
+| zipper | 99.9 | 99.9 | 0.0 | 98.9 | 98.9 | 0.0 |
+| **mean** | **99.6** | **99.63** | +0.03 | **98.1** | **97.87** | -0.23 |
+
+- mean I-AUROC는 논문과 같은 값(99.6), mean P-AUROC는 0.23%p 낮음. 카테고리별 차이는 I-AUROC 최대 0.6%p(screw), P-AUROC 최대 0.8%p(transistor) 이내로, 논문 수치를 재현함.
+- H3/H4 카테고리: grid I-AUROC 논문 99.7 / 재현 99.9, transistor P-AUROC 논문 97.6 / 재현 96.8(best epoch 기준). 마지막 epoch(39) 기준 transistor P-AUROC는 89.95라 논문 값과 차이가 큼.
+- 논문이 최종 수치를 어떤 epoch 기준으로 골랐는지는 확인하지 않음.
+- 논문 본문(p.5)은 "Training epochs 160, batchsize 4"라고 쓰고, 이번에 쓴 공식 `run.sh`는 meta_epochs=40×gan_epochs=4(=160 epoch), batch=8임(batch만 다름).
+
 ## setting
 - class-separated(카테고리별 별도 모델·discriminator, 공식 repo `main.py` 그대로). PatchCore(class-separated)와 setting 동일, GLAD/Dinomaly(uni)와는 다름.
-- 원 논문 설정 유지: wideresnet50(layer2·layer3), batch=8, meta_epochs=40, gan_epochs=4, imagesize=288(resize 329), noise_std=0.015, seed=0. 로컬 환경 대응으로 `--gpu 0`, `num_workers=0`만 변경(`source/config/run_mvtec_all.sh`).
+- 공식 `run.sh` 설정 유지: wideresnet50(layer2·layer3), batch=8, meta_epochs=40, gan_epochs=4, imagesize=288(resize 329), noise_std=0.015, seed=0. 로컬 환경 대응으로 `--gpu 0`, `num_workers=0`만 변경(`source/config/run_mvtec_all.sh`).
 - 실행: 노트북(RTX 5060/8GB), 2026-09-18 12:04 시작 → 2026-09-19 09:24 `results.csv` 저장(약 21시간 20분).
-- 논문 보고치와의 대조는 아직 안 함(논문 요약 `markdown/` 미작성).

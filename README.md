@@ -15,7 +15,7 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 | 3 | `method3_diad/` | He et al., DiAD: A Diffusion-based Framework for Multi-class Anomaly Detection | AAAI 2024 | ⏸ 중단(2026-09-07, 교수님 지시) — epoch 58까지 학습, H3/H4 최종 판단은 미결정으로 남김(3개 지점 raw 결과: `method3_diad/source/result/eval_results_epoch7/16/34.csv`) |
 | 4 | `method4_glad/` | Yao et al., GLAD: Towards Better Reconstruction with Global and Local Adaptive Diffusion Models for Unsupervised Anomaly Detection | ECCV 2024 | ✅ 완료(데스크톱, RTX 5070/12GB, batch=32, 20000 step, 원 논문과 동일 설정) — grid I-AUROC 0.996(H3 지지), transistor P-AUROC 0.710(H4 반박, 비단조 악화). 논문 자체 보고치(Table S7) 대비도 전 지표 격차 있음(원인 미확인) |
 | 5 | `method5_dinomaly/` | Guo et al., Dinomaly: The Less Is More Philosophy in Multi-Class Unsupervised Anomaly Detection | CVPR 2025 | ✅ 완료 — multi-class(batch=16, 원 논문 설정) grid I-AUROC 0.9983 / transistor P-AUROC 0.9335, class-separated(PatchCore와 동일 setting, 15개 카테고리) grid 1.0000 / transistor 0.9493(mean I-AUROC 99.75%, P-AUROC 98.38%)로 PatchCore 상회(H3·H4 모두 지지). 노트북 batch=16 VRAM 오버서브스크립션(5~8배 저속)은 gradient checkpointing으로 해결 |
-| 6 | `method6_simplenet/` | Liu et al., SimpleNet: A Simple Network for Image Anomaly Detection and Localization | CVPR 2023 | ✅ 완료(노트북, RTX 5060/8GB, 약 21시간) — class-separated 15개 카테고리, 공식 repo 설정 그대로(batch=8, meta_epochs=40, gan_epochs=4). mean I-AUROC 0.9963 / P-AUROC 0.9787 / PRO 0.9127. 결과는 best epoch 기준이라 마지막 epoch 값과 다를 수 있음(상세는 result README). 논문 보고치와의 대조는 미실시 |
+| 6 | `method6_simplenet/` | Liu et al., SimpleNet: A Simple Network for Image Anomaly Detection and Localization | CVPR 2023 | ✅ 완료(노트북, RTX 5060/8GB, 약 21시간) — class-separated 15개 카테고리, 공식 repo 설정 그대로(batch=8, meta_epochs=40, gan_epochs=4). mean I-AUROC 0.9963 / P-AUROC 0.9787 / PRO 0.9127. 결과는 best epoch 기준이라 마지막 epoch 값과 다를 수 있음(상세는 result README). 논문 Table 1(99.6/98.1) 대비 mean I-AUROC 동일, P-AUROC -0.23%p로 재현 |
 | 7 | `method7_reverse_distillation/` | Deng & Li, Anomaly Detection via Reverse Distillation from One-Class Embedding | CVPR 2022 | ✅ 완료 — class-separated 15개 카테고리, batch=16·epoch=200(원 논문 설정). mean I-AUROC 0.987 / P-AUROC 0.978 / PRO 0.939로 논문 보고치와 거의 일치 |
 
 ---
@@ -48,7 +48,7 @@ DiAD·GLAD(둘 다 diffusion 기반)는 H4(transistor)를 PatchCore 대비 반�
 2026-09-07 교수님 지시로 DiAD 재현을 중단하고, 피드백에서 언급된 4개 방법(GLAD/SimpleNet/Reverse Distillation/Dinomaly) 재현으로 전환했고, 4개 모두 재현을 마쳤다(GLAD는 데스크톱, SimpleNet·Reverse Distillation은 노트북, Dinomaly는 노트북 multi-class와 데스크톱 class-separated).
 
 - 재현 결과를 종합해 H3/H4 판단을 갱신하는 것이 다음 단계다.
-- SimpleNet은 논문 보고치와의 대조가 아직 안 됐다(논문 요약 `markdown/` 미작성).
+- SimpleNet 논문 요약(`method6_simplenet/markdown/`)은 아직 미작성(보고치 대조는 result README에 완료).
 - 피드백 4(노트북 batch=16 저속 원인) 대응 raw 로그는 `method5_dinomaly/source/result/`에 있다.
 
 ### 참고
