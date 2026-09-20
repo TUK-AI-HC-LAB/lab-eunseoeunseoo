@@ -1,0 +1,827 @@
+== 2026-09-21 00:04:36
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  160 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+== 2026-09-21 00:04:43
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,870 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  142 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  358 MiB
+== 2026-09-21 00:04:49
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,883 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  134 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  1,714 MiB
+== 2026-09-21 00:04:55
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,883 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  134 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  1,714 MiB
+== 2026-09-21 00:05:01
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,885 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  134 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  1,862 MiB
+== 2026-09-21 00:05:07
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,886 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  134 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,318 MiB
+== 2026-09-21 00:05:13
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,886 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  143 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,318 MiB
+== 2026-09-21 00:05:19
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,886 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  143 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,318 MiB
+== 2026-09-21 00:05:25
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,886 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  142 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,318 MiB
+== 2026-09-21 00:05:31
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,886 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  134 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,318 MiB
+== 2026-09-21 00:05:37
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  143 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:05:43
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  134 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:05:48
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  134 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:05:54
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  134 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:06:00
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  134 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:06:06
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  143 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:06:12
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  143 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:06:18
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  142 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:06:24
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  134 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  521 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:06:29
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  170 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  53 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  543 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  73 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:06:36
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  159 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  540 MiB
+\\eun\gpu process memory(pid_4768_luid_0x00000000_0x00011123_phys_0)\shared usage  143 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:06:42
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  172 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  511 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:06:48
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  82 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  552 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:06:54
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  133 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  585 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:00
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  66 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  585 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:06
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  65 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:12
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  65 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:18
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  64 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:24
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  64 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:29
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  64 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:35
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  64 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:41
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  64 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:47
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:53
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:07:59
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:08:05
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:08:11
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:08:17
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:08:23
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:08:29
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:08:35
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:08:40
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,887 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,774 MiB
+== 2026-09-21 00:08:46
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:08:52
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  62 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:08:58
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  71 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:09:04
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  178 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:09:10
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  122 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  584 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:09:16
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  156 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  585 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:09:22
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  236 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  586 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:09:28
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  108 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  199 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  664 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:09:34
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  108 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  118 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  662 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:09:40
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  108 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  118 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  662 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:09:46
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  121 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  108 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  118 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  659 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:09:52
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  108 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  118 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:09:58
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  118 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:10:04
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:10:10
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:10:16
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:10:22
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:10:28
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:10:33
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:10:39
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:10:45
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:10:51
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:10:57
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:11:03
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:11:09
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:11:15
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:11:21
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:11:26
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:11:32
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:11:38
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:11:44
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:11:50
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:11:56
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:12:02
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:12:08
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:12:14
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:12:20
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:12:26
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:12:32
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:12:38
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:12:44
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_19276_luid_0x00000000_0x00011123_phys_0)\shared usage  57 MiB
+\\eun\gpu process memory(pid_20464_luid_0x00000000_0x00011123_phys_0)\shared usage  55 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  117 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  631 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:12:50
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  63 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  61 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  555 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:12:56
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  63 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  61 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  555 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:13:02
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  63 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  61 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  555 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:13:07
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  63 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  61 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  555 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:13:13
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  63 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  61 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  555 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:13:19
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  63 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  61 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  555 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB
+== 2026-09-21 00:13:25
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\dedicated usage  7,881 MiB
+\\eun\gpu process memory(pid_11680_luid_0x00000000_0x00011123_phys_0)\shared usage  79 MiB
+\\eun\gpu process memory(pid_14588_luid_0x00000000_0x00011123_phys_0)\shared usage  77 MiB
+\\eun\gpu process memory(pid_2832_luid_0x00000000_0x00011123_phys_0)\shared usage  63 MiB
+\\eun\gpu process memory(pid_29556_luid_0x00000000_0x00011123_phys_0)\shared usage  61 MiB
+\\eun\gpu process memory(pid_3220_luid_0x00000000_0x00011123_phys_0)\shared usage  555 MiB
+\\eun\gpu process memory(pid_744_luid_0x00000000_0x00011123_phys_0)\shared usage  85 MiB
+\\eun\gpu process memory(pid_9060_luid_0x00000000_0x000114e9_phys_0)\shared usage  2,780 MiB

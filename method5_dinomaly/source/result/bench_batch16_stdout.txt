@@ -1,0 +1,23 @@
+tee: config/../result/bench_batch16_stdout.txt: No such file or directory
+cuda:0
+transistor
+train image number:213
+BENCH iter 2 t=1789916704.77
+BENCH iter 4 t=1789916734.93
+BENCH iter 6 t=1789916777.48
+BENCH iter 8 t=1789916810.00
+BENCH iter 10 t=1789916846.36
+BENCH iter 12 t=1789916887.06
+BENCH iter 14 t=1789916924.35
+BENCH iter 16 t=1789916959.65
+BENCH iter 18 t=1789916995.71
+BENCH iter 20 t=1789917036.58
+BENCH iter 22 t=1789917075.75
+BENCH iter 24 t=1789917113.08
+BENCH iter 26 t=1789917145.69
+BENCH iter 28 t=1789917183.42
+BENCH iter 30 t=1789917209.05
+[['transistor', 0, 0, 0, 0, 0, 0, 0]]
+Mean: I-Auroc:0.0000, I-AP:0.0000, I-F1:0.0000, P-AUROC:0.0000, P-AP:0.0000, P-F1:0.0000, P-AUPRO:0.0000
+
+[exited with code 0]
