@@ -43,6 +43,8 @@
 - **H3**: **지지**. best·마지막 epoch 모두 PatchCore 상회.
 - **H4**: best epoch 기준으로는 **지지**(0.9682>0.929)이나, 마지막 epoch 기준으로는 PatchCore에 못 미침(0.8995<0.929). epoch 선택 방식에 따라 판단이 갈리므로 조건부 지지로 기록.
 
+> ※ 정정(2026-09-20): 위 PatchCore 0.929는 anomaly-only 정의이고 SimpleNet의 `full_pixel_auroc`는 full-pixel 정의라 metric이 다르다. 같은 full-pixel 기준 PatchCore는 **0.963**이며, best epoch 0.9682는 근소하게 높고(+0.005) 마지막 epoch 0.8995는 낮아 "조건부 지지"라는 판단 구조는 유지되지만 우위 폭은 0.929 기준(+0.039)보다 훨씬 작다. 자세한 비교는 `meetings/2026-W39_brief.md` 5절 실험 3.
+
 ## 원 논문 보고치와 대조 (논문 Table 1, MVTec-AD, class-separated, I-AUROC%/P-AUROC%)
 논문 PDF(`method6_simplenet/paper/`) p.6 Table 1의 SimpleNet 열을 읽어 대조함(텍스처 평균 99.8/97.5, 물체 평균 99.5/98.4가 개별 값의 평균과 일치함을 확인). 재현 값은 위 결과 표(best epoch 기준)를 %로 환산.
 

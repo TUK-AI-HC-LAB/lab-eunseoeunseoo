@@ -17,6 +17,8 @@ Reverse Distillation(CVPR 2022, 공식 코드 저장소 이름은 RD4AD)
 - **H3** (grid, global pattern-regularity): **지지**. grid I-AUROC 1.000으로 PatchCore(0.977)를 앞섬 — DiAD/GLAD/Dinomaly에 이어 네 번째 재구성 계열 방법에서도 반복.
 - **H4** (transistor, spatial-arrangement): **미결정에 가까움**. transistor P-AUROC 0.927로 PatchCore(0.929)와 거의 동일하나 근소하게 낮음(-0.002). Dinomaly(sep)에서는 명확히 앞섰던 것과 달리 Reverse Distillation에서는 그 정도로 뚜렷하지 않아, "재구성 기반 접근이 H4에 특히 강하다"는 가설에 대한 근거가 방법마다 갈리는 모습.
 
+> ※ 정정(2026-09-20): 위 PatchCore 0.929는 anomaly-only 정의이고 RD4AD의 pixel_auroc는 full-pixel 정의다(`method7_reverse_distillation/source/code/RD4AD/test.py`). 같은 full-pixel 기준 PatchCore는 **0.963**이라 차이는 -0.002가 아니라 **-0.036**이며 "거의 동일"이 아니라 뚜렷하게 낮다. 자세한 비교는 `meetings/2026-W39_brief.md` 5절 실험 3.
+
 ## 15개 카테고리 전체 결과
 | category | pixel_auroc | image_auroc | pixel_aupro |
 |---|---|---|---|

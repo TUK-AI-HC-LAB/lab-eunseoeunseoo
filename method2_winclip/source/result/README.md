@@ -18,5 +18,21 @@
 
 상세 근거·실험 설정은 `method2_winclip/markdown/winclip_zeroshot_analysis.md` 참고.
 
+## 원 논문 보고치와 대조 (MVTec-AD 15개 카테고리 평균, %)
+논문 PDF(`method2_winclip/paper/`)의 Table 1(AC: AUROC/AUPR/F1-max)과 재현 CSV(`mvtec_all_zeroshot.csv`, `mvtec_all_1shot.csv`)의 15개 카테고리 평균을 비교함.
+
+| 조건 | 지표 | 논문 | 재현 | 차이 |
+|---|---|---|---|---|
+| zero-shot | I-AUROC | 91.8 | 90.41 | -1.39 |
+| zero-shot | AUPR | 96.5 | 95.64 | -0.86 |
+| zero-shot | F1-max | 92.9 | 92.12 | -0.78 |
+| 1-shot (WinCLIP+) | I-AUROC | 93.1±2.0 | 91.45 | -1.65 |
+| 1-shot (WinCLIP+) | AUPR | 96.5±0.9 | 95.92 | -0.58 |
+| 1-shot (WinCLIP+) | F1-max | 93.7±1.1 | 92.53 | -1.17 |
+
+- 세 지표 모두 재현이 논문보다 0.6~1.7%p 낮음. 논문 1-shot 값은 5개 random seed 평균±표준편차이고, 재현은 seed=10 한 번의 결과라 1-shot 차이(-1.65)는 논문 표준편차(2.0) 안쪽임.
+- 원인은 확인하지 않음.
+- 이 대조는 이미지 단위 분류(AC)만 해당함. 이 재현은 pixel 단위(AS)를 구현하지 않았음.
+
 ## setting
 class-separated, zero-shot/few-shot(카테고리별 재학습 없음) — 다른 방법들과 비교축 자체가 다름(학습 데이터 접근량이 0~1장).

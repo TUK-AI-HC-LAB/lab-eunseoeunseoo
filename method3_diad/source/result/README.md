@@ -51,6 +51,8 @@
 - **H3** (grid, global pattern-regularity): **미결정, 안 좋아지는 쪽**. PatchCore(0.977)에 세 지점 모두 못 미치고 비단조적.
 - **H4** (transistor, spatial-arrangement): **미결정, 반박에 가까움**. epoch7만 PatchCore를 넘었고(0.945>0.929) 이후 계속 하락해 PatchCore 근처로 수렴 — 우연히 초반에 높았을 가능성. 다만 transistor는 위 DiAD 논문 대비 격차가 grid만큼 크지 않아(epoch7 P-AUROC 94.5 vs 논문 95.1), grid와 달리 재현 신뢰성 문제로 보이지는 않음 — H4가 반박에 가깝다는 판단 자체는 유지 가능.
 
+> ※ 정정(2026-09-20): 위 PatchCore 0.929는 `anomaly_pixel_auroc`(이상 이미지만 모아 계산)이고, DiAD의 pixel AUROC는 전체 이미지의 모든 픽셀로 계산하는 full-pixel 정의다(`method3_diad/source/code/DiAD/utils/eval_helper.py`). 같은 full-pixel 기준 PatchCore는 **0.963**이라 epoch7의 0.945도 넘지 못한다. "반박에 가까움" 판단은 유지되고 격차만 커진다. 자세한 비교는 `meetings/2026-W39_brief.md` 5절 실험 3.
+
 ## 다음 판단
 - **2026-09-07 교수님 지시로 재현 중단**. grid·wood 등 DiAD 논문과의 격차가 30%p 안팎으로 너무 커서 이 재현치로 H3/H4를 계속 판단할 실질적 이유가 없다고 보고 중단, GLAD/SimpleNet/Reverse Distillation/Dinomaly로 후보 전환(경위는 `meetings/2026-W37_brief.md` 참고).
 

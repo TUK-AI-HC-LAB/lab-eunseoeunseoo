@@ -42,6 +42,8 @@ MVTec AD 기준 Industrial Anomaly Detection (IAD) 방법론을 재현하고, Pa
 | SimpleNet (best epoch, 완주) | class-separated(PatchCore와 동일) | 0.9992 | 0.9682 | H3 지지, H4 조건부 지지(마지막 epoch 기준 transistor P-AUROC 0.8995로 PatchCore 미달) |
 | Reverse Distillation (완주) | class-separated(PatchCore와 동일) | 1.000 | 0.927 | H3 지지, H4 미결정에 가까움(PatchCore 0.929 대비 -0.002) |
 
+> ※ 정정(2026-09-20): 위 표의 PatchCore 0.929는 `anomaly_pixel_auroc`(이상 이미지만 모아 계산)이고 다른 방법의 값은 전체 이미지 기준 full-pixel AUROC라 metric이 다릅니다. 같은 full-pixel 기준 PatchCore는 **0.963**이며, 이 기준에서 Dinomaly의 "H4 지지"(0.9335·0.9493)와 Reverse Distillation의 "거의 동일"(0.927, 실제 차이 -0.036)은 성립하지 않습니다. DiAD·GLAD의 반박/미결정 방향은 그대로이고 격차만 커지며, SimpleNet은 best epoch(0.9682)만 근소하게 높고 마지막 epoch(0.8995)은 낮습니다. 자세한 비교는 `meetings/2026-W39_brief.md` 5절 실험 3.
+
 DiAD·GLAD(둘 다 diffusion 기반)는 H4(transistor)를 PatchCore 대비 반박/미결정으로 내는 반면, Dinomaly는 H4까지 지지, SimpleNet은 epoch 선택에 따라 갈리고 Reverse Distillation은 미결정에 가까워 H4 판단은 방법마다 갈린다. H3(grid)는 diffusion 계열 중 GLAD와 diffusion이 아닌 Dinomaly·SimpleNet·Reverse Distillation 모두에서 지지로 반복된다. GLAD·DiAD는 논문 자체 보고치 대비 재현 격차가 있어(GLAD는 batch까지 맞췄는데도 격차 있음, 원인 미확인) 이 판단은 잠정적.
 
 ### 다음 방향
@@ -59,8 +61,8 @@ DiAD·GLAD(둘 다 diffusion 기반)는 H4(transistor)를 PatchCore 대비 반�
 
 | Week | Link | 비고 |
 |---|---|---|
-| 2026-W39 | 작성 중(미커밋) | GLAD 완주(H3 지지/H4 반박), Dinomaly class-separated VRAM 오버서브스크립션 진단·해결. 아직 초안 — 커밋 전 |
-| 2026-W38 (current) | [meetings/2026-W38_brief.md](meetings/2026-W38_brief.md) | GLAD·Dinomaly 병행 재현 착수 — Dinomaly batch=4 첫 결과(grid I-AUROC 0.9975로 H3 지지, transistor P-AUROC 0.9238로 H4 근접·미결정), GLAD는 데스크톱에서 effective batch 32로 재학습 중 |
+| 2026-W39 (current) | [meetings/2026-W39_brief.md](meetings/2026-W39_brief.md) | 7개 방법 재현 완주 후 같은 metric으로 비교(H3 지지, H4는 full-pixel 기준 재해석 — PatchCore 0.929 정정), GLAD 재현 신뢰도 문제, Dinomaly batch=16 저속 원인(VRAM 오버서브스크립션) 확정. 6·7번 피드백은 미착수 |
+| 2026-W38 | [meetings/2026-W38_brief.md](meetings/2026-W38_brief.md) | GLAD·Dinomaly 병행 재현 착수 — Dinomaly batch=4 첫 결과(grid I-AUROC 0.9975로 H3 지지, transistor P-AUROC 0.9238로 H4 근접·미결정), GLAD는 데스크톱에서 effective batch 32로 재학습 중 |
 | 2026-W37 | [meetings/2026-W37_brief.md](meetings/2026-W37_brief.md) | GLAD 비교로 DiAD 재현 mean I-AUROC가 논문 보고치에 크게 못 미침을 확인 — H3/H4 "구조적 한계 vs 학습 부족" 판단 재검토 |
 | 2026-W36 | [meetings/2026-W36_brief.md](meetings/2026-W36_brief.md) | DiAD 재현 실험 epoch 7/16/34 종합: H3/H4 모두 미결정(비관적 쪽으로 이동), epoch 24 재현 불가 확인 |
 | 2026-W31 | [meetings/2026-W31_brief.md](meetings/2026-W31_brief.md) | DiAD 재현 실험: H4 지지, H3 미결정 |

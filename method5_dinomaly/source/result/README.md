@@ -18,6 +18,9 @@
 ## 가설 판단
 - **H3** (grid, global pattern-regularity): **지지**. uni(batch=4/16)·sep 세 조건 모두 PatchCore를 명확히 앞섬. sep에서는 만점(1.0000).
 - **H4** (transistor, spatial-arrangement): uni batch=4에서는 PatchCore에 근소하게 못 미쳐(0.9238<0.929) 미결정이었으나, uni batch=16에서 역전(0.9335>0.929)되었고, **sep(class-separated)에서도 재확인**(0.9493>0.929) — 세 조건 중 가장 큰 격차. training setting(batch size, class-separated 여부)과 무관하게 일관되게 지지로 수렴.
+
+> ※ 정정(2026-09-20): 위 PatchCore 0.929는 `anomaly_pixel_auroc`(이상 이미지만 모아 계산)이고 Dinomaly의 P-AUROC는 전체 이미지 full-pixel 정의(`method5_dinomaly/source/dinomaly/utils.py`의 `evaluation_batch`)라 metric이 다르다. 같은 full-pixel 기준 PatchCore는 **0.963**이며 uni(0.9335)·sep(0.9493) 모두 넘지 못하므로 위 "H4 지지" 서술은 이 기준에서 성립하지 않는다. 자세한 비교는 `meetings/2026-W39_brief.md` 5절 실험 3.
+
 - sep 15개 카테고리 Mean(I-AUROC 99.75%/I-AP 99.92%/P-AUROC 98.38%)은 uni batch=16 Mean(99.64%/99.81%/98.33%)과 거의 같은 수준 — **class-separated로 바꿔도 성능이 크게 달라지지 않음**. 이는 논문 Table 2의 핵심 주장("multi-class 모델 하나로도 class-separated 전용 모델을 이긴다")과도 부합: 이 재현에서는 오히려 두 setting의 차이 자체가 크지 않았음.
 
 ## sep 학습 진행 메모
@@ -28,3 +31,29 @@
 ## setting
 - uni: multi-class(15개 카테고리 동시 학습, `dinomaly_mvtec_uni.py`) — PatchCore(class-separated)와 setting이 다름.
 - sep: class-separated(카테고리별 개별 학습, `dinomaly_mvtec_sep.py`, batch_size=16, 카테고리당 5000 iter) — PatchCore와 동일한 setting. **완주됨.**
+
+## 원 논문 보고치와 대조 (MVTec-AD 15개 카테고리 평균, %)
+논문 PDF(`method5_dinomaly/paper/`)의 Table 1(multi-class)·Table 2(class-separated)와 재현 CSV의 15개 카테고리 평균(CSV의 mean 행이 아니라 카테고리 값에서 재계산)을 비교함. Table 1에서 "Dinomaly (Ours)" 행이 논문의 원래 학습 스케줄(MVTec 10,000 iter)이고, 바로 아래 "Dinomaly" 행은 스케줄을 키운 버전이라 재현(10,000 iter)은 "(Ours)" 행과 비교함.
+
+**multi-class (uni, batch=16, 10000 iter) vs Table 1 "Dinomaly (Ours)"**
+
+| 지표 | 논문 | 재현 | 차이 |
+|---|---|---|---|
+| I-AUROC | 99.6 | 99.64 | +0.04 |
+| I-AP | 99.8 | 99.81 | +0.01 |
+| I-F1-max | 99.0 | 99.14 | +0.14 |
+| P-AUROC | 98.4 | 98.33 | -0.07 |
+| P-AP | 69.3 | 69.06 | -0.24 |
+| P-F1-max | 69.2 | 69.00 | -0.20 |
+| P-AUPRO | 94.8 | 94.64 | -0.16 |
+
+**class-separated (sep, batch=16, 카테고리당 5000 iter) vs Table 2 "Dinomaly"**
+
+| 지표 | 논문 | 재현 | 차이 |
+|---|---|---|---|
+| I-AUROC | 99.7 | 99.75 | +0.05 |
+| P-AUROC | 99.9(표에 인쇄된 값) | 98.38 | -1.52 |
+| P-AUPRO | 95.0 | 94.82 | -0.18 |
+
+- uni는 모든 지표가 논문과 0.25%p 이내로 일치해 재현으로 볼 수 있음.
+- sep의 I-AUROC·P-AUPRO도 일치함. P-AUROC만 논문 Table 2에 99.9로 인쇄돼 있어 -1.52%p 차이가 나는데, 같은 논문 Table 1의 Dinomaly 행은 98.4이고 Table 2의 "Dinomaly (MUAD)" 행도 98.4임. Table 2의 99.9가 표기 그대로의 값인지는 확인하지 못했고, 이 차이의 원인도 확인하지 않음.

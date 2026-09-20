@@ -16,6 +16,8 @@
 - **H3** (grid, global pattern-regularity): **지지**. checkpoint20000에서 PatchCore(0.977)를 넘어섬(0.996). step600→checkpoint20000 사이 계속 개선되는 단조 추세.
 - **H4** (transistor, spatial-arrangement): **반박**. PatchCore(0.929)에 크게 못 미침(0.710). 게다가 step600(0.786)→checkpoint20000(0.710)로 **학습이 진행될수록 오히려 나빠지는 비단조 추이** — 원인 미확인.
 
+> ※ 정정(2026-09-20): 위 PatchCore 0.929는 anomaly-only 정의이고 GLAD의 pixel AUROC는 full-pixel 정의다(`method4_glad/source/GLAD/main_multi.py`). 같은 full-pixel 기준 PatchCore는 **0.963**이며 GLAD 0.710은 방향(반박)은 같고 격차만 커진다. 자세한 비교는 `meetings/2026-W39_brief.md` 5절 실험 3.
+
 ## 원 논문과의 비교 (multi-class, MVTec-AD, Table S7 "GLAD-256")
 논문의 headline 결과(Table 1)는 카테고리별 별도 모델(single-class)이라 직접 비교가 안 되지만, supplementary Table S7에 같은 protocol(15개 카테고리 공동학습, resolution 256, `max_train_steps=20000`, batch=32)의 수치가 따로 있음. **이 재현(데스크탑, `train_batch_size=2 × gradient_accumulation_steps=16` = 실질 batch 32)은 batch를 포함해 논문/공식 스크립트(`train_multi.sh`)와 lr(5e-6)·denoise_step(500)·resolution(256)·mixed_precision(fp16)·optimizer(8-bit Adam)·steps(20000)가 모두 동일함.**
 
