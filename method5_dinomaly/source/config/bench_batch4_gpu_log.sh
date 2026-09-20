@@ -12,5 +12,5 @@ MON=$!
 cd "$(dirname "$0")/../dinomaly"
 "/c/Users/kelly/anaconda3/envs/dinomaly/python.exe" -u bench_sep_batch4.py \
     --data_path 'C:/ai_local/diad_dataset' --save_dir 'C:/ai_local/dinomaly_run/saved_results' \
-    --save_name bench_sep_batch4 --items transistor 2>&1 | tee "$OUT/bench_batch4_stdout.log"
+    --save_name bench_sep_batch4 --items transistor 2>&1 | tee "$OUT/bench_batch4_stdout.txt"
 kill $MON
