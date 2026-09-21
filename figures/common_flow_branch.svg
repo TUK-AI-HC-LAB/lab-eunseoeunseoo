@@ -1,0 +1,285 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1420" viewBox="0 0 1900 1420" font-family="'Malgun Gothic','Noto Sans KR','Segoe UI',sans-serif">
+<title>PatchCore · WinCLIP · GLAD · Dinomaly 공통 흐름</title>
+<defs>
+<marker id="ah-P" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 z" fill="#0072B2"/></marker>
+<marker id="ho-P" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L9,5 L1,9 z" fill="#ffffff" stroke="#0072B2" stroke-width="1.6"/></marker>
+<marker id="ah-W" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 z" fill="#D55E00"/></marker>
+<marker id="ho-W" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L9,5 L1,9 z" fill="#ffffff" stroke="#D55E00" stroke-width="1.6"/></marker>
+<marker id="ah-G" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 z" fill="#009E73"/></marker>
+<marker id="ho-G" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L9,5 L1,9 z" fill="#ffffff" stroke="#009E73" stroke-width="1.6"/></marker>
+<marker id="ah-D" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 z" fill="#CC79A7"/></marker>
+<marker id="ho-D" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L9,5 L1,9 z" fill="#ffffff" stroke="#CC79A7" stroke-width="1.6"/></marker>
+<marker id="ah-K" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 z" fill="#57606a"/></marker><marker id="ho-K" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L9,5 L1,9 z" fill="#ffffff" stroke="#57606a" stroke-width="1.6"/></marker></defs>
+<rect width="1900" height="1420" fill="#ffffff"/>
+<rect x="368" y="80" width="488" height="1160" fill="#F6F8FA"/>
+<rect x="1383" y="80" width="333" height="1160" fill="#F6F8FA"/>
+<polygon points="30,30 136,30 150,51 136,72 30,72" fill="#24292F"/>
+<text x="42" y="48" font-size="15" font-weight="700" fill="#ffffff">① 입력</text>
+<text x="42" y="64" font-size="11" fill="#C9D1D9">공통</text>
+<polygon points="364,30 838,30 852,51 838,72 364,72 374,51" fill="#24292F"/>
+<text x="388" y="48" font-size="15" font-weight="700" fill="#ffffff">② 특징 추출</text>
+<text x="388" y="64" font-size="11" fill="#C9D1D9">여기서 처음 분기</text>
+<polygon points="864,30 1358,30 1372,51 1358,72 864,72 874,51" fill="#24292F"/>
+<text x="888" y="48" font-size="15" font-weight="700" fill="#ffffff">③ 정상 기준 · 학습 신호</text>
+<text x="888" y="64" font-size="11" fill="#C9D1D9">방법별 경로 유지</text>
+<polygon points="1379,30 1698,30 1712,51 1698,72 1379,72 1389,51" fill="#24292F"/>
+<text x="1403" y="48" font-size="15" font-weight="700" fill="#ffffff">④ score 계산</text>
+<text x="1403" y="64" font-size="11" fill="#C9D1D9">방법별 경로 유지</text>
+<polygon points="1722,30 1880,30 1880,72 1722,72 1732,51" fill="#24292F"/>
+<text x="1746" y="48" font-size="15" font-weight="700" fill="#ffffff">출력</text>
+<text x="1746" y="64" font-size="11" fill="#C9D1D9">합류</text>
+<rect x="30" y="604.0" width="105" height="120" rx="6" fill="#24292F"/>
+<text x="82.5" y="656.0" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">이미지 x</text>
+<text x="82.5" y="678.0" text-anchor="middle" font-size="12" fill="#C9D1D9">MVTec AD</text>
+<rect x="1746" y="589.0" width="134" height="150" rx="6" fill="#24292F"/>
+<text x="1813.0" y="626.0" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">공통 출력</text>
+<text x="1813.0" y="656.0" text-anchor="middle" font-size="12.5" fill="#ffffff">이미지 수준 score</text>
+<text x="1813.0" y="678.0" text-anchor="middle" font-size="12.5" fill="#ffffff">픽셀 수준</text>
+<text x="1813.0" y="695.0" text-anchor="middle" font-size="12.5" fill="#ffffff">anomaly map</text>
+<rect x="172" y="100" width="1530" height="146" rx="8" fill="#0072B2" fill-opacity="0.05" stroke="#0072B2" stroke-width="2"/>
+<circle cx="190" cy="118" r="6" fill="#0072B2"/>
+<text x="204" y="123" font-size="15" font-weight="700" fill="#1f2328">PatchCore</text>
+<text x="308" y="123" font-size="12" fill="#57606a">학습 없음 · 메모리 뱅크 최근접 이웃</text>
+<rect x="380" y="136" width="215" height="92" rx="3" fill="#ffffff" stroke="#0072B2" stroke-width="2.2"/>
+<circle cx="581" cy="150" r="5" fill="#0072B2"/>
+<text x="390" y="170" font-size="13.5" font-weight="700" fill="#1f2328">NetworkFeatureAggregator</text>
+<text x="390" y="190" font-size="12" fill="#1f2328">사전학습 backbone</text>
+<text x="390" y="206" font-size="12" fill="#1f2328">layers_to_extract_from</text>
+<rect x="615" y="136" width="215" height="92" rx="3" fill="#ffffff" stroke="#0072B2" stroke-width="2.2"/>
+<circle cx="816" cy="150" r="5" fill="#0072B2"/>
+<text x="625" y="170" font-size="13.5" font-weight="700" fill="#1f2328">PatchMaker.patchify</text>
+<text x="625" y="190" font-size="12" fill="#1f2328">Preprocessing → Aggregator</text>
+<text x="625" y="206" font-size="12" fill="#1f2328">patch 특징 (차원 정렬)</text>
+<rect x="880" y="136" width="225" height="92" rx="3" fill="#ffffff" stroke="#0072B2" stroke-width="2.2"/>
+<circle cx="1091" cy="150" r="5" fill="#0072B2"/>
+<text x="890" y="170" font-size="13.5" font-weight="700" fill="#1f2328">GreedyCoresetSampler</text>
+<text x="890" y="190" font-size="12" fill="#1f2328">(Approximate / Identity)</text>
+<text x="890" y="206" font-size="12" fill="#1f2328">fit 시 patch 특징 축소</text>
+<rect x="1125" y="136" width="225" height="92" rx="3" fill="#E4E7EB" stroke="#0072B2" stroke-width="2.2"/>
+<circle cx="1336" cy="150" r="5" fill="#0072B2"/>
+<text x="1135" y="162" font-size="13.5" font-weight="700" fill="#1f2328">메모리 뱅크</text>
+<text x="1135" y="182" font-size="12" fill="#1f2328">정상 학습 이미지로 fit</text>
+<text x="1135" y="198" font-size="12" fill="#1f2328">FaissNN · NearestNeighbourScorer.fit</text>
+<text x="1135" y="214" font-size="12" fill="#1f2328">역전파 없음</text>
+<rect x="1395" y="136" width="300" height="92" rx="3" fill="#ffffff" stroke="#0072B2" stroke-width="2.2"/>
+<circle cx="1681" cy="150" r="5" fill="#0072B2"/>
+<text x="1405" y="162" font-size="13.5" font-weight="700" fill="#1f2328">kNN 거리 → score · map</text>
+<text x="1405" y="182" font-size="12" fill="#1f2328">NearestNeighbourScorer.predict</text>
+<text x="1405" y="198" font-size="12" fill="#1f2328">PatchMaker.score (max)</text>
+<text x="1405" y="214" font-size="12" fill="#1f2328">RescaleSegmentor → map</text>
+<polyline points="595,182.0 615,182.0" fill="none" stroke="#0072B2" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#ah-P)"/>
+<polyline points="830,182.0 880,182.0" fill="none" stroke="#0072B2" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#ah-P)"/>
+<polyline points="1105,182.0 1125,182.0" fill="none" stroke="#0072B2" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#ah-P)"/>
+<polyline points="1350,182.0 1395,182.0" fill="none" stroke="#0072B2" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#ah-P)"/>
+<rect x="172" y="266" width="1530" height="264" rx="8" fill="#D55E00" fill-opacity="0.05" stroke="#D55E00" stroke-width="2" stroke-dasharray="10 5"/>
+<rect x="184" y="278" width="12" height="12" fill="#D55E00"/>
+<text x="204" y="289" font-size="15" font-weight="700" fill="#1f2328">WinCLIP</text>
+<text x="288" y="289" font-size="12" fill="#57606a">학습 없음 · zero-shot / few-shot</text>
+<rect x="188" y="420" width="176" height="92" rx="14" fill="#E4E7EB" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<text x="200" y="454" font-size="12" font-weight="700" fill="#1f2328">부가 입력 (텍스트)</text>
+<text x="200" y="470" font-size="12" fill="#1f2328">프롬프트 state 11 ×</text>
+<text x="200" y="486" font-size="12" fill="#1f2328">template 22</text>
+<rect x="380" y="302" width="215" height="92" rx="3" fill="#ffffff" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<rect x="576" y="311" width="10" height="10" fill="#D55E00"/>
+<text x="390" y="336" font-size="13.5" font-weight="700" fill="#1f2328">window_masks</text>
+<text x="390" y="356" font-size="12" fill="#1f2328">mask_generate</text>
+<text x="390" y="372" font-size="12" fill="#1f2328">kernel 32 · 48 (patch 16)</text>
+<rect x="615" y="302" width="215" height="92" rx="3" fill="#ffffff" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<rect x="811" y="311" width="10" height="10" fill="#D55E00"/>
+<text x="625" y="336" font-size="13.5" font-weight="700" fill="#1f2328">WinCLIP 이미지 인코더</text>
+<text x="625" y="356" font-size="12" fill="#1f2328">ViT-B-16-plus-240</text>
+<text x="625" y="372" font-size="12" fill="#1f2328">F_w (window) · F_p (patch)</text>
+<rect x="880" y="302" width="225" height="92" rx="3" fill="#E4E7EB" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<rect x="1086" y="311" width="10" height="10" fill="#D55E00"/>
+<text x="890" y="336" font-size="13.5" font-weight="700" fill="#1f2328">visual gallery (few-shot)</text>
+<text x="890" y="356" font-size="12" fill="#1f2328">build_image_feature_gallery</text>
+<text x="890" y="372" font-size="12" fill="#1f2328">정상 참조 이미지 (few-shot) 특징</text>
+<rect x="380" y="420" width="215" height="92" rx="3" fill="#ffffff" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<rect x="576" y="429" width="10" height="10" fill="#D55E00"/>
+<text x="390" y="454" font-size="13.5" font-weight="700" fill="#1f2328">tokenizer</text>
+<text x="390" y="474" font-size="12" fill="#1f2328">open_clip.get_tokenizer</text>
+<text x="390" y="490" font-size="12" fill="#1f2328">(ViT-B-16-plus-240)</text>
+<rect x="615" y="420" width="215" height="92" rx="3" fill="#ffffff" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<rect x="811" y="429" width="10" height="10" fill="#D55E00"/>
+<text x="625" y="454" font-size="13.5" font-weight="700" fill="#1f2328">텍스트 인코더</text>
+<text x="625" y="474" font-size="12" fill="#1f2328">WinCLIP.encode_text</text>
+<text x="625" y="490" font-size="12" fill="#1f2328">정규화 임베딩</text>
+<rect x="880" y="420" width="225" height="92" rx="3" fill="#E4E7EB" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<rect x="1086" y="429" width="10" height="10" fill="#D55E00"/>
+<text x="890" y="454" font-size="13.5" font-weight="700" fill="#1f2328">text prototype</text>
+<text x="890" y="474" font-size="12" fill="#1f2328">normal · anomaly 임베딩 평균</text>
+<text x="890" y="490" font-size="12" fill="#1f2328">(pos / neg)</text>
+<rect x="1395" y="302" width="300" height="92" rx="3" fill="#ffffff" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<rect x="1676" y="311" width="10" height="10" fill="#D55E00"/>
+<text x="1405" y="328" font-size="13.5" font-weight="700" fill="#1f2328">few-shot 시각 score → map</text>
+<text x="1405" y="348" font-size="12" fill="#1f2328">0.5(1−cos) 최근접(gallery)</text>
+<text x="1405" y="364" font-size="12" fill="#1f2328">window 32·48 조화평균 + patch</text>
+<text x="1405" y="380" font-size="12" fill="#1f2328">→ map · max ; (visual+text)/2</text>
+<rect x="1395" y="420" width="300" height="92" rx="3" fill="#ffffff" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<rect x="1676" y="429" width="10" height="10" fill="#D55E00"/>
+<text x="1405" y="454" font-size="13.5" font-weight="700" fill="#1f2328">zero-shot 텍스트 score</text>
+<text x="1405" y="474" font-size="12" fill="#1f2328">softmax(100·f_img·T)[anomaly]</text>
+<text x="1405" y="490" font-size="12" fill="#1f2328">= text_probs</text>
+<polyline points="595,348.0 615,348.0" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#ah-W)"/>
+<polyline points="830,348.0 880,348.0" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#ah-W)"/>
+<polyline points="1105,348.0 1395,348.0" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#ah-W)"/>
+<polyline points="364,466.0 380,466.0" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#ah-W)"/>
+<polyline points="595,466.0 615,466.0" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#ah-W)"/>
+<polyline points="830,466.0 880,466.0" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#ah-W)"/>
+<polyline points="1105,466.0 1395,466.0" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#ah-W)"/>
+<polyline points="722.5,394 722.5,407.0 1485,407.0 1485,420" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#ah-W)"/>
+<polyline points="1605,420 1605,394" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#ah-W)"/>
+<rect x="172" y="550" width="1530" height="394" rx="8" fill="#009E73" fill-opacity="0.05" stroke="#009E73" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polygon points="190,561 197,574 183,574" fill="#009E73"/>
+<text x="204" y="573" font-size="15" font-weight="700" fill="#1f2328">GLAD</text>
+<text x="258" y="573" font-size="12" fill="#57606a">diffusion 재구성 · UNet / DINO 미세조정</text>
+<rect x="188" y="704" width="176" height="92" rx="14" fill="#E4E7EB" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<text x="200" y="746" font-size="12" font-weight="700" fill="#1f2328">부가 입력 (텍스트)</text>
+<text x="200" y="762" font-size="12" fill="#1f2328">instance_prompt</text>
+<rect x="380" y="586" width="215" height="92" rx="3" fill="#ffffff" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polygon points="581,594 587,605 575,605" fill="#009E73"/>
+<text x="390" y="620" font-size="13.5" font-weight="700" fill="#1f2328">VAE encoder</text>
+<text x="390" y="640" font-size="12" fill="#1f2328">AutoencoderKL (고정)</text>
+<text x="390" y="656" font-size="12" fill="#1f2328">latent × scaling_factor</text>
+<rect x="380" y="704" width="215" height="92" rx="3" fill="#ffffff" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polygon points="581,712 587,723 575,723" fill="#009E73"/>
+<text x="390" y="738" font-size="13.5" font-weight="700" fill="#1f2328">CLIP text encoder</text>
+<text x="390" y="758" font-size="12" fill="#1f2328">CLIPTextModel (고정)</text>
+<text x="390" y="774" font-size="12" fill="#1f2328">encoder_hidden_states</text>
+<rect x="380" y="822" width="450" height="92" rx="3" fill="#ffffff"/>
+<rect x="380" y="822" width="450" height="92" rx="3" fill="#009E73" fill-opacity="0.20" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polygon points="816,830 822,841 810,841" fill="#009E73"/>
+<text x="390" y="848" font-size="13.5" font-weight="700" fill="#1f2328">DINO ViT-B/8 (patch 8)</text>
+<text x="390" y="868" font-size="12" fill="#1f2328">dino_model: train_dino.py 로 미세조정</text>
+<text x="390" y="884" font-size="12" fill="#1f2328">dino_frozen: 고정 사본 (step 선택)</text>
+<text x="390" y="900" font-size="12" fill="#1f2328">→ patch tokens</text>
+<rect x="880" y="586" width="225" height="92" rx="3" fill="#E4E7EB" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polygon points="1091,594 1097,605 1085,605" fill="#009E73"/>
+<text x="890" y="620" font-size="13.5" font-weight="700" fill="#1f2328">혼합 latent (학습 입력)</text>
+<text x="890" y="640" font-size="12" fill="#1f2328">정상 + DTD·Perlin 합성 이상</text>
+<text x="890" y="656" font-size="12" fill="#1f2328">α = t/T 혼합 · 타깃 ε (predict_eps)</text>
+<rect x="1125" y="586" width="225" height="210" rx="3" fill="#ffffff"/>
+<rect x="1125" y="586" width="225" height="210" rx="3" fill="#009E73" fill-opacity="0.20" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polygon points="1336,594 1342,605 1330,605" fill="#009E73"/>
+<text x="1135" y="672" font-size="13.5" font-weight="700" fill="#1f2328">UNet2DConditionModel</text>
+<text x="1135" y="690" font-size="12" fill="#1f2328">미세조정</text>
+<text x="1135" y="706" font-size="12" fill="#1f2328">손실: MSE(ε̂, ε)</text>
+<text x="1135" y="722" font-size="12" fill="#1f2328">cond: 텍스트 임베딩</text>
+<rect x="880" y="822" width="225" height="92" rx="3" fill="#ffffff"/>
+<polygon points="892,822 1093,822 1105,834 1105,902 1093,914 892,914 880,902 880,834" fill="#009E73" fill-opacity="0.20" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polygon points="1091,830 1097,841 1085,841" fill="#009E73"/>
+<text x="890" y="856" font-size="13.5" font-weight="700" fill="#1f2328">DINO 미세조정 손실</text>
+<text x="890" y="876" font-size="12" fill="#1f2328">cos(입력, 재구성)</text>
+<text x="890" y="892" font-size="12" fill="#1f2328">+ frozen 정규화 (lmd)</text>
+<rect x="1395" y="586" width="300" height="210" rx="3" fill="#ffffff" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polygon points="1681,594 1687,605 1675,605" fill="#009E73"/>
+<text x="1405" y="664" font-size="13.5" font-weight="700" fill="#1f2328">DDIM 부분 재구성 x̂</text>
+<text x="1405" y="682" font-size="12" fill="#1f2328">pipeline.py · denoise_step</text>
+<text x="1405" y="698" font-size="12" fill="#1f2328">guidance_scale 9</text>
+<text x="1405" y="714" font-size="12" fill="#1f2328">dino_frozen 으로 min_step 결정</text>
+<text x="1405" y="730" font-size="12" fill="#1f2328">학습된 UNet = 정상 복원기</text>
+<rect x="1395" y="822" width="300" height="92" rx="3" fill="#ffffff" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polygon points="1681,830 1687,841 1675,841" fill="#009E73"/>
+<text x="1405" y="848" font-size="13.5" font-weight="700" fill="#1f2328">score · map</text>
+<text x="1405" y="868" font-size="12" fill="#1f2328">DINO patch min(1−cos) + v·|x−x̂|</text>
+<text x="1405" y="884" font-size="12" fill="#1f2328">Gaussian blur × object_mask</text>
+<text x="1405" y="900" font-size="12" fill="#1f2328">상위 250 평균 → score</text>
+<polyline points="595,632.0 880,632.0" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-G)"/>
+<polyline points="1105,632.0 1125,632.0" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-G)"/>
+<polyline points="364,750.0 380,750.0" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-G)"/>
+<polyline points="595,750.0 1125,750.0" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-G)"/>
+<polyline points="880,868.0 830,868.0" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ho-G)"/>
+<polyline points="1350,691.0 1395,691.0" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-G)"/>
+<polyline points="1605,796 1605,822" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-G)"/>
+<polyline points="460,914 460,928 1485,928 1485,914" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-G)"/>
+<rect x="172" y="964" width="1530" height="264" rx="8" fill="#CC79A7" fill-opacity="0.05" stroke="#CC79A7" stroke-width="2" stroke-dasharray="13 4 2 4"/>
+<polygon points="190,974 198,982 190,990 182,982" fill="#CC79A7"/>
+<text x="204" y="987" font-size="15" font-weight="700" fill="#1f2328">Dinomaly</text>
+<text x="298" y="987" font-size="12" fill="#57606a">특징 재구성 · decoder 학습 (class-separated)</text>
+<rect x="380" y="1000" width="215" height="92" rx="3" fill="#ffffff" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4"/>
+<polygon points="581,1007 588,1014 581,1021 574,1014" fill="#CC79A7"/>
+<text x="390" y="1034" font-size="13.5" font-weight="700" fill="#1f2328">DINOv2-reg ViT-B/14</text>
+<text x="390" y="1054" font-size="12" fill="#1f2328">vit_encoder.load (고정)</text>
+<text x="390" y="1070" font-size="12" fill="#1f2328">target_layers 2–9</text>
+<rect x="615" y="1000" width="215" height="92" rx="3" fill="#ffffff" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4"/>
+<polygon points="816,1007 823,1014 816,1021 809,1014" fill="#CC79A7"/>
+<text x="625" y="1034" font-size="13.5" font-weight="700" fill="#1f2328">특징 융합 (encoder)</text>
+<text x="625" y="1054" font-size="12" fill="#1f2328">fuse_layer_encoder</text>
+<text x="625" y="1070" font-size="12" fill="#1f2328">[[0–3], [4–7]] → en 2그룹</text>
+<rect x="880" y="1000" width="225" height="92" rx="3" fill="#ffffff"/>
+<rect x="880" y="1000" width="225" height="92" rx="3" fill="#CC79A7" fill-opacity="0.20" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4"/>
+<polygon points="1091,1007 1098,1014 1091,1021 1084,1014" fill="#CC79A7"/>
+<text x="890" y="1026" font-size="13.5" font-weight="700" fill="#1f2328">Bottleneck + Decoder</text>
+<text x="890" y="1046" font-size="12" fill="#1f2328">bMlp (drop 0.2)</text>
+<text x="890" y="1062" font-size="12" fill="#1f2328">VitBlock × 8 (LinearAttention2)</text>
+<text x="890" y="1078" font-size="12" fill="#1f2328">gradient checkpointing</text>
+<rect x="880" y="1118" width="225" height="92" rx="3" fill="#ffffff"/>
+<polygon points="892,1118 1093,1118 1105,1130 1105,1198 1093,1210 892,1210 880,1198 880,1130" fill="#CC79A7" fill-opacity="0.20" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4"/>
+<polygon points="1091,1125 1098,1132 1091,1139 1084,1132" fill="#CC79A7"/>
+<text x="890" y="1152" font-size="13.5" font-weight="700" fill="#1f2328">global_cosine_hm_percent</text>
+<text x="890" y="1172" font-size="12" fill="#1f2328">p = 0.9, factor = 0.1</text>
+<text x="890" y="1188" font-size="12" fill="#1f2328">en↔de cos 정렬 (hard mining)</text>
+<rect x="1395" y="1000" width="300" height="92" rx="3" fill="#ffffff" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4"/>
+<polygon points="1681,1007 1688,1014 1681,1021 1674,1014" fill="#CC79A7"/>
+<text x="1405" y="1034" font-size="13.5" font-weight="700" fill="#1f2328">1−cos(en, de) → map</text>
+<text x="1405" y="1054" font-size="12" fill="#1f2328">fuse 그룹별 cal_anomaly_maps</text>
+<text x="1405" y="1070" font-size="12" fill="#1f2328">업샘플 후 그룹 평균</text>
+<rect x="1395" y="1118" width="300" height="92" rx="3" fill="#ffffff" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4"/>
+<polygon points="1681,1125 1688,1132 1681,1139 1674,1132" fill="#CC79A7"/>
+<text x="1405" y="1152" font-size="13.5" font-weight="700" fill="#1f2328">score</text>
+<text x="1405" y="1172" font-size="12" fill="#1f2328">Gaussian (k=5, σ=4)</text>
+<text x="1405" y="1188" font-size="12" fill="#1f2328">상위 1% 평균 (max_ratio=0.01)</text>
+<polyline points="595,1046.0 615,1046.0" fill="none" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4" stroke-linejoin="round" marker-end="url(#ah-D)"/>
+<polyline points="830,1046.0 880,1046.0" fill="none" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4" stroke-linejoin="round" marker-end="url(#ah-D)"/>
+<polyline points="1105,1046.0 1395,1046.0" fill="none" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4" stroke-linejoin="round" marker-end="url(#ah-D)"/>
+<polyline points="992,1118 992,1092" fill="none" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4" stroke-linejoin="round" marker-end="url(#ho-D)"/>
+<polyline points="722.5,1092 722.5,1105.0 1485,1105.0 1485,1092" fill="none" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4" stroke-linejoin="round" marker-end="url(#ah-D)"/>
+<polyline points="1605,1092 1605,1118" fill="none" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4" stroke-linejoin="round" marker-end="url(#ah-D)"/>
+<line x1="135" y1="664.0" x2="156" y2="664.0" stroke="#24292F" stroke-width="4"/>
+<line x1="156" y1="182.0" x2="156" y2="1046.0" stroke="#24292F" stroke-width="4"/>
+<polyline points="156,182.0 380,182.0" fill="none" stroke="#0072B2" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#ah-P)"/>
+<polyline points="156,348.0 380,348.0" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#ah-W)"/>
+<polyline points="156,632.0 380,632.0" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-G)"/>
+<polyline points="156,868.0 380,868.0" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-G)"/>
+<polyline points="156,1046.0 380,1046.0" fill="none" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4" stroke-linejoin="round" marker-end="url(#ah-D)"/>
+<line x1="1724" y1="182.0" x2="1724" y2="1164.0" stroke="#24292F" stroke-width="4"/>
+<polyline points="1695,182.0 1724,182.0" fill="none" stroke="#0072B2" stroke-width="2.2"/>
+<polyline points="1695,348.0 1724,348.0" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<polyline points="1695,466.0 1724,466.0" fill="none" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<polyline points="1695,868.0 1724,868.0" fill="none" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polyline points="1695,1046.0 1724,1046.0" fill="none" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4"/>
+<polyline points="1695,1164.0 1724,1164.0" fill="none" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4"/>
+<line x1="1724" y1="664.0" x2="1744" y2="664.0" stroke="#24292F" stroke-width="4" marker-end="url(#ah-K)"/>
+<rect x="30" y="1258" width="1840" height="150" rx="6" fill="#ffffff" stroke="#8C959F" stroke-width="1.2"/>
+<text x="50" y="1284" font-size="14" font-weight="700" fill="#1f2328">방법 = 색 · 선 · 마커</text>
+<rect x="50" y="1299" width="74" height="22" rx="3" fill="#0072B2" fill-opacity="0.10" stroke="#0072B2" stroke-width="2.2"/>
+<circle cx="140" cy="1310" r="6" fill="#0072B2"/>
+<text x="158" y="1315" font-size="13" fill="#1f2328">PatchCore</text>
+<rect x="50" y="1324" width="74" height="22" rx="3" fill="#D55E00" fill-opacity="0.10" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="10 5"/>
+<rect x="134" y="1329" width="12" height="12" fill="#D55E00"/>
+<text x="158" y="1340" font-size="13" fill="#1f2328">WinCLIP</text>
+<rect x="50" y="1349" width="74" height="22" rx="3" fill="#009E73" fill-opacity="0.10" stroke="#009E73" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/>
+<polygon points="140,1353 147,1366 133,1366" fill="#009E73"/>
+<text x="158" y="1365" font-size="13" fill="#1f2328">GLAD</text>
+<rect x="50" y="1374" width="74" height="22" rx="3" fill="#CC79A7" fill-opacity="0.10" stroke="#CC79A7" stroke-width="2.2" stroke-dasharray="13 4 2 4"/>
+<polygon points="140,1377 148,1385 140,1393 132,1385" fill="#CC79A7"/>
+<text x="158" y="1390" font-size="13" fill="#1f2328">Dinomaly</text>
+<text x="360" y="1284" font-size="14" font-weight="700" fill="#1f2328">상자 = 역할 (테두리는 방법 색 · 선)</text>
+<rect x="360" y="1299" width="74" height="22" rx="3" fill="#ffffff" stroke="#0072B2" stroke-width="2.2"/>
+<text x="446" y="1315" font-size="13" fill="#1f2328">사전학습·고정 또는 비학습 모듈</text>
+<rect x="360" y="1324" width="74" height="22" rx="3" fill="#0072B2" fill-opacity="0.20" stroke="#0072B2" stroke-width="2.2"/>
+<text x="446" y="1340" font-size="13" fill="#1f2328">학습(미세조정)되는 모듈 — 방법 색 옅은 채움</text>
+<rect x="360" y="1349" width="74" height="22" rx="11" fill="#E4E7EB" stroke="#0072B2" stroke-width="2.2"/>
+<text x="446" y="1365" font-size="13" fill="#1f2328">데이터 · 저장·생성된 정상 기준 (bank · gallery · prototype · 혼합 latent)</text>
+<polygon points="366,1374 428,1374 434,1380 434,1390 428,1396 366,1396 360,1390 360,1380" fill="#0072B2" fill-opacity="0.20" stroke="#0072B2" stroke-width="2.2"/>
+<text x="446" y="1390" font-size="13" fill="#1f2328">학습 손실 (모서리 깎은 상자)</text>
+<text x="1150" y="1284" font-size="14" font-weight="700" fill="#1f2328">화살표 · 선</text>
+<line x1="1150" y1="1308" x2="1224" y2="1308" stroke="#57606a" stroke-width="2.2" marker-end="url(#ah-K)"/>
+<text x="1238" y="1313" font-size="13" fill="#1f2328">데이터 흐름 (색 = 방법)</text>
+<line x1="1150" y1="1333" x2="1224" y2="1333" stroke="#57606a" stroke-width="2.2" marker-end="url(#ho-K)"/>
+<text x="1238" y="1338" font-size="13" fill="#1f2328">손실 → 모듈 갱신 (역전파)</text>
+<line x1="1150" y1="1358" x2="1224" y2="1358" stroke="#24292F" stroke-width="4"/>
+<text x="1238" y="1363" font-size="13" fill="#1f2328">굵은 검정 = 공통 구간 (입력 분기 · 출력 합류)</text>
+<rect x="1150" y="1372" width="74" height="22" rx="11" fill="#E4E7EB" stroke="#57606a" stroke-width="2.2"/>
+<text x="1238" y="1388" font-size="13" fill="#1f2328">부가 입력 = 이미지 외 입력 (텍스트 프롬프트)</text>
+</svg>
