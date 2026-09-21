@@ -76,6 +76,8 @@ Embedding 계열처럼 pre-trained backbone의 feature를 쓰되, synthesizing �
 ## 2. SimpleNet 전체 흐름
 
 구성 요소는 4개: Feature Extractor(사전학습 backbone), Feature Adaptor, Anomalous Feature Generator, Discriminator. 이 중 **Anomalous Feature Generator는 학습 때만 쓰고 추론 때는 버린다.** (논문 Fig. 3)
+<img width="650" height="265" alt="image" src="https://github.com/user-attachments/assets/d01dd067-0e04-4a5a-9c35-a61b8cd0b5da" />
+
 
 **학습 (정상 이미지만 사용)**
 1. 정상 이미지 $x^i$ → Feature Extractor $F_\phi$ (ImageNet 사전학습 ResNet 계열, **고정**) → 위치별 local feature $o^i_{h,w}$
