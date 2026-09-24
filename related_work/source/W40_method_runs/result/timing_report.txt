@@ -1,0 +1,126 @@
+============================================================================================================
+W55 timing report   generated 2026-09-24 21:44:48
+============================================================================================================
+  runs recorded: 69   source: results_w55/*/summary_*.csv
+
+[mvtec_dinomaly]  21 run(s)
+  method     cat          status    wall_s  start  data  model      run   s/img  VRAM MiB   ep
+  dinomaly   bottle       ok         679.9    5.3   0.0    2.9    671.7             11825     
+  dinomaly   cable        ok         758.6    5.3   0.0    3.0    750.3             11786     
+  dinomaly   capsule      timeout    900.0 -606.6   0.0    2.9   1503.7             11808     
+  dinomaly   capsule      timeout   1200.0 -306.6   0.0    2.9   1503.7             11787     
+  dinomaly   capsule      ok        1512.1    5.5   0.0    2.9   1503.7             11801     
+  dinomaly   carpet       ok         753.1    5.3   0.0    2.9    744.9             11804     
+  dinomaly   grid         timeout    900.0  -93.9   0.0    3.0    990.9             11811     
+  dinomaly   grid         ok         999.2    5.3   0.0    3.0    990.9             11788     
+  dinomaly   hazelnut     timeout    900.0 -255.5   0.0    3.0   1152.5             11799     
+  dinomaly   hazelnut     ok        1160.8    5.3   0.0    3.0   1152.5             11787     
+  dinomaly   leather      timeout    900.0  -62.4   0.0    2.9    959.5             11810     
+  dinomaly   leather      ok         967.7    5.3   0.0    2.9    959.5             11801     
+  dinomaly   metal_nut    timeout    900.0-1875.2   0.0    3.0   2772.2             11812     
+  dinomaly   metal_nut    ok        2780.7    5.5   0.0    3.0   2772.2             11809     
+  dinomaly   pill         timeout    900.0  780.2   0.0    3.0    116.8             11806     
+  dinomaly   screw        ok         714.7    5.4   0.0    2.9    706.4             11800     
+  dinomaly   tile         ok         907.7    5.1   0.0    3.0    899.6             11807     
+  dinomaly   toothbrush   timeout    900.0  449.6   0.0    3.2    447.2             11829     
+  dinomaly   transistor   ok        1032.4    5.3   0.0    2.9   1024.2             11802     
+  dinomaly   wood         ok        1593.5    5.3   0.0    3.0   1585.2             11804     
+  dinomaly   zipper       ok         674.7    5.6   0.0    3.0    666.1             11788     
+
+[mvtec_rd]  15 run(s)
+  method     cat          status    wall_s  start  data  model      run   s/img  VRAM MiB   ep
+  rd         bottle       ok         227.8    5.2   0.0    2.3    220.3             11793   10
+  rd         cable        ok         234.4    5.2   0.0    2.3    226.9             11750   10
+  rd         capsule      ok         228.9    5.1   0.0    2.4    221.4             11750   10
+  rd         carpet       ok         291.6    5.3   0.0    2.3    284.0             11784   10
+  rd         grid         ok         266.7    5.2   0.0    2.3    259.2             11753   10
+  rd         hazelnut     ok         394.8    5.3   0.0    2.3    387.2             11755   10
+  rd         leather      ok         258.3    5.2   0.0    2.4    250.7             11791   10
+  rd         metal_nut    ok         225.3    5.2   0.0    2.3    217.8             11761   10
+  rd         pill         ok         272.2    5.1   0.0    2.3    264.8             11757   10
+  rd         screw        ok         322.5    5.3   0.0    2.3    314.9             11795   10
+  rd         tile         ok         237.2    5.2   0.0    2.3    229.7             11760   10
+  rd         toothbrush   ok          70.2    5.2   0.0    2.3     62.7             11760   10
+  rd         transistor   ok         226.6    5.3   0.0    2.3    219.0             11761   10
+  rd         wood         ok         256.1    5.2   0.0    2.4    248.5             11799   10
+  rd         zipper       ok         240.3    5.1   0.0    2.4    232.8             11762   10
+
+[mvtec_rd_orig]  15 run(s)
+  method     cat          status    wall_s  start  data  model      run   s/img  VRAM MiB   ep
+  rd_orig    bottle       ok         200.3    5.3   0.0    2.3    192.7              7971   35
+  rd_orig    cable        ok         315.5    5.2   0.0    2.3    308.0              7993   35
+  rd_orig    capsule      ok         301.8    5.1   0.0    2.3    294.4              8025   35
+  rd_orig    carpet       ok         378.5    5.1   0.0    2.2    371.2              7962   35
+  rd_orig    grid         ok         240.4    5.1   0.0    2.3    233.0              7990   35
+  rd_orig    hazelnut     ok         513.1    5.2   0.0    2.3    505.6              7965   35
+  rd_orig    leather      ok         301.8    5.1   0.0    2.3    294.4              7968   35
+  rd_orig    metal_nut    ok         191.1    5.2   0.0    2.3    183.6              7996   35
+  rd_orig    pill         ok         273.3    5.2   0.0    2.3    265.8              8033   35
+  rd_orig    screw        ok         290.6    5.2   0.0    2.2    283.2              7968   35
+  rd_orig    tile         ok         258.8    5.1   0.0    2.3    251.4              8002   35
+  rd_orig    toothbrush   ok          86.2    5.0   0.0    2.3     78.9              7969   35
+  rd_orig    transistor   ok         301.2    5.0   0.0    2.3    293.9              7973   35
+  rd_orig    wood         ok         346.5    5.1   0.0    2.3    339.1              7971   35
+  rd_orig    zipper       ok         215.2    5.1   0.0    2.3    207.8              8000   35
+
+[smoke]  10 run(s)
+  method     cat          status    wall_s  start  data  model      run   s/img  VRAM MiB   ep
+  coad       bottle       ok         405.2    5.1   0.0    1.0    399.1              6440    1
+  dinomaly   bottle       timeout    900.0   10.6   0.0    3.1    886.3             11816    1
+  padim      bottle       ok         130.3    5.4   0.0    1.6    123.3              1671    1
+  patchcore  bottle       ok          24.3    5.1   0.0    1.1     18.1  0.0617      2329    1
+  promptad   bottle       ok          57.6    5.1   0.0    1.7     50.80.011264042681958302      5119    1
+  rd         bottle       ok          43.4    5.2   0.0    2.3     35.9             11792    1
+  rd_orig    bottle       ok          16.1    5.2   0.0    2.3      8.6              8282    1
+  simple     bottle       ok          39.5    4.9   0.0    1.1     33.5  0.0059      3336    1
+  uniad      bottle       ok          14.4    5.1   0.0    1.4      7.9              1839    1
+  winclip    bottle       ok         192.7    5.1   0.0    3.4    184.2              3768    1
+
+[smoke_dino1]  1 run(s)
+  method     cat          status    wall_s  start  data  model      run   s/img  VRAM MiB   ep
+  dinomaly   bottle       ok         716.0    5.2   0.0    3.0    707.8             11752     
+
+[smoke_dino2]  1 run(s)
+  method     cat          status    wall_s  start  data  model      run   s/img  VRAM MiB   ep
+  dinomaly   bottle       timeout   1800.0   35.4   0.0    3.0   1761.6             11836     
+
+[timing5]  6 run(s)
+  method     cat          status    wall_s  start  data  model      run   s/img  VRAM MiB   ep
+  coad       bottle       ok         392.3    5.1   0.0    1.0    386.2              6316    5
+  promptad   bottle       ok          32.2    5.0   0.0    1.7     25.50.012013044702001366      5306    5
+  rd         bottle       ok         111.4    5.2   0.0    2.3    103.9             11843    5
+  rd_orig    bottle       ok          37.8    5.1   0.0    2.3     30.4              8054    5
+  simple     bottle       ok         150.0    5.1   0.0    1.1    143.8   0.006      3105    5
+  uniad      bottle       ok          30.0    5.0   0.0    1.3     23.7              1665    5
+
+============================================================================================================
+PER-METHOD SUMMARY (status=ok only)
+============================================================================================================
+  method      runs  wall mean  wall min  wall max  run mean  VRAM max  laptop-8GB?
+    wall = total process time; run = train+infer+eval only (excludes dataset scan and model build)
+  coad           2      398.8     392.3     405.2     392.6      6440  yes
+  dinomaly      14     1089.4     674.7    2780.7    1081.1     11825  NO
+  padim          1      130.3     130.3     130.3     123.3      1671  yes
+  patchcore      1       24.3      24.3      24.3      18.1      2329  yes
+  promptad       2       44.9      32.2      57.6      38.1      5306  yes
+  rd            17      229.9      43.4     394.8     222.3     11843  NO
+  rd_orig       17      251.1      16.1     513.1     243.6      8282  NO
+  simple         2       94.8      39.5     150.0      88.7      3336  yes
+  uniad          2       22.2      14.4      30.0      15.8      1839  yes
+  winclip        1      192.7     192.7     192.7     184.2      3768  yes
+
+============================================================================================================
+NOT SUCCESSFUL
+============================================================================================================
+  dinomaly   mvtec  bottle       timeout     900.0s  exceeded 900s
+  dinomaly   mvtec  bottle       timeout    1800.0s  exceeded 1800s
+  dinomaly   mvtec  capsule      timeout     900.0s  exceeded 900s
+  dinomaly   mvtec  capsule      timeout    1200.0s  exceeded 1200s
+  dinomaly   mvtec  grid         timeout     900.0s  exceeded 900s
+  dinomaly   mvtec  hazelnut     timeout     900.0s  exceeded 900s
+  dinomaly   mvtec  leather      timeout     900.0s  exceeded 900s
+  dinomaly   mvtec  metal_nut    timeout     900.0s  exceeded 900s
+  dinomaly   mvtec  pill         timeout     900.0s  exceeded 900s
+  dinomaly   mvtec  toothbrush   timeout     900.0s  exceeded 900s
+
+per-run csv -> C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\results_w55\timing_per_run.csv

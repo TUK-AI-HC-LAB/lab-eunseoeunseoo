@@ -1,0 +1,39 @@
+==============================================================================================================
+W55 method feasibility probe  (import -> contract -> backbone -> construct+load)
+==============================================================================================================
+torch 2.11.0+cu128  cuda_available=True  device=cpu
+
+[coad      ] import ok  backbone ok  construct ok
+[dinomaly  ] import ok  backbone ok  construct ok
+[glass     ] import ok  backbone ok  construct ok
+[padim     ] import ok  backbone ok  construct ok
+[patchcore ] import ok  backbone ok  construct ok
+[promptad  ] import ok  backbone ok  construct ok
+[rd        ] import ok  backbone ok  construct ok
+[rd_orig   ] import ok  backbone ok  construct ok
+[simple    ] import ok  backbone ok  construct ok
+[uniad     ] import ok  backbone ok  construct ok
+[winclip   ] import ok  backbone ok  construct ok
+
+==============================================================================================================
+SUMMARY
+==============================================================================================================
+  method     import   contract   backbone   construct  reason
+  ----------------------------------------------------------------------------------------------------------
+  coad       ok       ok         ok         ok         
+  dinomaly   ok       ok         ok         ok         
+  glass      ok       ok         ok         ok         
+  padim      ok       ok         ok         ok         
+  patchcore  ok       ok         ok         ok         
+  promptad   ok       ok         ok         ok         
+  rd         ok       ok         ok         ok         
+  rd_orig    ok       ok         ok         ok         
+  simple     ok       ok         ok         ok         
+  uniad      ok       ok         ok         ok         
+  winclip    ok       ok         ok         ok         
+
+  constructible now (11/11): coad, dinomaly, glass, padim, patchcore, promptad, rd, rd_orig, simple, uniad, winclip
+  blocked (0/11):
+
+  NOTE: 'construct ok' means the model builds and .load() completes.
+        It does NOT prove the method trains to completion or fits in VRAM.

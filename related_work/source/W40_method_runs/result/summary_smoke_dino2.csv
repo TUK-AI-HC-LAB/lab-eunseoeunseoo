@@ -1,0 +1,2 @@
+tag,dataset,method,category,status,exit_code,wall_s,peak_vram_mb,meta_epochs,total_iter,batch_size,auroc_mean,pixel_auroc_mean,sal_f1_mean,reason,log_path,results_csv
+smoke_dino2,mvtec,dinomaly,bottle,timeout,,1800.0,11836,,600,,,,,exceeded 1800s,C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\results_w55\smoke_dino2\run_logs\dinomaly__mvtec__bottle.log,

@@ -1,0 +1,40 @@
+Training Progress 0/12:  71%|███████   | 12/17 [01:40<00:18,  3.76s/it]
+Training Progress 0/12:  76%|███████▋  | 13/17 [01:43<00:14,  3.62s/it]
+Training Progress 0/12:  82%|████████▏ | 14/17 [01:46<00:10,  3.47s/it]
+Training Progress 0/12:  88%|████████▊ | 15/17 [01:50<00:06,  3.41s/it]
+Training Progress 0/12:  94%|█████████▍| 16/17 [01:53<00:03,  3.33s/it]
+Training Progress 0/12: 100%|██████████| 17/17 [01:56<00:00,  3.39s/it]
+Training Progress 0/12: 100%|██████████| 17/17 [01:56<00:00,  6.87s/it]
+2026-09-24 21:37:24.128 | INFO     | trainer.trainer_dinomaly:train:97 - 
+----- 1 -----
+Training Progress 1/12:   0%|          | 0/17 [00:00<?, ?it/s]
+Training Progress 1/12:   6%|▌         | 1/17 [00:05<01:22,  5.14s/it]
+Training Progress 1/12:  12%|█▏        | 2/17 [00:30<04:18, 17.26s/it]
+Training Progress 1/12:  12%|█▏        | 2/17 [01:04<08:04, 32.32s/it]
+Traceback (most recent call last):
+  File "C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\main.py", line 235, in <module>
+    raise SystemExit(main(sys.argv[1:]))
+                     ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\main.py", line 230, in main
+    run([dataset(args), net(args)], args)
+  File "C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\main_run.py", line 101, in run
+    metrics = train_and_collect_metrics(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\main_run.py", line 23, in train_and_collect_metrics
+    return run_trainer_lifecycle(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\component_registry.py", line 233, in run_trainer_lifecycle
+    trainer.train(training_data, validation_data, test_data, dataset_name)
+  File "C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\trainer\trainer_dinomaly.py", line 110, in train
+    loss.backward()
+  File "C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\.venv-gpu\Lib\site-packages\torch\_tensor.py", line 631, in backward
+    torch.autograd.backward(
+  File "C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\.venv-gpu\Lib\site-packages\torch\autograd\__init__.py", line 381, in backward
+    _engine_run_backward(
+  File "C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\.venv-gpu\Lib\site-packages\torch\autograd\graph.py", line 869, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\owen3\Desktop\labs\No_Submit\code\dinomaly_share_codebase\dinomaly_share_codebase\trainer\Dinomaly_lib\utils.py", line 24, in modify_grad
+    x[inds] *= factor
+    ~^^^^^^
+RuntimeError: Storage size calculation overflowed with sizes=[4, -1178562093]

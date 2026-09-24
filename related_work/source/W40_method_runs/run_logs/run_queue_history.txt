@@ -1,0 +1,67 @@
+[10:42:58] ==============================================================================
+[10:42:58] day plan start; deadline 2026-09-24 18:00 (7.3h from now)
+[10:42:58] waiting for smoke ... 6/11 done
+[10:43:58] waiting for smoke ... 6/11 done
+[10:44:58] waiting for smoke ... 6/11 done
+[10:45:58] waiting for smoke ... 6/11 done
+[10:46:58] waiting for smoke ... 6/11 done
+[10:47:58] waiting for smoke ... 6/11 done
+[10:48:58] waiting for smoke ... 6/11 done
+[10:49:58] waiting for smoke ... 6/11 done
+[10:50:58] waiting for smoke ... 9/11 done
+[10:51:58] waiting for smoke ... 10/11 done
+[10:52:58] waiting for smoke ... 10/11 done
+[10:53:58] waiting for smoke ... 10/11 done
+[10:54:58] waiting for smoke ... 10/11 done
+[10:55:58] waiting for smoke ... 10/11 done
+[10:56:58] waiting for smoke ... 10/11 done
+[10:57:58] waiting for smoke ... 10/11 done
+[11:02:03] ==============================================================================
+[11:02:03] day plan start; deadline 2026-09-24 18:00 (7.0h from now)
+[11:02:03] START smoke: mvtec/bottle methods=['glass'] meta_epochs=1 total_iter=None timeout=900s
+[11:02:27] END   smoke
+[11:02:27] START smoke_dino1: mvtec/bottle methods=['dinomaly'] meta_epochs=None total_iter=200 timeout=900s
+[11:14:23] END   smoke_dino1
+[11:14:23] START timing5: mvtec/bottle methods=['simple', 'rd_orig', 'rd', 'uniad', 'glass', 'promptad', 'coad'] meta_epochs=5 total_iter=None timeout=900s
+[11:27:19] END   timing5
+[11:27:19] START smoke_dino2: mvtec/bottle methods=['dinomaly'] meta_epochs=None total_iter=600 timeout=1800s
+[11:57:21] END   smoke_dino2
+[11:57:21]   epoch budget simple     = 14   (fixed=12s per_epoch=27.6s)
+[11:57:21]   epoch budget rd_orig    = 75   (fixed=11s per_epoch=5.4s)
+[11:57:21]   epoch budget rd         = 23   (fixed=26s per_epoch=17.0s)
+[11:57:21]   epoch budget uniad      = 105  (fixed=10s per_epoch=3.9s)
+[11:57:21]   epoch budget glass      = 1    (no 2-point timing)
+[11:57:21]   epoch budget promptad   = 1    (no 2-point timing)
+[11:57:21]   epoch budget coad       = 1    (no 2-point timing)
+[11:57:21]   iter budget  dinomaly   = 200
+[11:57:21] START mvtec_dinomaly: mvtec/all methods=['dinomaly'] meta_epochs=None total_iter=200 timeout=900s
+[14:19:58] ==============================================================================
+[14:19:58] afternoon plan; deadline 18:00 (3.67h left)
+[14:19:58] START mvtec_rd_orig: ['rd_orig'] mvtec/all meta_epochs=35 total_iter=None cap=600s
+[14:45:12] ==============================================================================
+[14:45:12] afternoon plan; deadline 18:00 (3.25h left)
+[14:45:12] START mvtec_rd_orig: ['rd_orig'] mvtec/all meta_epochs=35 total_iter=None cap=600s
+[15:55:26] END   mvtec_rd_orig
+[15:55:26] START mvtec_rd: ['rd'] mvtec/all meta_epochs=10 total_iter=None cap=600s
+[16:57:59] END   mvtec_rd
+[16:57:59] START mvtec_dinomaly: ['dinomaly'] mvtec/all meta_epochs=None total_iter=200 cap=1200s
+[17:59:59] STOP mvtec_dinomaly: day deadline reached mid-step; finished jobs are kept
+[17:59:59] END   mvtec_dinomaly
+[17:59:59] START mvtec_light: ['patchcore', 'padim', 'winclip', 'promptad'] mvtec/all meta_epochs=None total_iter=None cap=900s
+[18:00:59] STOP mvtec_light: day deadline reached mid-step; finished jobs are kept
+[18:00:59] END   mvtec_light
+[18:00:59] SKIP mvtec_glass: past deadline
+[18:00:59] afternoon plan finished
+[18:40:14] ==============================================================================
+[18:40:14] evening top-up; deadline 20:30 (1.83h left)
+[18:40:14] START mvtec_dinomaly: dinomaly [tile,transistor,wood,zipper] cap=1800s {'total_iter': 200}
+[09-24 18:42:06] ==============================================================================
+[09-24 18:42:06] run-all started (no deadline; resumable)
+[09-24 18:42:06] START mvtec_dinomaly: dinomaly mvtec/[tile,transistor,wood,zipper] cap=3600s {'total_iter': 200}
+[09-24 19:52:15] END   mvtec_dinomaly
+[09-24 19:52:15] START mvtec_dinomaly: dinomaly mvtec/[capsule,leather,metal_nut,pill,toothbrush] cap=3600s {'total_iter': 200}
+[09-24 20:47:18] watchdog: armed; will stop pid 9068 once ['metal_nut', 'pill', 'toothbrush'] are recorded
+[09-24 20:47:48] watchdog: stopping (queue moved past dinomaly); remaining were ['metal_nut', 'pill', 'toothbrush']
+[09-24 20:48:01] watchdog: armed; will stop pid 9068 once ['metal_nut', 'pill', 'toothbrush'] are recorded
+[09-24 20:48:31] watchdog: stopping (queue moved past dinomaly); remaining were ['metal_nut', 'pill', 'toothbrush']
+[09-24 20:48:36] watchdog: process tree terminated; results are on disk and resumable

@@ -1,0 +1,1 @@
+tag,dataset,method,category,status,exit_code,wall_s,peak_vram_mb,meta_epochs,total_iter,batch_size,auroc_mean,pixel_auroc_mean,sal_f1_mean,reason,log_path,results_csv
