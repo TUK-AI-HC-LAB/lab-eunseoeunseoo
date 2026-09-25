@@ -1,161 +1,213 @@
 # W40_method_runs — result
 
-교수님이 주신 공통 프레임워크(`dinomaly_share_codebase`)로 MVTec을 실행한 결과 (LabTask #55).
-**실행일 2026-09-24, 데스크톱 RTX 5070 / 12GB, seed 0, class-separated(카테고리별 개별 학습).**
+공통 프레임워크(`dinomaly_share_codebase`)로 MVTec·VisA를 실행한 수치 (LabTask #55).
+데스크톱 RTX 5070 / 12GB, seed 0, class-separated(카테고리별 개별 학습).
 
-> `> **[내 판단]**` 블록은 내가 직접 써야 하는 부분(빈칸). 그 밖의 표·수치는 전부 아래 raw 파일로 되짚을 수 있음.
+실행이 두 번 있고 학습량이 다르다.
 
-## 파일
+| | 날짜 | 학습량 | 상태 |
+|---|---|---|---|
+| **A** | 2026-09-25~ | `configs/<method>.yaml` 값 그대로 | 진행 중 |
+| **B** | 2026-09-24 | 축소 (rd 10 ep, rd_orig 35 ep, dinomaly 200 iter) | 종료 |
 
-| 파일 | 내용 |
-|---|---|
-| `summary_mvtec_rd_orig.csv` | rd_orig 15개 카테고리, meta_epochs=35 |
-| `summary_mvtec_rd.csv` | rd 15개 카테고리, meta_epochs=10 |
-| `summary_mvtec_dinomaly.csv` | dinomaly 13개 카테고리, total_iter=200 (pill·toothbrush 미완) |
-| `summary_smoke.csv` | 11개 방법 × bottle 1 epoch — 비용·VRAM 측정 1번째 점 |
-| `summary_timing5.csv` | 학습형 방법 × bottle 5 epoch — 2번째 점 |
-| `summary_smoke_dino1/2.csv` | dinomaly는 epoch이 아닌 total_iter로 도므로 200/600 iter로 별도 측정 |
-| `summary_mvtec_light.csv` | patchcore·padim·winclip·promptad — 시작 1분 만에 가용 시간 종료, 빈 파일 |
-| `timing_per_run.csv` | 전 job의 구간 분해(기동/데이터/모델/실행), peak VRAM, 이미지당 추론시간 |
-| `timing_report.txt` | 위 CSV를 표로 출력한 것 |
-| `method_probe.txt` | 11개 방법 각각이 import→계약검사→backbone→생성 중 어디까지 되는지 |
+A는 `--meta-epochs` / `--total-iter` / `--batch-size`를 넘기지 않아 config 값이 그대로 적용된다.
 
-각 CSV 열: `status`(ok/timeout/failed), `wall_s`, `peak_vram_mb`, `meta_epochs`/`total_iter`, `auroc_mean`, `pixel_auroc_mean`, `sal_f1_mean`, `reason`, `log_path`, `results_csv`.
-
-## 결과 요약 (H3/H4 관련 카테고리)
-
-| 조건 | grid I-AUROC | transistor P-AUROC |
+| 방법 | A의 학습량 | 출처 |
 |---|---|---|
-| **프레임워크 dinomaly** (200 iter) | **1.0000** | 0.9202 |
-| **프레임워크 rd_orig** (35 ep) | 0.9908 | 0.9150 |
-| **프레임워크 rd** (10 ep) | 0.8906 | 0.9053 |
-| PatchCore 기준 | 0.977 | 0.963 (full-pixel 정의, W39 정정본) |
-| RD4AD 공식 구현 재현 참고 | 1.000 | 0.927 (epoch 200) |
-| Dinomaly(sep) 공식 구현 재현 참고 | 1.000 | 0.9493 (5000 iter/카테고리) |
+| patchcore | 학습 없음 (memory bank) | `configs/patchcore.yaml`은 `imagesize: 224`만 지정 |
+| padim | 학습 없음 (가우시안 적합) | config에 학습 인자 없음 → DEFAULTS |
+| rd_orig | meta_epochs 40 | `main.py:146` DEFAULTS |
+| rd | meta_epochs 300 | `configs/rd.yaml` |
 
-- grid I-AUROC: dinomaly가 1.0000으로 PatchCore(0.977)를 넘음. rd는 0.8906으로 유일하게 크게 낮은데, 학습량이 논문 설정의 3.3%(10/300 epoch)라는 점과 분리되지 않음.
-- **transistor P-AUROC: 세 방법 모두 0.905~0.920으로 PatchCore(0.963)보다 낮음.** 같은 방법의 공식 구현 재현치(RD4AD 0.927, Dinomaly 0.9493)보다도 낮다.
+측정 단위: I-AUROC / P-AUROC, `wall_s`는 job 전체 벽시계 시간, `peak_vram_mb`는 job 중 `nvidia-smi` 2초 간격 최대값.
 
-> **[내 판단] H3 / H4**
->
-> _(여기에 내 말로:_
-> _- **H3**(grid, global pattern-regularity): 지지/반박/미결정 중 무엇이고 근거가 무엇인지. dinomaly 1.0000은 지지 방향이지만 rd 0.8906을 어떻게 다룰지 — 학습 부족 탓으로 돌리는 게 타당한지._
-> _- **H4**(transistor, spatial-arrangement): 세 방법이 전부 PatchCore보다 낮다는 게 H4에 어떤 의미인지. 학습량이 부족해서인지, 아니면 프레임워크의 후처리 경로 차이 때문인지 구분할 수 있는지(#54에서 확인한 대로 dinomaly·rd·rd_orig는 모두 공용 `RescaleSegmentor`를 쓰지 않고 자체 predict를 씀)._
-> _- 학습량이 논문 설정의 3~87%로 제각각인 수치들을 H3/H4 판단 근거로 쓸 수 있는지.)_
+---
 
-## 15개 카테고리 전체 결과 (I-AUROC / P-AUROC)
+# 1. A — MVTec-AD
 
-| category | rd_orig (35 ep) | rd (10 ep) | dinomaly (200 iter) |
+| category | patchcore | padim | rd_orig | rd |
+|---|---|---|---|---|
+| bottle | 1.0000 / 0.9878 | 1.0000 / 0.9872 | 1.0000 / 0.9889 | 1.0000 / 0.9894 |
+| cable | 0.9921 / 0.9847 | 0.9072 / 0.9790 | 0.9689 / 0.9741 | 0.9801 / 0.9803 |
+| capsule | 0.9749 / 0.9881 | 0.9246 / 0.9855 | 0.9485 / 0.9852 | 0.9673 / 0.9847 |
+| carpet | 0.9852 / 0.9895 | (failed) | 0.9912 / 0.9902 | 0.9868 / 0.9887 |
+| grid | 0.9942 / 0.9788 | 0.9657 / 0.9707 | 0.9975 / 0.9916 | 0.9916 / 0.9930 |
+| hazelnut | 1.0000 / 0.9890 | 0.9504 / 0.9846 | 1.0000 / 0.9901 | 1.0000 / 0.9911 |
+| leather | 1.0000 / 0.9934 | 1.0000 / 0.9933 | 1.0000 / 0.9946 | 1.0000 / 0.9940 |
+| metal_nut | 1.0000 / 0.9843 | 0.9936 / 0.9800 | 1.0000 / 0.9741 | 1.0000 / 0.9765 |
+| pill | 0.9482 / 0.9759 | (미실행) | 0.9705 / 0.9785 | (미실행) |
+| screw | 0.9768 / 0.9902 | (미실행) | 0.9699 / 0.9945 | (미실행) |
+| tile | 1.0000 / 0.9618 | (미실행) | 0.9949 / 0.9604 | (미실행) |
+| toothbrush | 0.9083 / 0.9901 | (미실행) | 0.9889 / 0.9896 | (미실행) |
+| transistor | 0.9958 / 0.9470 | (미실행) | 0.9758 / 0.9192 | (미실행) |
+| wood | 0.9895 / 0.9441 | (미실행) | 0.9895 / 0.9578 | (미실행) |
+| zipper | 0.9879 / 0.9869 | (미실행) | 0.9215 / 0.9789 | (미실행) |
+| **Mean (ok만)** | **0.9835 / 0.9794** (15개) | **0.9631 / 0.9829** (7개) | **0.9811 / 0.9778** (15개) | **0.9907 / 0.9872** (8개) |
+
+# 2. A — VisA
+
+| category | rd_orig |
+|---|---|
+| candle | 0.9362 / 0.9887 |
+| capsules | 0.9045 / 0.9937 |
+| cashew | 0.9756 / 0.9632 |
+| chewinggum | 0.9838 / 0.9855 |
+| fryum | 0.9420 / 0.9630 |
+| macaroni1 | 0.9647 / 0.9932 |
+| macaroni2 | 0.8983 / 0.9931 |
+| pcb1 | 0.9696 / 0.9971 |
+| pcb2 | 0.9744 / 0.9871 |
+| pcb3 | 0.9721 / 0.9924 |
+| pcb4 | 0.9987 / 0.9834 |
+| pipe_fryum | 0.9946 / 0.9907 |
+| **Mean (ok만)** | **0.9595 / 0.9859** (12개) |
+
+# 3. A — 실행 비용
+
+| 방법 | 데이터셋 | 완료 | 총 시간 | 카테고리당 | peak VRAM |
+|---|---|---|---|---|---|
+| patchcore | mvtec | 15/15 | 0.13h | 31초 | 3,091 MiB |
+| padim | mvtec | 7/15 | 0.29h | 2.5분 | 1,720 MiB |
+| rd_orig | mvtec | 15/15 | 0.56h | 2.2분 | 8,290 MiB |
+| rd_orig | visa | 12/12 | 1.23h | 6.2분 | 8,393 MiB |
+| rd | mvtec | 8/15 | 17.33h | 130분 | 11,810 MiB |
+
+---
+
+# 4. B — MVTec-AD
+
+| category | rd_orig | rd | dinomaly |
 |---|---|---|---|
 | bottle | 1.0000 / 0.9890 | 0.9960 / 0.9866 | 1.0000 / 0.9916 |
 | cable | 0.9713 / 0.9748 | 0.9408 / 0.9731 | 0.9859 / 0.9789 |
 | capsule | 0.9533 / 0.9849 | 0.8636 / 0.9788 | 0.9637 / 0.9871 |
 | carpet | 0.9920 / 0.9902 | 0.9952 / 0.9918 | 1.0000 / 0.9950 |
-| **grid** | 0.9908 / 0.9909 | 0.8906 / 0.9202 | **1.0000 / 0.9952** |
+| grid | 0.9908 / 0.9909 | 0.8906 / 0.9202 | 1.0000 / 0.9952 |
 | hazelnut | 1.0000 / 0.9906 | 1.0000 / 0.9913 | 1.0000 / 0.9960 |
 | leather | 1.0000 / 0.9944 | 1.0000 / 0.9947 | 1.0000 / 0.9939 |
 | metal_nut | 1.0000 / 0.9752 | 0.9927 / 0.9723 | 1.0000 / 0.9748 |
-| pill | 0.9733 / 0.9799 | 0.8584 / 0.9557 | (미실행) |
+| pill | 0.9733 / 0.9799 | 0.8584 / 0.9557 | (timeout) |
 | screw | 0.9637 / 0.9941 | 0.8227 / 0.9860 | 0.9162 / 0.9922 |
 | tile | 0.9924 / 0.9588 | 0.9949 / 0.9583 | 1.0000 / 0.9796 |
-| toothbrush | 1.0000 / 0.9894 | 0.9889 / 0.9867 | (미실행) |
-| **transistor** | 0.9758 / **0.9150** | 0.9775 / **0.9053** | 0.9896 / **0.9202** |
+| toothbrush | 1.0000 / 0.9894 | 0.9889 / 0.9867 | (timeout) |
+| transistor | 0.9758 / 0.9150 | 0.9775 / 0.9053 | 0.9896 / 0.9202 |
 | wood | 0.9877 / 0.9567 | 0.9921 / 0.9556 | 0.9965 / 0.9759 |
 | zipper | 0.9086 / 0.9789 | 0.9031 / 0.9644 | 0.9963 / 0.9859 |
-| **Mean (15개)** | **0.9806 / 0.9775** | **0.9478 / 0.9680** | — (13개뿐) |
-| **Mean (공통 13개)** | 0.9797 / 0.9764 | 0.9515 / 0.9676 | **0.9883 / 0.9820** |
+| **Mean (ok만)** | **0.9806 / 0.9775** (15개) | **0.9478 / 0.9680** (15개) | **0.9883 / 0.9820** (13개) |
 
-dinomaly가 13개뿐이라 15개 mean끼리는 비교할 수 없다. 마지막 행이 **dinomaly가 가진 13개로 맞춘 mean**이며 이것만 직접 비교 가능하다.
+# 5. B — 실행 비용
 
-### 공식 구현 재현치와 대조
-
-| 방법 | 공식 구현 재현 (W39) | 그때 설정 | 이번 프레임워크 | 이번 설정 | 차이 |
+| 방법 | 데이터셋 | 완료 | 총 시간 | 카테고리당 | peak VRAM |
 |---|---|---|---|---|---|
-| RD4AD / rd_orig | 98.7 / 97.8 | epoch **200** | 98.06 / 97.75 | epoch **35** | -0.64 / -0.05 %p |
-| Dinomaly (sep) | 99.75 / 98.38 | **5000 iter**/카테고리 | 98.83 / 98.20 | **200 iter** | -0.92 / -0.18 %p |
+| rd_orig | mvtec | 15/15 | 1.17h | 4.7분 | 8,033 MiB |
+| rd | mvtec | 15/15 | 1.04h | 4.2분 | 11,799 MiB |
+| dinomaly | mvtec | 13/15 | 4.04h | 19분 | 11,825 MiB |
 
-> **[내 판단] 프레임워크 재현 신뢰도**
->
-> _(여기에 내 말로: 학습량을 1/6·1/25로 줄였는데 격차가 1%p 미만인 것을 어떻게 읽을지. 프레임워크 수치를 공식 구현 재현치 대신 쓸 수 있다고 볼지.)_
+# 6. A / B 대조 (같은 카테고리만)
 
-## setting
+A와 B에서 모두 `ok`인 카테고리만 골라 평균낸 값이다.
+
+| 방법 | 실행 | 학습량 | 비교 카테고리 | I-AUROC | P-AUROC | 카테고리당 |
+|---|---|---|---|---|---|---|
+| rd | B | 10 ep | 8개 | 0.9599 | 0.9761 | 4.4분 |
+| rd | A | 300 ep | 8개 | 0.9907 | 0.9872 | 129.9분 |
+| rd | 차이 (A−B) | | | **+0.0309** | **+0.0111** | |
+| rd_orig | B | 35 ep | 15개 | 0.9806 | 0.9775 | 4.7분 |
+| rd_orig | A | 40 ep | 15개 | 0.9811 | 0.9778 | 2.2분 |
+| rd_orig | 차이 (A−B) | | | **+0.0005** | **+0.0003** | |
+
+
+---
+
+# 7. 실행하지 못한 범위와 이유
+
+| 범위 | 상태 | 이유 |
+|---|---|---|
+| A: rd MVTec 7개 (pill·screw·tile·toothbrush·transistor·wood·zipper) | 대기 | 9/25 20:30 GPU 반납으로 중단. pill은 219/300 에포크에서 끊겨 재실행 필요 |
+| A: rd VisA 12개 | 대기 | MVTec 다음 차례 |
+| A: padim MVTec 8개 | 대기 | `spec_mvtec_fast` 단계가 중간에 종료됨 |
+| A: padim `carpet` | 실패 | exit code -1, 트레이스백 없이 mahalanobis 계산 35%에서 종료. peak VRAM 1,335 MiB. raw: `run_logs/padim__mvtec__carpet.log` |
+| A: winclip·promptad·coad·uniad·simple | 미실행 | 노트북 담당 (`w55_laptop.py`) |
+| A: dinomaly · glass | 미실행 | 아래 계산 참조 |
+| B: dinomaly `pill` | 실패 | `Dinomaly_lib/utils.py:24` 정수 오버플로 (`Storage size calculation overflowed with sizes=[4, -1178562093]`). `expand_as`로 만든 stride-0 뷰에 boolean 인덱싱. 다른 14개에서는 미발생. raw: `../run_logs/dinomaly_pill_crash_tail.txt` |
+| B: dinomaly `toothbrush` | 미실행 | `pill` 크래시로 차례가 오지 않음 |
+
+config 설정 기준 소요시간 (2점 측정, `timing_report.txt`):
+
+| 방법 | config 설정 | MVTec-15 | VisA-12 | 합계 |
+|---|---|---|---|---|
+| dinomaly | total_iter 5000 | 93.8h | 217.5h | 311.3h |
+| glass | meta_epochs 640 | 320.1h | 742.7h | 1,062.8h |
+
+---
+
+# 8. 실행 환경
 
 | 항목 | 값 |
 |---|---|
 | 기기 | 데스크톱, RTX 5070 12GB, 16 core, Windows 11 |
 | 환경 | Python 3.11.9, torch 2.11.0+cu128, torchvision 0.26.0+cu128 (venv `.venv-gpu`) |
-| 데이터 | MVTec-AD, `C:/ai_local/glad_dataset/MVTec-AD` |
+| 데이터 | MVTec-AD `C:/ai_local/glad_dataset/MVTec-AD`, VisA `C:/ai_local/glad_dataset/VisA_mvtec` |
 | 평가 단위 | class-separated |
 | seed | 0 |
-| num_workers | **0** — Windows에서 8로 올리면 spawn 오버헤드로 24초 → 92초로 **느려짐**을 실측 |
+| num_workers | 0 |
 | 실행 방식 | 방법×카테고리 job마다 `main.py`를 별도 프로세스로 실행, CSV에 append (재개 가능) |
 
-프레임워크 기본값(=논문 설정)과 이번 설정의 차이:
+VisA는 공식 `split_csv/1cls.csv` 기준으로 MVTec 디렉터리 구조로 변환. 12 카테고리 / train 8,659 / test-good 962 / test-bad 1,200(마스크 전부 존재). 변환 스크립트 `../scripts/w55_visa_to_mvtec.py`.
 
-| 방법 | 프레임워크 기본 | 이번 실행 | 비율 |
-|---|---|---|---|
-| rd_orig | meta_epochs 40 | **35** | 87.5% |
-| rd | meta_epochs 300 | **10** | 3.3% |
-| dinomaly | total_iter 5000 | **200** | 4% |
+peak VRAM 실측에 따른 기기 분담:
 
-epoch 수를 줄인 근거는 2점 측정으로 뽑은 비용이다. 자세한 값은 `timing_report.txt`.
+| 노트북 (RTX 5060 8GB) | 데스크톱 (RTX 5070 12GB) |
+|---|---|
+| padim 1,720 · uniad 1,839 · patchcore 3,091 | rd_orig 8,393 MiB |
+| simple 3,336 · winclip 3,768 · promptad 5,119 | rd 11,810 MiB |
+| coad 6,440 MiB | dinomaly 11,825 MiB |
 
-| 방법 | epoch당 | peak VRAM | 8GB 노트북 |
-|---|---|---|---|
-| rd_orig | 5.4s | 8,282 MiB | **불가** |
-| rd | 17.0s | 11,792 MiB | **불가** |
-| dinomaly | — (iter 기반) | 11,816 MiB | **불가** |
+---
 
-이 세 방법이 8GB를 넘겨 노트북에서 실행 불가능하므로, 데스크톱 가용일(1일)에 우선 배치했다.
+# 9. 파일
 
-## 실행하지 못한 범위와 이유
+| 파일 | 내용 |
+|---|---|
+| `summary_spec_mvtec_fast.csv` | A: patchcore 15/15 + padim 7/15 |
+| `summary_spec_mvtec_rd_orig.csv` | A: rd_orig MVTec, meta_epochs=40 |
+| `summary_spec_visa_rd_orig.csv` | A: rd_orig VisA, meta_epochs=40 |
+| `summary_spec_mvtec_rd.csv` | A: rd MVTec, meta_epochs=300 |
+| `summary_mvtec_rd_orig.csv` | B: rd_orig 15개, meta_epochs=35 |
+| `summary_mvtec_rd.csv` | B: rd 15개, meta_epochs=10 |
+| `summary_mvtec_dinomaly.csv` | B: dinomaly 13개, total_iter=200 |
+| `summary_smoke.csv` | 11개 방법 × bottle 1 epoch — 비용 측정 1번째 점 |
+| `summary_timing5.csv` | 학습형 방법 × bottle 5 epoch — 2번째 점 |
+| `summary_smoke_dino1/2.csv` | dinomaly 200/600 iter 별도 측정 |
+| `summary_mvtec_light.csv` | 시작 1분 만에 종료, 빈 파일 |
+| `timing_per_run.csv` | 전 job 구간 분해(기동/데이터/모델/실행), peak VRAM, 이미지당 추론시간 |
+| `timing_report.txt` | 위 CSV를 표로 출력 |
+| `method_probe.txt` | 11개 방법이 import→계약검사→backbone→생성 중 어디까지 되는지 |
 
-| 범위 | 상태 | 이유 |
-|---|---|---|
-| dinomaly `pill` | 실패 | 프레임워크 버그. `Dinomaly_lib/utils.py:24` 정수 오버플로 (`Storage size calculation overflowed with sizes=[4, -1178562093]`). `expand_as`로 만든 stride-0 뷰에 boolean 인덱싱하면서 크기가 음수로 뒤집힘. 다른 14개 카테고리에서는 발생 안 함. raw: `../run_logs/dinomaly_pill_crash_tail.txt` |
-| dinomaly `toothbrush` | 미실행 | `pill` 크래시가 배치 러너까지 중단시켜 차례가 오지 않음 |
-| patchcore·padim·winclip·promptad·simple·uniad·glass·coad × MVTec | 미실행 | 데스크톱 가용 시간 내 우선순위에서 밀림. 전부 8GB 노트북에서 가능하므로 9/25~9/28 진행 |
-| VisA 전체 (12 카테고리) | 미실행 | 위와 동일. **데이터 변환은 완료** — `C:/ai_local/glad_dataset/VisA_mvtec`, 12 카테고리 / train 8,659 / test-good 962 / test-bad 1,200(마스크 전부 존재), 변환 스크립트 `../scripts/w55_visa_to_mvtec.py` |
+CSV 열: `status`(ok/timeout/failed), `wall_s`, `peak_vram_mb`, `meta_epochs`/`total_iter`, `auroc_mean`, `pixel_auroc_mean`, `sal_f1_mean`, `reason`, `log_path`, `results_csv`.
 
-**논문 설정으로는 애초에 불가능한 것** (2점 측정에서 계산):
+`timeout`의 제한시간은 프레임워크가 아니라 배치 러너가 건 값이다 (`w55_run_batch.py:199`). 재개 시 `timeout` 행만 재시도되고 `ok`/`failed`는 최종으로 친다.
 
-| 방법 | 논문 설정 | 카테고리당 | 15개 합계 |
-|---|---|---|---|
-| rd | 300 ep | 85분 | **21시간** |
-| uniad | 1000 ep | 65분 | **16시간** |
-| glass | 640 ep | 21시간 | **13일** |
+---
 
-## 실행을 위해 고쳐야 했던 프레임워크 문제 6건
-
-원본은 전부 `*.orig`로 보존. 패치·스크립트는 `../scripts/`.
-
-| # | 위치 | 증상 | 원인 | 성격 |
-|---|---|---|---|---|
-| 1 | `metrics_gpu.py:11` | CPU에서 **평가 단계만** `Torch not compiled with CUDA enabled` | `device="cuda"` 기본 인자 (같은 파일 47/79/165행은 이미 fallback 패턴) | 환경 |
-| 2 | `datasets/base.py:133` | Windows에서 `num_workers>0` 이 `Can't pickle local object` | transform 첫 항목이 로컬 `lambda x: x` | **Windows 전용** |
-| 3 | `trainer_glass.py:236` | glass가 **학습을 통째로 건너뛰고** 에러 없이 종료 | 맨몸 `except:` 가 openpyxl 미설치와 이름 불일치(`mvtec_glass_bottle` vs 키 `mvtec_bottle`)를 삼키고 `distribution=1`(학습 없는 판정 모드)로 전환 | **설계** |
-| 4 | `RD_lib/noise.py:19` | rd 시작 즉시 `low is out of bounds for int32` | `np.random.randint(±1e10)` 이 Windows 기본 int32 초과 | **Windows 전용** |
-| 5 | `Dinomaly_lib/utils.py:24` | dinomaly `pill` backward 중 크래시 | stride-0 뷰 boolean 인덱싱 오버플로 | **미해결** |
-| 6 | scikit-learn 1.9.1 | `sklearn.cluster` `.pyd` 2개가 Windows 앱 제어 정책에 차단 | 파일 단위 차단 | 환경 (1.7.2로 우회) |
-
-**3번이 가장 위험하다.** 실패가 예외로 드러나지 않고 다른 실행 모드로 조용히 바뀌어, exit 0과 함께 그럴듯한 숫자를 내놓는다.
-
-| glass (bottle, 1 epoch) | I-AUROC | P-AUROC | 소요 |
-|---|---|---|---|
-| 수정 전 (학습 건너뜀) | 0.2452 | 0.4076 | 23초 |
-| **수정 후 (실제 학습)** | **0.9452** | **0.9015** | 147초 |
-
-> **[내 판단] 이 6건을 어떻게 볼지**
->
-> _(여기에 내 말로: 3번을 #57(코드 기반 한계와 개선안) 후보로 쓸지. 2·4번이 Windows 전용이라는 게 이 프레임워크가 전제한 환경에 대해 무엇을 말해주는지.)_
-
-## 재개 방법
-
-모든 상태가 데스크톱 디스크에 남아 있어 명령 하나로 이어진다. 끝난 job은 건너뛰고, `timeout` 으로 남은 것만 재시도한다.
+# 10. 재개 방법
 
 ```bash
 cd No_Submit/code/dinomaly_share_codebase/dinomaly_share_codebase
-./.venv-gpu/Scripts/python.exe results_w40/w55_runall.py
+./.venv-gpu/Scripts/python.exe -u results_w40/w55_spec.py --from-phase 2   # 데스크톱
+./.venv-gpu/Scripts/python.exe -u results_w40/w55_laptop.py                # 노트북
 ```
 
-재개 시 dinomaly는 `pill`·`toothbrush` 둘만 재시도하고, 이어서 MVTec 나머지 8개 방법 → VisA 순으로 진행한다.
+끝난 job은 건너뛴다. rd는 `pill`부터 이어서 MVTec 7개 → VisA 12개 순으로 진행한다.
+
+job 제한시간은 9/25에 올렸다 (MVTec rd 3.5h → 4.5h, VisA rd 8h → 10h). 실측 1.569 s/iter 기준 최악 카테고리가 MVTec hazelnut 3.27h, VisA pcb3 7.45h로 옛 제한시간의 7% 안이었다. 파이썬이 시작 시 이 값을 읽으므로 실행 중인 프로세스에는 파일 수정이 반영되지 않는다.
+
+중단 시에는 프로세스 트리 전체를 종료해야 한다. 이 환경에는 `wmic`이 없다.
+
+```powershell
+Get-CimInstance Win32_Process -Filter "Name='python.exe'" |
+  ForEach-Object { taskkill /F /T /PID $_.ProcessId }
+nvidia-smi --query-gpu=memory.used --format=csv
+```
+
+중단으로 죽은 job은 `failed`로 기록되고 재개 시 재시도되지 않으므로, 해당 행을 CSV에서 삭제해야 다시 실행된다.
