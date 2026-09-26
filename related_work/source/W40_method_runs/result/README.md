@@ -2,6 +2,7 @@
 
 공통 프레임워크(`dinomaly_share_codebase`)로 MVTec·VisA를 실행한 수치 (LabTask #55).
 데스크톱 RTX 5070 / 12GB, seed 0, class-separated(카테고리별 개별 학습).
+노트북(RTX 5060 Laptop / 8GB)에서도 일부 방법을 나눠 실행했다 (3-0~3-4절).
 
 실행이 두 번 있고 학습량이 다르다.
 
@@ -72,6 +73,85 @@ A는 `--meta-epochs` / `--total-iter` / `--batch-size`를 넘기지 않아 confi
 | rd_orig | visa | 12/12 | 1.23h | 6.2분 | 8,393 MiB |
 | rd | mvtec | 8/15 | 17.33h | 130분 | 11,810 MiB |
 
+# 3-0. A (노트북) — 개요
+
+같은 프레임워크를 노트북(RTX 5060 Laptop, VRAM 8GB)에서 실행한 수치이다. 2026-09-25에 시작했고 uniad가 진행 중이라 2026-09-26 밤까지의 값이다.
+
+- 카테고리마다 따로 학습했고, 학습량 인자를 넘기지 않아 각 `configs/<방법>.yaml` 값이 그대로 쓰였다 (uniad 1000, promptad 100).
+- 표의 값은 `I-AUROC / P-AUROC`이다.
+- patchcore는 데스크톱(1절)에도 있다. 같은 방법이지만 기기가 달라 두 표의 값이 조금 다르다.
+
+# 3-1. A (노트북) — MVTec-AD
+
+| category | patchcore | winclip | promptad | coad | uniad |
+|---|---|---|---|---|---|
+| bottle | 1.0000 / 0.9876 | 0.9992 / 0.9584 | 1.0000 / 0.9902 | 1.0000 / 0.9925 | 1.0000 / 0.9841 |
+| cable | 0.9946 / 0.9849 | 0.9303 / 0.9136 | 0.9878 / 0.9783 | 0.9987 / 0.9904 | 0.9674 / 0.9739 |
+| capsule | 0.9725 / 0.9882 | 0.8827 / 0.9727 | 0.9489 / 0.9270 | 0.9781 / 0.9908 | 0.8568 / 0.9742 |
+| carpet | 0.9860 / 0.9895 | 0.9984 / 0.9845 | 0.9988 / 0.9937 | 0.9928 / 0.9954 | 0.9984 / 0.9845 |
+| grid | 0.9900 / 0.9825 | 0.9933 / 0.9532 | 0.9942 / 0.9892 | 0.9524 / 0.9922 | (미실행) |
+| hazelnut | 1.0000 / 0.9892 | 0.9814 / 0.9861 | 1.0000 / 0.9925 | 1.0000 / 0.9943 | (미실행) |
+| leather | 1.0000 / 0.9934 | 1.0000 / 0.9922 | 1.0000 / 0.9940 | 1.0000 / 0.9973 | (미실행) |
+| metal_nut | 1.0000 / 0.9843 | 1.0000 / 0.8320 | 1.0000 / 0.9640 | 0.9985 / 0.9867 | (미실행) |
+| pill | 0.9525 / 0.9742 | 0.9280 / 0.9382 | 0.9686 / 0.9596 | 0.9692 / 0.9830 | (미실행) |
+| screw | 0.9807 / 0.9905 | 0.9170 / 0.9772 | 0.9143 / 0.9522 | 0.8754 / 0.9926 | (미실행) |
+| tile | 1.0000 / 0.9611 | 1.0000 / 0.9124 | 1.0000 / 0.9624 | 1.0000 / 0.9774 | (미실행) |
+| toothbrush | 0.9028 / 0.9900 | 0.9667 / 0.9822 | 0.9472 / 0.9903 | 0.9889 / 0.9922 | (미실행) |
+| transistor | 0.9958 / 0.9491 | 0.9333 / 0.9280 | 0.9829 / 0.9568 | 0.9825 / 0.9671 | (미실행) |
+| wood | 0.9886 / 0.9425 | 0.9956 / 0.9474 | 0.9886 / 0.9642 | 0.9868 / 0.9730 | (미실행) |
+| zipper | 0.9874 / 0.9868 | 0.9769 / 0.9685 | 0.9916 / 0.9189 | 0.9622 / 0.9688 | (미실행) |
+| **Mean (ok만)** | **0.9834 / 0.9796** (15개) | **0.9669 / 0.9498** (15개) | **0.9815 / 0.9689** (15개) | **0.9790 / 0.9862** (15개) | **0.9556 / 0.9792** (4개) |
+
+# 3-2. A (노트북) — VisA
+
+| category | patchcore | winclip | promptad | coad |
+|---|---|---|---|---|
+| candle | 0.9698 / 0.9874 | 0.9826 / 0.9569 | 0.9750 / 0.9575 | 0.9325 / 0.9923 |
+| capsules | 0.7543 / 0.9764 | 0.8748 / 0.9561 | 0.8323 / 0.9769 | 0.8908 / 0.9910 |
+| cashew | 0.9740 / 0.9838 | 0.9622 / 0.9676 | 0.9202 / 0.8705 | 0.9722 / 0.9941 |
+| chewinggum | 0.9934 / 0.9864 | 0.9754 / 0.9862 | 0.9800 / 0.9665 | 0.9882 / 0.9913 |
+| fryum | 0.9280 / 0.9452 | 0.9256 / 0.9554 | 0.9640 / 0.9013 | 0.9552 / 0.9619 |
+| macaroni1 | 0.9188 / 0.9839 | 0.9114 / 0.9049 | 0.9014 / 0.9264 | 0.8593 / 0.9919 |
+| macaroni2 | 0.6586 / 0.9343 | 0.7651 / 0.8182 | 0.7533 / 0.9289 | 0.7059 / 0.9878 |
+| pcb1 | 0.9693 / 0.9946 | 0.9583 / 0.9670 | 0.9214 / 0.9278 | 0.9536 / 0.9959 |
+| pcb2 | 0.9316 / 0.9763 | 0.7733 / 0.9052 | 0.9016 / 0.8396 | 0.8848 / 0.9857 |
+| pcb3 | 0.9477 / 0.9851 | 0.8874 / 0.9664 | 0.8880 / 0.9554 | 0.9013 / 0.9875 |
+| pcb4 | 0.9925 / 0.9743 | 0.9594 / 0.9814 | 0.9688 / 0.8998 | 0.9935 / 0.9896 |
+| pipe_fryum | 0.9978 / 0.9906 | 0.8874 / 0.9545 | 0.9886 / 0.9849 | 0.9722 / 0.9949 |
+| **Mean (ok만)** | **0.9197 / 0.9765** (12개) | **0.9052 / 0.9433** (12개) | **0.9162 / 0.9279** (12개) | **0.9175 / 0.9887** (12개) |
+
+# 3-3. A (노트북) — 실행 비용
+
+카테고리당 시간은 job 전체 벽시계 시간의 평균이고, VRAM은 job 중 `nvidia-smi` 최댓값이다.
+
+| 방법 | 데이터셋 | 완료 | 카테고리당 (평균) | peak VRAM |
+|---|---|---|---|---|
+| patchcore | mvtec | 15/15 | 1.4분 | 2,872 MiB |
+| winclip | mvtec | 15/15 | 8.1분 | 4,400 MiB |
+| promptad | mvtec | 15/15 | 24.5분 | 2,878 MiB |
+| coad | mvtec | 15/15 | 14.9분 | 6,706 MiB |
+| uniad | mvtec | 4/15 | 2.30시간 | 1,283 MiB |
+| patchcore | visa | 12/12 | 2.1분 | 5,426 MiB |
+| winclip | visa | 12/12 | 12.3분 | 7,873 MiB |
+| promptad | visa | 12/12 | 1.06시간 | 3,659 MiB |
+| coad | visa | 12/12 | 22.2분 | 7,886 MiB |
+
+---
+
+# 3-4. A (노트북) — 제한 시간에 걸린 job
+
+실행 스크립트에는 job당 제한 시간이 있고 넘으면 강제 종료된다 (프레임워크에는 없음). 시간 초과는 방법이 실패한 것이 아니라 스크립트가 종료한 것이다.
+
+| job | 원래 제한 | 결과 |
+|---|---|---|
+| padim (MVTec bottle, cable, capsule, carpet) | 1800초 | 4개 모두 시간 초과. 로그상 마할라노비스 거리 계산 단계가 초당 약 1.5회 속도였고 끝나기 전에 종료됨. 노트북에서는 제외하고 재실행하지 않음 |
+| promptad (MVTec hazelnut, screw) | 1800초 | 제한을 5400초로 올려 재실행, 각각 2024초, 1633초에 완료 |
+| uniad (MVTec carpet) | 9000초 | 학습 918/1000 epoch에서 종료. 제한을 21600초로 올려 재실행, 10533초에 완료 |
+
+VisA의 patchcore, winclip, promptad 제한도 3600초에서 10800초로 올려서 돌렸다.
+
+---
+
 ---
 
 # 4. B — MVTec-AD
@@ -127,7 +207,10 @@ A와 B에서 모두 `ok`인 카테고리만 골라 평균낸 값이다.
 | A: rd VisA 12개 | 대기 | MVTec 다음 차례 |
 | A: padim MVTec 8개 | 대기 | `spec_mvtec_fast` 단계가 중간에 종료됨 |
 | A: padim `carpet` | 실패 | exit code -1, 트레이스백 없이 mahalanobis 계산 35%에서 종료. peak VRAM 1,335 MiB. raw: `run_logs/padim__mvtec__carpet.log` |
-| A: winclip·promptad·coad·uniad·simple | 미실행 | 노트북 담당 (`w55_laptop.py`) |
+| A: winclip·promptad·coad (노트북) | 완료 | 3-1~3-3절 |
+| A: uniad MVTec 나머지 11개 (노트북) | 진행 중 | job당 약 2~3시간 (grid부터) |
+| A: simple, uniad VisA (노트북) | 미실행 | uniad 뒤 차례 |
+| A: padim (노트북) | 제외 | 1800초 제한에 걸림 (3-4절). 데스크톱 담당 |
 | A: dinomaly · glass | 미실행 | 아래 계산 참조 |
 | B: dinomaly `pill` | 실패 | `Dinomaly_lib/utils.py:24` 정수 오버플로 (`Storage size calculation overflowed with sizes=[4, -1178562093]`). `expand_as`로 만든 stride-0 뷰에 boolean 인덱싱. 다른 14개에서는 미발생. raw: `../run_logs/dinomaly_pill_crash_tail.txt` |
 | B: dinomaly `toothbrush` | 미실행 | `pill` 크래시로 차례가 오지 않음 |
@@ -146,6 +229,7 @@ config 설정 기준 소요시간 (2점 측정, `timing_report.txt`):
 | 항목 | 값 |
 |---|---|
 | 기기 | 데스크톱, RTX 5070 12GB, 16 core, Windows 11 |
+| 기기 (노트북) | RTX 5060 Laptop 8GB, Windows 11. torch 2.11.0+cu128 (venv `.venv-gpu`). 데이터 MVTec-AD `C:/ai_local/diad_dataset`, VisA `C:/ai_local/VisA_mvtec` |
 | 환경 | Python 3.11.9, torch 2.11.0+cu128, torchvision 0.26.0+cu128 (venv `.venv-gpu`) |
 | 데이터 | MVTec-AD `C:/ai_local/glad_dataset/MVTec-AD`, VisA `C:/ai_local/glad_dataset/VisA_mvtec` |
 | 평가 단위 | class-separated |
@@ -187,27 +271,3 @@ peak VRAM 실측에 따른 기기 분담:
 CSV 열: `status`(ok/timeout/failed), `wall_s`, `peak_vram_mb`, `meta_epochs`/`total_iter`, `auroc_mean`, `pixel_auroc_mean`, `sal_f1_mean`, `reason`, `log_path`, `results_csv`.
 
 `timeout`의 제한시간은 프레임워크가 아니라 배치 러너가 건 값이다 (`w55_run_batch.py:199`). 재개 시 `timeout` 행만 재시도되고 `ok`/`failed`는 최종으로 친다.
-
----
-
-# 10. 재개 방법
-
-```bash
-cd No_Submit/code/dinomaly_share_codebase/dinomaly_share_codebase
-./.venv-gpu/Scripts/python.exe -u results_w40/w55_spec.py --from-phase 2   # 데스크톱
-./.venv-gpu/Scripts/python.exe -u results_w40/w55_laptop.py                # 노트북
-```
-
-끝난 job은 건너뛴다. rd는 `pill`부터 이어서 MVTec 7개 → VisA 12개 순으로 진행한다.
-
-job 제한시간은 9/25에 올렸다 (MVTec rd 3.5h → 4.5h, VisA rd 8h → 10h). 실측 1.569 s/iter 기준 최악 카테고리가 MVTec hazelnut 3.27h, VisA pcb3 7.45h로 옛 제한시간의 7% 안이었다. 파이썬이 시작 시 이 값을 읽으므로 실행 중인 프로세스에는 파일 수정이 반영되지 않는다.
-
-중단 시에는 프로세스 트리 전체를 종료해야 한다. 이 환경에는 `wmic`이 없다.
-
-```powershell
-Get-CimInstance Win32_Process -Filter "Name='python.exe'" |
-  ForEach-Object { taskkill /F /T /PID $_.ProcessId }
-nvidia-smi --query-gpu=memory.used --format=csv
-```
-
-중단으로 죽은 job은 `failed`로 기록되고 재개 시 재시도되지 않으므로, 해당 행을 CSV에서 삭제해야 다시 실행된다.
