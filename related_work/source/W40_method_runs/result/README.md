@@ -4,16 +4,11 @@
 데스크톱 RTX 5070 / 12GB, seed 0, class-separated(카테고리별 개별 학습).
 노트북(RTX 5060 Laptop / 8GB)에서도 일부 방법을 나눠 실행했다 (3-0~3-4절).
 
-실행이 두 번 있고 학습량이 다르다.
+아래 결과는 모두 config가 정한 학습량 그대로 실행한 것이다(표에서 "A"로 표기). `--meta-epochs` / `--total-iter` / `--batch-size`를 넘기지 않아 config 값이 그대로 적용된다.
 
-| | 날짜 | 학습량 | 상태 |
-|---|---|---|---|
-| **A** | 2026-09-25~ | `configs/<method>.yaml` 값 그대로 | 진행 중 |
-| **B** | 2026-09-24 | 축소 (rd 10 ep, rd_orig 35 ep, dinomaly 200 iter) | 종료 |
+> **예외: simple은 백본 가중치를 ImageNet V1으로 바꿔 실행했다.** 프레임워크 기본값(V2)으로는 판별기가 학습되지 않았기 때문이다. 이유와 근거는 3-5절.
 
-A는 `--meta-epochs` / `--total-iter` / `--batch-size`를 넘기지 않아 config 값이 그대로 적용된다.
-
-| 방법 | A의 학습량 | 출처 |
+| 방법 | 학습량 | 출처 |
 |---|---|---|
 | patchcore | 학습 없음 (memory bank) | `configs/patchcore.yaml`은 `imagesize: 224`만 지정 |
 | padim | 학습 없음 (가우시안 적합) | config에 학습 인자 없음 → DEFAULTS |
@@ -76,7 +71,7 @@ A는 `--meta-epochs` / `--total-iter` / `--batch-size`를 넘기지 않아 confi
 
 # 3-0. A (노트북) — 개요
 
-같은 프레임워크를 노트북(RTX 5060 Laptop, VRAM 8GB)에서 실행한 수치이다. 2026-09-25에 시작했고 uniad가 진행 중이라 2026-09-27 밤까지의 값이다.
+같은 프레임워크를 노트북(RTX 5060 Laptop, VRAM 8GB)에서 실행한 수치이다. 2026-09-25에 시작했고 2026-09-28 새벽까지의 값이다.
 
 - 카테고리마다 따로 학습했고, 학습량 인자를 넘기지 않아 각 `configs/<방법>.yaml` 값이 그대로 쓰였다 (uniad 1000, promptad 100).
 - 표의 값은 `I-AUROC / P-AUROC`이다.
@@ -100,8 +95,8 @@ A는 `--meta-epochs` / `--total-iter` / `--batch-size`를 넘기지 않아 confi
 | toothbrush | 0.9028 / 0.9900 | 0.9667 / 0.9822 | 0.9472 / 0.9903 | 0.9889 / 0.9922 | 0.9500 / 0.9839 |
 | transistor | 0.9958 / 0.9491 | 0.9333 / 0.9280 | 0.9829 / 0.9568 | 0.9825 / 0.9671 | 0.9954 / 0.9889 |
 | wood | 0.9886 / 0.9425 | 0.9956 / 0.9474 | 0.9886 / 0.9642 | 0.9868 / 0.9730 | 0.9868 / 0.9325 |
-| zipper | 0.9874 / 0.9868 | 0.9769 / 0.9685 | 0.9916 / 0.9189 | 0.9622 / 0.9688 | (미실행) |
-| **Mean (ok만)** | **0.9834 / 0.9796** (15개) | **0.9669 / 0.9498** (15개) | **0.9815 / 0.9689** (15개) | **0.9790 / 0.9862** (15개) | **0.9542 / 0.9626** (14개) |
+| zipper | 0.9874 / 0.9868 | 0.9769 / 0.9685 | 0.9916 / 0.9189 | 0.9622 / 0.9688 | 0.9443 / 0.9681 |
+| **Mean (ok만)** | **0.9834 / 0.9796** (15개) | **0.9669 / 0.9498** (15개) | **0.9815 / 0.9689** (15개) | **0.9790 / 0.9862** (15개) | **0.9535 / 0.9629** (15개) |
 
 # 3-2. A (노트북) — VisA
 
@@ -131,7 +126,7 @@ A는 `--meta-epochs` / `--total-iter` / `--batch-size`를 넘기지 않아 confi
 | winclip | mvtec | 15/15 | 8.1분 | 4,400 MiB |
 | promptad | mvtec | 15/15 | 24.5분 | 2,878 MiB |
 | coad | mvtec | 15/15 | 14.9분 | 6,706 MiB |
-| uniad | mvtec | 14/15 | 2.33시간 | 1,360 MiB |
+| uniad | mvtec | 15/15 | 2.31시간 | 1,360 MiB |
 | patchcore | visa | 12/12 | 2.1분 | 5,426 MiB |
 | winclip | visa | 12/12 | 12.3분 | 7,873 MiB |
 | promptad | visa | 12/12 | 1.06시간 | 3,659 MiB |
@@ -153,54 +148,64 @@ VisA의 patchcore, winclip, promptad 제한도 3600초에서 10800초로 올려�
 
 ---
 
+# 3-5. simple — 백본 가중치를 V1으로 바꿔 실행한 이유 (예외)
+
+**simple만 프레임워크 설정과 다르게 실행했다.** 학습량 등 config 값은 그대로이고, 백본(WideResNet50)의 사전학습 가중치만 ImageNet V1으로 바꿨다. 나머지 방법은 모두 프레임워크 그대로다.
+
+### V1 / V2 가중치란
+
+PyTorch의 이미지 모델 라이브러리(torchvision)는 WideResNet50에 ImageNet 사전학습 가중치를 두 가지 제공한다. 모델 구조는 같고 학습된 값만 다르다.
+
+| 이름 | 파일 | 설명 | ImageNet 정확도 | 불러오는 방식 |
+|---|---|---|---|---|
+| V1 (`IMAGENET1K_V1`) | `wide_resnet50_2-95faca4d.pth` | 원래 제공되던 가중치. 원 논문의 학습 방식을 재현 | 78.5% | `pretrained=True` (예전 방식) |
+| V2 (`IMAGENET1K_V2`) | `wide_resnet50_2-9ba9bcbe.pth` | torchvision이 개선된 학습 방식으로 다시 학습해 추가 | 81.6% | `weights="DEFAULT"` |
+
+정확도와 파일 이름은 torchvision이 가중치와 함께 제공하는 정보(`Wide_ResNet50_2_Weights`)에서 확인했다.
+
+### 무엇이 문제였나
+
+- 프레임워크의 `backbones.py`는 백본을 `wide_resnet50_2(weights="DEFAULT")`로 불러온다. torchvision에서 이 모델의 DEFAULT는 **ImageNet V2 가중치**다(교수자 제공 원본 zip부터 이렇게 되어 있음).
+- SimpleNet 공식 코드는 `wide_resnet50_2(pretrained=True)`, 즉 **V1 가중치**를 쓴다.
+- 같은 입력에서 V2의 중간층 특징값은 V1보다 약 9배 크다(layer3 표준편차 V1 0.09, V2 0.85).
+- SimpleNet은 정상 특징에 표준편차 0.015의 노이즈를 더해 "가짜 이상 특징"을 만들고, 판별기가 둘을 구분하도록 학습한다. 0.015는 V1 특징 크기에 맞춘 값이라, V2에서는 노이즈가 상대적으로 너무 작아 정상과 가짜 이상이 사실상 같아진다. 그 결과 **판별기가 모든 입력에 0 근처 점수를 내는 상태로 무너져 학습되지 않았다.**
+
+### 근거
+
+| 조건 (bottle) | 판별기 학습 | I-AUROC / P-AUROC |
+|---|---|---|
+| 프레임워크 그대로 (V2 가중치, 40 epoch) | 안 됨 (정답률* 0.0) | 0.9119 / 0.7439 |
+| 가중치만 V1으로 교체 (2 epoch, 원인 확인용) | 됨 (정답률* 0.79) | 0.9929 / 0.9676 |
+| SimpleNet 공식 코드 (V1 가중치, 40 epoch, W39 재현) | 됨 (정답률* 0.99) | 1.0000 / 0.9800 |
+
+\* 정답률: 판별기는 특징마다 점수를 내며, 정상은 높게·가짜 이상은 낮게 내도록 학습한다. 여기서 정답률은 정상 특징 중 점수가 +0.5 이상인 비율과 가짜 이상 특징 중 점수가 −0.5 미만인 비율이다(±0.5는 SimpleNet이 정한 기준선, 학습 로그의 `p_true`·`p_fake`). 두 비율은 거의 같아 하나만 적었다. 학습되면 1에 가까워지고, 0이면 모든 특징이 0 근처 점수를 받아 정상과 가짜 이상을 구분하지 못한다는 뜻이다. 프레임워크 그대로 실행했을 때는 손실도 40 epoch 내내 약 1.0에 머물렀는데, 이는 모든 점수가 0일 때의 손실값(정상 쪽 0.5 + 가짜 이상 쪽 0.5)과 같다.
+
+프레임워크 그대로 실행한 cable·capsule도 같은 양상이었다(cable 0.8383 / 0.8174, capsule 0.9278 / 0.9466).
+
+원인을 좁히는 과정에서 아래는 원인이 아님을 확인했다.
+
+| 의심한 원인 | 확인 방법 | 결과 |
+|---|---|---|
+| 이미지 캐시(데스크톱에서 추가한 속도 개선) | 캐시를 끄고 bottle 실행 | 똑같이 판별기가 무너짐 |
+| 라이브러리 버전 | W39 공식 코드 재현 환경이 같은 torch 2.11.0에서 정상 학습됨 | 원인 아님 |
+| adaptor 학습률(프레임워크 config가 공식 코드보다 100배 작음) | 학습률만 공식 값으로 바꿔 bottle·cable·capsule 40 epoch 실행 | 세 카테고리 모두 판별기가 무너짐 |
+
+### 적용 방법과 원시 결과
+
+- V1 적용: `../scripts/main_v1.py`가 `backbones.py`의 wideresnet50 항목만 `weights="IMAGENET1K_V1"`로 바꿔 끼운 뒤 `main.py`를 그대로 실행한다. 프레임워크 파일은 수정하지 않았다.
+- 원시 결과: V1 실행 `summary_spec_mvtec_simple_v1.csv`, `summary_spec_visa_simple_v1.csv`. 프레임워크 그대로(V2) 실행한 3개 카테고리는 `summary_spec_mvtec_simple.csv`에 남겨 두었다.
+
+### 같은 백본을 쓰는 다른 방법
+
+이 백본 로더(`backbones.py`)를 쓰는 방법은 patchcore·simple·glass뿐이다. padim·rd·rd_orig는 각자 코드에서 V1을 불러오고, 나머지는 WideResNet50을 쓰지 않는다.
+
+patchcore도 V1으로 MVTec 15개를 다시 돌려 비교했다. 평균은 V2 0.9834 / 0.9796, V1 0.9826 / 0.9808로 거의 같아서, **patchcore 결과(3-1절)는 프레임워크 그대로(V2) 둔다.** 카테고리별로는 transistor P-AUROC가 V2 0.9491, V1 0.9628로 차이가 가장 컸다.
+
 ---
 
-# 4. B — MVTec-AD
-
-| category | rd_orig | rd | dinomaly |
-|---|---|---|---|
-| bottle | 1.0000 / 0.9890 | 0.9960 / 0.9866 | 1.0000 / 0.9916 |
-| cable | 0.9713 / 0.9748 | 0.9408 / 0.9731 | 0.9859 / 0.9789 |
-| capsule | 0.9533 / 0.9849 | 0.8636 / 0.9788 | 0.9637 / 0.9871 |
-| carpet | 0.9920 / 0.9902 | 0.9952 / 0.9918 | 1.0000 / 0.9950 |
-| grid | 0.9908 / 0.9909 | 0.8906 / 0.9202 | 1.0000 / 0.9952 |
-| hazelnut | 1.0000 / 0.9906 | 1.0000 / 0.9913 | 1.0000 / 0.9960 |
-| leather | 1.0000 / 0.9944 | 1.0000 / 0.9947 | 1.0000 / 0.9939 |
-| metal_nut | 1.0000 / 0.9752 | 0.9927 / 0.9723 | 1.0000 / 0.9748 |
-| pill | 0.9733 / 0.9799 | 0.8584 / 0.9557 | (timeout) |
-| screw | 0.9637 / 0.9941 | 0.8227 / 0.9860 | 0.9162 / 0.9922 |
-| tile | 0.9924 / 0.9588 | 0.9949 / 0.9583 | 1.0000 / 0.9796 |
-| toothbrush | 1.0000 / 0.9894 | 0.9889 / 0.9867 | (timeout) |
-| transistor | 0.9758 / 0.9150 | 0.9775 / 0.9053 | 0.9896 / 0.9202 |
-| wood | 0.9877 / 0.9567 | 0.9921 / 0.9556 | 0.9965 / 0.9759 |
-| zipper | 0.9086 / 0.9789 | 0.9031 / 0.9644 | 0.9963 / 0.9859 |
-| **Mean (ok만)** | **0.9806 / 0.9775** (15개) | **0.9478 / 0.9680** (15개) | **0.9883 / 0.9820** (13개) |
-
-# 5. B — 실행 비용
-
-| 방법 | 데이터셋 | 완료 | 총 시간 | 카테고리당 | peak VRAM |
-|---|---|---|---|---|---|
-| rd_orig | mvtec | 15/15 | 1.17h | 4.7분 | 8,033 MiB |
-| rd | mvtec | 15/15 | 1.04h | 4.2분 | 11,799 MiB |
-| dinomaly | mvtec | 13/15 | 4.04h | 19분 | 11,825 MiB |
-
-# 6. A / B 대조 (같은 카테고리만)
-
-A와 B에서 모두 `ok`인 카테고리만 골라 평균낸 값이다.
-
-| 방법 | 실행 | 학습량 | 비교 카테고리 | I-AUROC | P-AUROC | 카테고리당 |
-|---|---|---|---|---|---|---|
-| rd | B | 10 ep | 15개 | 0.9478 | 0.9680 | 4.2분 |
-| rd | A | 300 ep | 15개 | 0.9859 | 0.9800 | 123.2분 |
-| rd | 차이 (A−B) | | | **+0.0381** | **+0.0120** | |
-| rd_orig | B | 35 ep | 15개 | 0.9806 | 0.9775 | 4.7분 |
-| rd_orig | A | 40 ep | 15개 | 0.9811 | 0.9778 | 2.2분 |
-| rd_orig | 차이 (A−B) | | | **+0.0005** | **+0.0003** | |
-
-
 ---
 
-# 7. 실행하지 못한 범위와 이유
+# 4. 실행하지 못한 범위와 이유
 
 | 범위 | 상태 | 이유 |
 |---|---|---|
@@ -208,24 +213,27 @@ A와 B에서 모두 `ok`인 카테고리만 골라 평균낸 값이다.
 | A: rd VisA 9개 (chewinggum·fryum·macaroni1·macaroni2·pcb1·pcb2·pcb3·pcb4·pipe_fryum) | 대기 | cashew 다음 차례 |
 | A: padim MVTec 8개 | 대기 | `spec_mvtec_fast` 단계가 중간에 종료됨 |
 | A: padim `carpet` | 실패 | exit code -1, 트레이스백 없이 mahalanobis 계산 35%에서 종료. peak VRAM 1,335 MiB. raw: `run_logs/padim__mvtec__carpet.log` |
-| A: winclip·promptad·coad (노트북) | 완료 | 3-1~3-3절 |
-| A: uniad MVTec (노트북) | 14/15 | zipper만 남음. job당 약 2~3시간 |
-| A: simple, uniad VisA (노트북) | 미실행 | uniad 뒤 차례 |
+| A: winclip·promptad·coad·uniad (노트북) | 완료 | 3-1~3-3절 |
+| A: simple MVTec (노트북, 백본 V1) | 진행 중 | 2026-09-28 04:17 시작. 프레임워크 그대로(V2)로 먼저 돌린 3개는 판별기가 학습되지 않아 V1으로 다시 실행 (3-5절) |
+| A: simple VisA (노트북, 백본 V1) | 대기 | simple MVTec 다음 차례 |
+| A: uniad VisA (노트북) | 대기 | simple VisA 다음 차례 |
 | A: padim (노트북) | 제외 | 1800초 제한에 걸림 (3-4절). 데스크톱 담당 |
 | A: dinomaly · glass | 미실행 | 아래 계산 참조 |
-| B: dinomaly `pill` | 실패 | `Dinomaly_lib/utils.py:24` 정수 오버플로 (`Storage size calculation overflowed with sizes=[4, -1178562093]`). `expand_as`로 만든 stride-0 뷰에 boolean 인덱싱. 다른 14개에서는 미발생. raw: `../run_logs/dinomaly_pill_crash_tail.txt` |
-| B: dinomaly `toothbrush` | 미실행 | `pill` 크래시로 차례가 오지 않음 |
 
-config 설정 기준 소요시간 (2점 측정, `timing_report.txt`):
+config 설정 기준 소요시간:
 
-| 방법 | config 설정 | MVTec-15 | VisA-12 | 합계 |
-|---|---|---|---|---|
-| dinomaly | total_iter 5000 | 93.8h | 217.5h | 311.3h |
-| glass | meta_epochs 640 | 320.1h | 742.7h | 1,062.8h |
+| 방법 | config 설정 | MVTec-15 | VisA-12 | 합계 | 측정 방식 |
+|---|---|---|---|---|---|
+| dinomaly | total_iter 5000 | 93.8h | 217.5h | 311.3h | 200 iter·600 iter 2개 지점 실측(`timing_report.txt`)으로 선형 추정 |
+| glass | meta_epochs 640 | 132.7h | 315.2h | 447.9h | bottle 5 epoch 실측 평균(평가 포함) |
+
+glass 값은 bottle을 5 epoch 실행해 잰 epoch당 시간(40.11 / 37.95 / 41.58 / 36.79 / 36.98초, `lg_results/epoch_test_glass.csv`)의 평균에, config epoch 수(640)와 카테고리 수를 곱해 추정했다. `configs/glass.yaml`이 `eval_epochs: 1`이라 매 epoch 전체 평가가 도는데, 위 측정은 학습 시간만 재므로(평가는 별도) 실측 벽시계 기준 평가 비용(epoch당 약 5.7초)을 더한 값을 표에 썼다. 평가를 뺀 학습 시간만이면 MVTec 115.6h·VisA 274.5h·합계 390.1h이다. VisA는 카테고리별 학습 이미지 수 비율로 환산했다.
+
+447.9h는 약 18.7일이라, 이번 주 실행 대상에서 제외한다.
 
 ---
 
-# 8. 실행 환경
+# 5. 실행 환경
 
 | 항목 | 값 |
 |---|---|
@@ -246,11 +254,11 @@ peak VRAM 실측에 따른 기기 분담:
 |---|---|
 | padim 1,720 · uniad 1,839 · patchcore 3,091 | rd_orig 8,393 MiB |
 | simple 3,336 · winclip 3,768 · promptad 5,119 | rd 11,828 MiB |
-| coad 6,440 MiB | dinomaly 11,825 MiB |
+| coad 6,440 MiB | dinomaly 11,752 MiB |
 
 ---
 
-# 9. 파일
+# 6. 파일
 
 | 파일 | 내용 |
 |---|---|
@@ -259,9 +267,6 @@ peak VRAM 실측에 따른 기기 분담:
 | `summary_spec_visa_rd_orig.csv` | A: rd_orig VisA, meta_epochs=40 |
 | `summary_spec_mvtec_rd.csv` | A: rd MVTec, meta_epochs=300 |
 | `summary_spec_visa_rd.csv` | A: rd VisA, meta_epochs=300 (진행 중, 2/12) |
-| `summary_mvtec_rd_orig.csv` | B: rd_orig 15개, meta_epochs=35 |
-| `summary_mvtec_rd.csv` | B: rd 15개, meta_epochs=10 |
-| `summary_mvtec_dinomaly.csv` | B: dinomaly 13개, total_iter=200 |
 | `summary_smoke.csv` | 11개 방법 × bottle 1 epoch — 비용 측정 1번째 점 |
 | `summary_timing5.csv` | 학습형 방법 × bottle 5 epoch — 2번째 점 |
 | `summary_smoke_dino1/2.csv` | dinomaly 200/600 iter 별도 측정 |
