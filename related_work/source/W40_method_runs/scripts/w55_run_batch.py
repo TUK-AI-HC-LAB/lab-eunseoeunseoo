@@ -44,13 +44,9 @@ VISA = ["candle", "capsules", "cashew", "chewinggum", "fryum", "macaroni1",
 ALL_METHODS = ["patchcore", "padim", "winclip", "simple", "rd_orig", "rd",
                "dinomaly", "uniad", "glass", "promptad", "coad"]
 
-# Dataset locations differ per machine, so they are overridable from the
-# environment instead of being hard-coded to the desktop's layout:
-#   set W55_MVTEC=D:/data/MVTec-AD
-#   set W55_VISA=D:/data/VisA_mvtec
 DATA_PATHS = {
-    "mvtec": os.environ.get("W55_MVTEC", "C:/ai_local/glad_dataset/MVTec-AD"),
-    "visa": os.environ.get("W55_VISA", "C:/ai_local/glad_dataset/VisA_mvtec"),
+    "mvtec": "C:/ai_local/glad_dataset/MVTec-AD",
+    "visa": "C:/ai_local/glad_dataset/VisA_mvtec",
 }
 
 
@@ -119,9 +115,6 @@ def main():
     ap.add_argument("--gpu", default="0",
                     help="GPU index, or 'cpu' to force CPU")
     ap.add_argument("--out-root", default=None)
-    ap.add_argument("--backbone-v1", action="store_true",
-                    help="run results_w40/main_v1.py (wideresnet50 with ImageNet V1 "
-                         "weights) instead of main.py")
     args = ap.parse_args()
 
     methods = (ALL_METHODS if args.methods == "all"
@@ -171,8 +164,7 @@ def main():
         os.makedirs(job_results, exist_ok=True)
         log_path = os.path.join(logs_dir, f"{method}__{args.dataset}__{cat}.log")
 
-        entry = os.path.join("results_w40", "main_v1.py") if args.backbone_v1 else "main.py"
-        cmd = [PY, entry,
+        cmd = [PY, "main.py",
                "--method", method,
                "--dataset", args.dataset,
                "--category", cat,
@@ -207,13 +199,6 @@ def main():
             except subprocess.TimeoutExpired:
                 status, code = "timeout", ""
                 reason = f"exceeded {args.timeout}s"
-            except BaseException as exc:
-                # A child that dies badly (dinomaly/pill took the whole runner
-                # down once, leaving no row at all) must not stop the queue:
-                # record it and move on. BaseException so that even a
-                # KeyboardInterrupt-style abort still leaves a row behind.
-                status, code = "failed", ""
-                reason = f"runner: {type(exc).__name__}: {exc}"[:200]
         wall = round(time.time() - t0, 1)
         peak_vram = sampler.stop()
 
