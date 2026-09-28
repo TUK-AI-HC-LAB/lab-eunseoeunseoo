@@ -192,10 +192,52 @@ bottle 기준. 판별기 정답률은 정상 특징을 정상으로, 가짜 이�
 | 라이브러리 버전 | W39 공식 코드 재현 환경이 같은 torch 2.11.0에서 정상 학습됨 | 원인 아님 |
 | adaptor 학습률(프레임워크 config가 공식 코드보다 100배 작음) | 학습률만 공식 값으로 바꿔 bottle·cable·capsule 40 epoch 실행 | 세 카테고리 모두 판별기가 무너짐 |
 
-### 적용 방법과 원시 결과
+### 적용 방법
 
-- V1 적용: `../scripts/main_v1.py`가 `backbones.py`의 wideresnet50 항목만 `weights="IMAGENET1K_V1"`로 바꿔 끼운 뒤 `main.py`를 그대로 실행한다. 프레임워크 파일은 수정하지 않았다.
-- 원시 결과: V1 실행 `summary_spec_mvtec_simple_v1.csv`, `summary_spec_visa_simple_v1.csv`. 프레임워크 그대로(V2) 실행한 3개 카테고리는 `summary_spec_mvtec_simple.csv`에 남겨 두었다.
+`../scripts/main_v1.py`가 `backbones.py`의 wideresnet50 항목만 `weights="IMAGENET1K_V1"`로 바꿔 끼운 뒤 `main.py`를 그대로 실행한다. 프레임워크 파일은 수정하지 않았다. 원시 결과: `summary_spec_mvtec_simple_v1.csv`, `summary_spec_visa_simple_v1.csv`. 프레임워크 그대로(V2) 실행한 3개 카테고리는 `summary_spec_mvtec_simple.csv`에 남겨 두었다.
+
+### simple (V1) — MVTec-AD
+
+카테고리당 약 25.2분, peak VRAM 1,548 MiB.
+
+| category | simple (V1) |
+|---|---|
+| bottle | 1.0000 / 0.9752 |
+| cable | 0.9413 / 0.9544 |
+| capsule | 0.9781 / 0.9843 |
+| carpet | 0.9502 / 0.9531 |
+| grid | 1.0000 / 0.9885 |
+| hazelnut | 0.9911 / 0.9674 |
+| leather | 1.0000 / 0.9897 |
+| metal_nut | 0.9990 / 0.8965 |
+| pill | 0.9280 / 0.8800 |
+| screw | 0.8897 / 0.9855 |
+| tile | 0.9722 / 0.8882 |
+| toothbrush | 0.8722 / 0.9851 |
+| transistor | 0.9808 / 0.7533 |
+| wood | 0.8623 / 0.7905 |
+| zipper | 0.9743 / 0.9892 |
+| **Mean (ok만)** | **0.9560 / 0.9321** (15개) |
+
+### simple (V1) — VisA
+
+12개 중 8개 완료, 나머지 진행 중(pcb2~pipe_fryum). 카테고리당 약 68.2분(완료분 평균).
+
+| category | simple (V1) |
+|---|---|
+| candle | 0.9218 / 0.9763 |
+| capsules | 0.6845 / 0.9629 |
+| cashew | 0.8640 / 0.9655 |
+| chewinggum | 0.9920 / 0.9898 |
+| fryum | 0.8806 / 0.9158 |
+| macaroni1 | 0.8994 / 0.9903 |
+| macaroni2 | 0.7102 / 0.9570 |
+| pcb1 | 0.8308 / 0.9883 |
+| pcb2 | (진행 중) |
+| pcb3 | (미실행) |
+| pcb4 | (미실행) |
+| pipe_fryum | (미실행) |
+| **Mean (ok만, 8개)** | **0.8479 / 0.9682** |
 
 ### 같은 백본을 쓰는 다른 방법
 
@@ -215,9 +257,7 @@ patchcore도 V1으로 MVTec 15개를 다시 돌려 비교했다. 평균은 V2 0.
 | A: rd VisA 8개 (macaroni1·macaroni2·pcb1·pcb2·pcb3·pcb4·pipe_fryum) | 대기 | fryum 다음 차례 |
 | A: padim MVTec 8개 | 대기 | `spec_mvtec_fast` 단계가 중간에 종료됨 |
 | A: padim `carpet` | 실패 | exit code -1, 트레이스백 없이 mahalanobis 계산 35%에서 종료. peak VRAM 1,335 MiB. raw: `run_logs/padim__mvtec__carpet.log` |
-| A: winclip·promptad·coad·uniad (노트북) | 완료 | 3-1~3-3절 |
-| A: simple MVTec (노트북, 백본 V1) | 진행 중 | 판별기 학습 문제(3-5절)로 V1으로 재실행 중 |
-| A: simple VisA (노트북, 백본 V1) | 대기 | simple MVTec 다음 차례 |
+| A: simple VisA (노트북, 백본 V1) | 진행 중 (8/12) | pcb2부터 이어서 실행 중 (3-5절) |
 | A: uniad VisA (노트북) | 대기 | simple VisA 다음 차례 |
 | A: padim (노트북) | 제외 | 1800초 제한에 걸림 (3-4절). 데스크톱 담당 |
 | A: dinomaly | 미실행 | 실행 시간만 실측(아래), 성능(I-AUROC/P-AUROC)은 아직 없음 |
