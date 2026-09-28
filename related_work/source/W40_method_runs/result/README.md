@@ -4,22 +4,39 @@
 데스크톱 RTX 5070 / 12GB, seed 0, class-separated(카테고리별 개별 학습).
 노트북(RTX 5060 Laptop / 8GB)에서도 일부 방법을 나눠 실행했다 (3-0~3-5절).
 
-아래 결과는 모두 config가 정한 학습량 그대로 실행한 것이다(표에서 "A"로 표기). `--meta-epochs` / `--total-iter` / `--batch-size`를 넘기지 않아 config 값이 그대로 적용된다.
+아래 1~3절의 결과는 모두 config가 정한 학습량 그대로 실행한 것이다. `--meta-epochs` / `--total-iter` / `--batch-size`를 넘기지 않아 config 값이 그대로 적용된다.
+
+이와 별개로, 어떤 방법이 얼마나 걸리는지 알아보려고 카테고리 하나만 짧게 돌려본 실행이 있다. 결과가 아니라 소요 시간 추정용이므로 7절에 따로 두었다.
 
 > **예외: simple은 백본 가중치를 ImageNet V1으로 바꿔 실행했다.** 프레임워크 기본값(V2)으로는 판별기가 학습되지 않았기 때문이다. 이유와 근거는 3-5절.
 
-| 방법 | 학습량 | 출처 |
-|---|---|---|
-| patchcore | 학습 없음 (memory bank) | `configs/patchcore.yaml`은 `imagesize: 224`만 지정 |
-| padim | 학습 없음 (가우시안 적합) | config에 학습 인자 없음 → DEFAULTS |
-| rd_orig | meta_epochs 40 | `main.py:146` DEFAULTS |
-| rd | meta_epochs 300 | `configs/rd.yaml` |
+실제로 적용된 학습량과 그 값의 출처는 아래와 같다. 어느 것도 내가 정하지 않았다.
 
-측정 단위: I-AUROC / P-AUROC, `wall_s`는 job 전체 벽시계 시간, `peak_vram_mb`는 job 중 `nvidia-smi` 2초 간격 최대값.
+| 방법 | 학습량 | 출처 | 실행 |
+|---|---|---|---|
+| patchcore | 학습 없음 (memory bank) | `configs/patchcore.yaml`은 `imagesize: 224`만 지정 | 양쪽 |
+| padim | 학습 없음 (가우시안 적합) | config에 학습 인자 없음 → `main.py` DEFAULTS | 데스크톱 |
+| rd_orig | meta_epochs **40** | config에 없어 `main.py:146` DEFAULTS | 데스크톱 |
+| rd | meta_epochs **300** | `configs/rd.yaml` | 데스크톱 |
+| winclip | meta_epochs **1** | `configs/winclip.yaml` | 노트북 |
+| promptad | meta_epochs **100** | `configs/promptad.yaml` | 노트북 |
+| coad | 학습 없음 | config에 학습 인자 없음 → DEFAULTS | 노트북 |
+| uniad | meta_epochs **1000** | `configs/uniad.yaml` | 노트북 |
+| simple | meta_epochs **40** | config에 없어 `main.py:146` DEFAULTS. 단 백본 가중치는 V1으로 바꿈(3-5절) | 노트북 |
+| dinomaly | total_iter **5000** | `configs/dinomaly.yaml` | 미실행 (4절) |
+| glass | meta_epochs **640** | `configs/glass.yaml` | 미실행 (4절) |
+
+측정 단위: I-AUROC / P-AUROC, `wall_s`는 job 하나를 돌리는 데 걸린 시간(데이터 로딩·학습·평가 전부 포함), `peak_vram_mb`는 job 중 `nvidia-smi` 2초 간격 최대값.
+
+1~3절의 수치는 **2026-09-28 23:00 기준**이다. rd VisA가 아직 돌고 있어 `(진행 중)`으로 표시한 칸은 이후 채워진다.
 
 ---
 
-# 1. A — MVTec-AD
+# 1. (데스크톱) MVTec-AD
+
+데스크톱에서 실행한 4개 방법이다. 같은 MVTec을 노트북에서 실행한 방법(winclip·promptad·coad·uniad)은 3-1절에 있다.
+
+**patchcore는 양쪽에서 돌렸다.** 데스크톱 0.9835 / 0.9794, 노트북 0.9834 / 0.9796으로 15개 평균이 I-AUROC 0.0001·P-AUROC 0.0002 차이다. 기기가 달라도 같은 값이 나오는지 확인된 셈이라 둘 다 남긴다.
 
 | category | patchcore | padim | rd_orig | rd |
 |---|---|---|---|---|
@@ -40,25 +57,32 @@
 | zipper | 0.9879 / 0.9869 | (미실행) | 0.9215 / 0.9789 | 0.9643 / 0.9747 |
 | **Mean (ok만)** | **0.9835 / 0.9794** (15개) | **0.9631 / 0.9829** (7개) | **0.9811 / 0.9778** (15개) | **0.9859 / 0.9800** (15개) |
 
-# 2. A — VisA
+# 2. (데스크톱) VisA
+
+데스크톱에서 실행한 2개 방법이다. 같은 VisA를 노트북에서 실행한 방법(patchcore·winclip·promptad·coad)은 3-2절에 있다.
 
 | category | rd_orig | rd |
 |---|---|---|
 | candle | 0.9362 / 0.9887 | 0.9605 / 0.9857 |
 | capsules | 0.9045 / 0.9937 | 0.8903 / 0.9929 |
-| cashew | 0.9756 / 0.9632 | (진행 중) |
-| chewinggum | 0.9838 / 0.9855 | (미실행) |
-| fryum | 0.9420 / 0.9630 | (미실행) |
-| macaroni1 | 0.9647 / 0.9932 | (미실행) |
-| macaroni2 | 0.8983 / 0.9931 | (미실행) |
+| cashew | 0.9756 / 0.9632 | 0.9648 / 0.9317 |
+| chewinggum | 0.9838 / 0.9855 | 0.9796 / 0.9725 |
+| fryum | 0.9420 / 0.9630 | 0.9482 / 0.9661 |
+| macaroni1 | 0.9647 / 0.9932 | 0.9725 / 0.9912 |
+| macaroni2 | 0.8983 / 0.9931 | **(진행 중)** |
 | pcb1 | 0.9696 / 0.9971 | (미실행) |
 | pcb2 | 0.9744 / 0.9871 | (미실행) |
 | pcb3 | 0.9721 / 0.9924 | (미실행) |
 | pcb4 | 0.9987 / 0.9834 | (미실행) |
 | pipe_fryum | 0.9946 / 0.9907 | (미실행) |
-| **Mean (ok만)** | **0.9595 / 0.9859** (12개) | **0.9254 / 0.9893** (2개) |
+| **Mean (ok만)** | **0.9595 / 0.9859** (12개) | **0.9527 / 0.9734** (6개) |
+| **Mean (같은 6개)** | **0.9511 / 0.9812** | **0.9527 / 0.9734** |
 
-# 3. A — 실행 비용
+위 두 Mean 행은 쓰임이 다르다. `Mean (ok만)`은 각 방법이 끝낸 카테고리만 평균낸 값이라 **방법끼리 비교할 수 없다** — rd는 아직 6개뿐이고 그 6개가 어려운 쪽에 몰려 있다. `Mean (같은 6개)`는 rd가 끝낸 6개(candle·capsules·cashew·chewinggum·fryum·macaroni1)로 양쪽을 맞춘 값이고, 이것만 직접 비교할 수 있다. 맞춰 보면 I-AUROC는 rd가 +0.0015로 근소하게 앞서고 P-AUROC는 −0.0078로 뒤진다. rd VisA가 12개를 다 끝내면 이 행은 지운다.
+
+# 3. (데스크톱) 실행 비용
+
+padim은 데스크톱 수치만 쓴다. 노트북에서는 제한 시간에 걸려 제외했다(3-4절).
 
 | 방법 | 데이터셋 | 완료 | 총 시간 | 카테고리당 | peak VRAM |
 |---|---|---|---|---|---|
@@ -67,9 +91,9 @@
 | rd_orig | mvtec | 15/15 | 0.56h | 2.2분 | 8,290 MiB |
 | rd_orig | visa | 12/12 | 1.23h | 6.2분 | 8,393 MiB |
 | rd | mvtec | 15/15 | 30.80h | 123.2분 | 11,828 MiB |
-| rd | visa | 2/12 (진행 중) | 11.94h | 358.1분 | 11,810 MiB |
+| rd | visa | 6/12 (진행 중) | 31.00h | 310.0분 | 11,826 MiB |
 
-# 3-0. A (노트북) — 개요
+# 3-0. (노트북) 개요
 
 같은 프레임워크를 노트북(RTX 5060 Laptop, VRAM 8GB)에서 실행한 수치이다. 2026-09-25에 시작했고 2026-09-28 새벽까지의 값이다.
 
@@ -77,7 +101,7 @@
 - 표의 값은 `I-AUROC / P-AUROC`이다.
 - patchcore는 데스크톱(1절)에도 있다. 같은 방법이지만 기기가 달라 두 표의 값이 조금 다르다.
 
-# 3-1. A (노트북) — MVTec-AD
+# 3-1. (노트북) MVTec-AD
 
 | category | patchcore | winclip | promptad | coad | uniad |
 |---|---|---|---|---|---|
@@ -98,7 +122,7 @@
 | zipper | 0.9874 / 0.9868 | 0.9769 / 0.9685 | 0.9916 / 0.9189 | 0.9622 / 0.9688 | 0.9443 / 0.9681 |
 | **Mean (ok만)** | **0.9834 / 0.9796** (15개) | **0.9669 / 0.9498** (15개) | **0.9815 / 0.9689** (15개) | **0.9790 / 0.9862** (15개) | **0.9535 / 0.9629** (15개) |
 
-# 3-2. A (노트북) — VisA
+# 3-2. (노트북) VisA
 
 | category | patchcore | winclip | promptad | coad |
 |---|---|---|---|---|
@@ -116,9 +140,9 @@
 | pipe_fryum | 0.9978 / 0.9906 | 0.8874 / 0.9545 | 0.9886 / 0.9849 | 0.9722 / 0.9949 |
 | **Mean (ok만)** | **0.9197 / 0.9765** (12개) | **0.9052 / 0.9433** (12개) | **0.9162 / 0.9279** (12개) | **0.9175 / 0.9887** (12개) |
 
-# 3-3. A (노트북) — 실행 비용
+# 3-3. (노트북) 실행 비용
 
-카테고리당 시간은 job 전체 벽시계 시간의 평균이고, VRAM은 job 중 `nvidia-smi` 최댓값이다.
+카테고리당 시간은 job 하나에 걸린 시간의 평균이고, VRAM은 job 중 `nvidia-smi` 최댓값이다.
 
 | 방법 | 데이터셋 | 완료 | 카테고리당 (평균) | peak VRAM |
 |---|---|---|---|---|
@@ -134,7 +158,7 @@
 
 ---
 
-# 3-4. A (노트북) — 제한 시간에 걸린 job
+# 3-4. (노트북) 제한 시간에 걸린 job
 
 실행 스크립트에는 job당 제한 시간이 있고 넘으면 강제 종료된다 (프레임워크에는 없음). 시간 초과는 방법이 실패한 것이 아니라 스크립트가 종료한 것이다.
 
@@ -253,15 +277,15 @@ patchcore도 V1으로 MVTec 15개를 다시 돌려 비교했다. 평균은 V2 0.
 
 | 범위 | 상태 | 이유 |
 |---|---|---|
-| A: rd VisA fryum | 진행 중 | candle·capsules·cashew·chewinggum 완료 후 진행 중 (2026-09-28 07:51 기준) |
-| A: rd VisA 8개 (macaroni1·macaroni2·pcb1·pcb2·pcb3·pcb4·pipe_fryum) | 대기 | fryum 다음 차례 |
-| A: padim MVTec 8개 | 대기 | `spec_mvtec_fast` 단계가 중간에 종료됨 |
-| A: padim `carpet` | 실패 | exit code -1, 트레이스백 없이 mahalanobis 계산 35%에서 종료. peak VRAM 1,335 MiB. raw: `run_logs/padim__mvtec__carpet.log` |
-| A: simple VisA (노트북, 백본 V1) | 진행 중 (8/12) | pcb2부터 이어서 실행 중 (3-5절) |
-| A: uniad VisA (노트북) | 대기 | simple VisA 다음 차례 |
-| A: padim (노트북) | 제외 | 1800초 제한에 걸림 (3-4절). 데스크톱 담당 |
-| A: dinomaly | 미실행 | 실행 시간만 실측(아래), 성능(I-AUROC/P-AUROC)은 아직 없음 |
-| A: glass | 미실행 | 아래 계산 참조 |
+| rd VisA macaroni2 | 진행 중 | candle·capsules·cashew·chewinggum·fryum·macaroni1 완료 후 진행 중 (2026-09-28 13:00 기준) |
+| rd VisA 5개 (pcb1·pcb2·pcb3·pcb4·pipe_fryum) | 대기 | macaroni2 다음 차례. 완료 예상 2026-09-30 오전 |
+| padim MVTec 8개 | 대기 | `spec_mvtec_fast` 단계가 중간에 종료됨 |
+| padim `carpet` | 실패 | exit code -1, 트레이스백 없이 mahalanobis 계산 35%에서 종료. peak VRAM 1,335 MiB. raw: `run_logs/padim__mvtec__carpet.log` |
+| simple VisA (노트북, 백본 V1) | 진행 중 (8/12) | pcb2부터 이어서 실행 중 (3-5절) |
+| uniad VisA (노트북) | 대기 | simple VisA 다음 차례 |
+| padim (노트북) | 제외 | 1800초 제한에 걸림 (3-4절). 데스크톱 담당 |
+| dinomaly | 미실행 | 실행 시간만 실측(아래), 성능(I-AUROC/P-AUROC)은 아직 없음 |
+| glass | 미실행 | 아래 계산 참조 |
 
 config 설정 기준 소요시간:
 
@@ -272,7 +296,7 @@ config 설정 기준 소요시간:
 
 **dinomaly.** bottle 1개를 config 그대로(total_iter=5000, 총 385 epoch) 돌리다가 속도가 안정된 128 epoch 지점에서 멈추고(2.998 s/iteration, `results_w55/dino5000_probe/run_logs/dinomaly__mvtec__bottle.log`), 여기에 `5000 iter × 2.998s`로 카테고리당 시간(약 4.17h)을 구해 카테고리 수를 곱했다. VisA(12개)가 MVTec(15개)보다 합계가 작은 것은 오타가 아니다 — dinomaly는 `total_iter`가 고정이라 카테고리 크기와 무관하게 항상 약 5,000 iteration을 돌기 때문에, 합계는 거의 카테고리 **개수**에만 비례한다(15개 대 12개). 128~146 epoch 구간(3.39 s/it, 표본 18)까지 반영한 상한은 MVTec 70.6h·VisA 56.5h·합계 127.1h이다. 참고로 Dinomaly 공식 구현은 같은 설정(class-separated, batch 16, 5000 iter)으로 8GB 노트북(RTX 5060)에서 13개 카테고리를 18시간 4분에 끝냈는데(W39 재현), 이 프레임워크 실측은 그보다 3배 가까이 느리다 — 다만 하드웨어가 반대 방향(공식 구현은 8GB 노트북, 이 프레임워크는 12GB 데스크톱)이라 그 차이를 하드웨어 탓으로 볼 수도 없다. peak VRAM은 11,746 MiB로 8GB 노트북에서는 못 돌린다. **끝까지 돌리지 않아서 config 설정(5000 iter)에서의 I-AUROC/P-AUROC는 아직 없다.**
 
-**glass.** bottle을 5 epoch 실행해 잰 epoch당 시간(40.11 / 37.95 / 41.58 / 36.79 / 36.98초, `lg_results/epoch_test_glass.csv`)의 평균에, config epoch 수(640)와 카테고리 수를 곱해 추정했다. `configs/glass.yaml`이 `eval_epochs: 1`이라 매 epoch 전체 평가가 도는데, 위 측정은 학습 시간만 재므로(평가는 별도) 실측 벽시계 기준 평가 비용(epoch당 약 5.7초)을 더한 값을 표에 썼다. 평가를 뺀 학습 시간만이면 MVTec 115.6h·VisA 274.5h·합계 390.1h이다. VisA는 카테고리별 학습 이미지 수 비율로 환산했다.
+**glass.** bottle을 5 epoch 실행해 잰 epoch당 시간(40.11 / 37.95 / 41.58 / 36.79 / 36.98초, `lg_results/epoch_test_glass.csv`)의 평균에, config epoch 수(640)와 카테고리 수를 곱해 추정했다. `configs/glass.yaml`이 `eval_epochs: 1`이라 매 epoch 전체 평가가 도는데, 위 측정은 학습 시간만 재므로(평가는 별도) 실제로 걸린 시간에서 뽑은 평가 비용(epoch당 약 5.7초)을 더한 값을 표에 썼다. 평가를 뺀 학습 시간만이면 MVTec 115.6h·VisA 274.5h·합계 390.1h이다. VisA는 카테고리별 학습 이미지 수 비율로 환산했다.
 
 두 방법 다 이번 주 실행 대상에서 제외한다: glass 447.9h(약 18.7일), dinomaly 112.7h(약 4.7일)에 남은 rd VisA(약 52h)까지 더하면 데스크톱 한 대로는 10/5경까지 걸린다. "실행 불가"가 아니라 "실측 완료, 기간 확보 시 실행 가능"이다.
 
@@ -307,16 +331,11 @@ peak VRAM 실측에 따른 기기 분담:
 
 | 파일 | 내용 |
 |---|---|
-| `summary_spec_mvtec_fast.csv` | A: patchcore 15/15 + padim 7/15 |
-| `summary_spec_mvtec_rd_orig.csv` | A: rd_orig MVTec, meta_epochs=40 |
-| `summary_spec_visa_rd_orig.csv` | A: rd_orig VisA, meta_epochs=40 |
-| `summary_spec_mvtec_rd.csv` | A: rd MVTec, meta_epochs=300 |
-| `summary_spec_visa_rd.csv` | A: rd VisA, meta_epochs=300 (진행 중) |
-| `summary_smoke.csv` | 11개 방법 × bottle 1 epoch — 비용 측정 1번째 점 |
-| `summary_timing5.csv` | 학습형 방법 × bottle 5 epoch — 2번째 점 |
-| `summary_smoke_dino1/2.csv` | dinomaly 200/600 iter 별도 측정 (600 iter는 제한시간 초과로 무효) |
-| `dino5000_probe/run_logs/dinomaly__mvtec__bottle.log` | dinomaly config 그대로(total_iter=5000) bottle 128 epoch 실측, 4절 소요시간의 근거 |
-| `summary_mvtec_light.csv` | 시작 1분 만에 종료, 빈 파일 |
+| `summary_spec_mvtec_fast.csv` | patchcore 15/15 + padim 7/15 |
+| `summary_spec_mvtec_rd_orig.csv` | rd_orig MVTec, meta_epochs=40 |
+| `summary_spec_visa_rd_orig.csv` | rd_orig VisA, meta_epochs=40 |
+| `summary_spec_mvtec_rd.csv` | rd MVTec, meta_epochs=300 |
+| `summary_spec_visa_rd.csv` | rd VisA, meta_epochs=300 (진행 중) |
 | `timing_per_run.csv` | 전 job 구간 분해(기동/데이터/모델/실행), peak VRAM, 이미지당 추론시간 |
 | `timing_report.txt` | 위 CSV를 표로 출력 |
 | `method_probe.txt` | 11개 방법이 import→계약검사→backbone→생성 중 어디까지 되는지 |
@@ -324,3 +343,34 @@ peak VRAM 실측에 따른 기기 분담:
 CSV 열: `status`(ok/timeout/failed), `wall_s`, `peak_vram_mb`, `meta_epochs`/`total_iter`, `auroc_mean`, `pixel_auroc_mean`, `sal_f1_mean`, `reason`, `log_path`, `results_csv`.
 
 `timeout`의 제한시간은 프레임워크가 아니라 배치 러너가 건 값이다 (`w55_run_batch.py:199`). 재개 시 `timeout` 행만 재시도되고 `ok`/`failed`는 최종으로 친다.
+
+---
+
+# 7. 학습 시간 예측을 위한 실행
+
+어떤 방법이 config 설정으로 얼마나 걸릴지 알아보려고, 카테고리 하나(`bottle`)만
+짧게 돌려 소요 시간을 잰 것이다. **결과가 아니라 시간 추정용**이므로 1~3절의 수치와
+섞어 쓰지 않는다. 여기서 잰 값으로 4절의 dinomaly·glass 소요시간을 계산했다.
+
+| 파일 | 학습량 | 용도 |
+|---|---|---|
+| `summary_smoke.csv` | 11개 방법 × bottle, 1 epoch | 방법별 기본 비용·peak VRAM |
+| `summary_timing5.csv` | 학습형 6개 방법 × bottle, 5 epoch | 위와 2점을 이뤄 epoch당 비용 분리 |
+| `summary_smoke_dino1.csv` | dinomaly × bottle, 200 iter | dinomaly는 epoch이 아닌 `total_iter`로 돌아 별도 측정 |
+| `summary_smoke_dino2.csv` | dinomaly × bottle, 600 iter | **제한시간 초과로 무효.** `wall_s=1800`은 실측이 아니라 배치 러너가 건 제한시간이다 |
+| `dino5000_probe/run_logs/dinomaly__mvtec__bottle.log` | dinomaly × bottle, `total_iter=5000` 중 146 epoch | 4절 dinomaly 소요시간의 근거. 시간만 재고 중단 |
+| `lg_results/epoch_test_glass.csv` | glass × bottle, 5 epoch | 4절 glass 소요시간의 근거 |
+| `summary_mvtec_light.csv` | — | 시작 1분 만에 종료, 빈 파일 |
+| `timing_per_run.csv` / `timing_report.txt` | — | 위 측정들의 구간 분해(기동/데이터/모델/실행) |
+
+측정할 때 겪은 것 두 가지를 남긴다.
+
+**제한시간에 걸린 값을 실측으로 쓰면 안 된다.** `summary_smoke_dino2.csv`의
+`wall_s=1800`을 실측으로 보고 2점 피팅을 하면 dinomaly MVTec-15가 93.8h로 나오는데,
+실제로 config 설정을 돌려 재보니 62.6h였다. 1800초는 상한도 하한도 아닌 검열된 값이다.
+
+**학습이 실제로 돌았는지 확인해야 한다.** glass를 1 epoch·5 epoch로 잰 초기 측정은
+23.6초와 22.8초로, 에포크를 5배 늘렸는데 시간이 오히려 줄었다. 두 실행의 I-AUROC가
+소수점 17자리까지 같아(0.24523809552192688) 학습이 아예 안 돌았음이 드러났고,
+원인은 `trainer_glass.py`의 맨몸 `except`가 오류를 삼키고 학습 없는 판정 모드로
+전환한 것이었다. 고친 뒤 다시 잰 값이 4절의 근거다.
